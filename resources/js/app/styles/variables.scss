@@ -1,0 +1,26 @@
+:root {
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+
+    --color-background: rgb(10, 10, 10);
+    --color-background-rgb: 10, 10, 10;
+    --color-background-secondary: rgb(20, 20, 20);
+    --color-background-secondary-rgb: 20, 20, 20;
+
+    --color-border: rgb(40, 40, 40);
+    --color-border-rgb: 40, 40, 40;
+    --color-border-hover: rgb(80, 80, 80);
+    --color-border-hover-rgb: 80, 80, 80;
+
+    --color-text: rgb(250, 250, 250);
+    --color-text-rgb: 250, 250, 250;
+    --color-text-secondary: rgb(160, 160, 160);
+    --color-text-secondary-rgb: 160, 160, 160;
+
+    --z-index-dropdown: 999;
+    --z-index-dialog: 1000;
+    --z-index-alert: 1001;
+}

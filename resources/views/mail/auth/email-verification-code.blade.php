@@ -1,0 +1,3 @@
+<div>
+    {{ $emailVerificationCode->code }}
+</div>

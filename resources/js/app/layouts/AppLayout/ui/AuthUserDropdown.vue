@@ -1,0 +1,67 @@
+<script setup lang="ts">
+import { ref } from "vue"
+import { useI18n } from "vue-i18n"
+import { useLogOut } from "@/features/auth/log-out"
+import { UserAvatar } from "@/entities/user"
+import { createDialog, IDropdown, IMenu } from "@/shared/ui"
+import { useNavigation } from "@/shared/hooks"
+import { ICurrentUser } from "@/shared/api"
+
+const props = defineProps<{
+    user: ICurrentUser
+}>()
+
+const { t } = useI18n()
+
+const dropdownIsOpen = ref<boolean>(false)
+const { goToProfilePage } = useNavigation()
+
+const { fetch: logout } = useLogOut()
+
+const goToProfileHandler = () => {
+    goToProfilePage(props.user.id)
+    dropdownIsOpen.value = false
+}
+
+const logOutHandler = () => {
+    createDialog({
+        title: t("auth.dialog.title.log-out"),
+        message: t("auth.dialog.message.log-out"),
+        confirmButtonText: t("auth.dialog.action.log-out"),
+        onConfirm: () => logout(),
+    })
+    dropdownIsOpen.value = false
+}
+</script>
+
+<template>
+    <i-dropdown
+        v-model="dropdownIsOpen"
+        position-x="right"
+        position-y="bottom"
+    >
+        <template #trigger>
+            <user-avatar
+                :id="user.id"
+            />
+        </template>
+        <template #content>
+            <i-menu
+                :options="[
+                    {
+                        text: t('user-profile'),
+                        onClick: goToProfileHandler
+                    },
+                    {
+                        text: t('log-out'),
+                        onClick: logOutHandler
+                    }
+                ]"
+            />
+        </template>
+    </i-dropdown>
+</template>
+
+<style scoped lang="scss">
+
+</style>

@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 120),
+    'lifetime' => (int)env('SESSION_LIFETIME', 120),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 
@@ -81,7 +81,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | When using the "database" session driver, you may specify the table to
-    | be used to store sessions. Of course, a sensible default is defined
+    | be used to model sessions. Of course, a sensible default is defined
     | for you; however, you're welcome to change this to another table.
     |
     */
@@ -94,14 +94,14 @@ return [
     |--------------------------------------------------------------------------
     |
     | When using one of the framework's cache driven session backends, you may
-    | define the cache store which should be used to store the session data
+    | define the cache model which should be used to model the session data
     | between requests. This must match one of your defined cache stores.
     |
     | Affects: "apc", "dynamodb", "memcached", "redis"
     |
     */
 
-    'store' => env('SESSION_STORE'),
+    'model' => env('SESSION_STORE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -129,7 +129,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
     ),
 
     /*
