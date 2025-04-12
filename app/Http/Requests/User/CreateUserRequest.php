@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\User;
 
+use App\DTOs\User\CreateUserDTO;
 use App\Http\Requests\BaseRequest;
 
 final class CreateUserRequest extends BaseRequest
@@ -21,5 +22,10 @@ final class CreateUserRequest extends BaseRequest
             "password" => ["required", "confirmed"],
             "verification_code" => ["required", "string", "min:6", "max:6"],
         ];
+    }
+
+    public function toDTO(): CreateUserDTO
+    {
+        return CreateUserDTO::fromArray($this->validated());
     }
 }

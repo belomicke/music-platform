@@ -26,11 +26,8 @@ import AppLayoutHeader from "./ui/AppLayoutHeader.vue"
     }
 
     &-content {
-        background-color: var(--color-background-secondary);
         width: 100%;
         overflow: auto;
-        border-radius: 8px;
-        margin: 0 10px 10px;
     }
 }
 </style>

@@ -31,10 +31,20 @@ export const useNavigation = () => {
         })
     }
 
+    const goToArtistInfoPage = async (id: string) => {
+        await router.push({
+            name: ROUTE_NAMES.ARTIST_INFO_PAGE,
+            params: {
+                id,
+            },
+        })
+    }
+
     return {
         goToHomePage,
         goToSignInPage,
         goToSignUpPage,
         goToProfilePage,
+        goToArtistInfoPage,
     }
 }

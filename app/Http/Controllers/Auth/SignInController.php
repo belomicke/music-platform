@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Actions\Auth\SignInAction;
-use App\DTO\Auth\SignInDTO;
 use App\Exceptions\Auth\InvalidCredentialsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignInRequest;
@@ -27,15 +26,11 @@ final class SignInController extends Controller
         SignInAction  $signInAction
     ): JsonResponse
     {
-        $email = $request->input("email");
-        $password = $request->input("password");
+        $data = $request->toDTO();
 
-        $signInAction->execute(data: new SignInDTO(
-            email: $email,
-            password: $password
-        ));
+        $signInAction->execute(data: $data);
 
-        $user = $this->getUserByEmailQuery->execute(email: $email);
+        $user = $this->getUserByEmailQuery->execute(email: $data->email);
 
         return $this->success([
             "user" => CurrentUserResource::make($user)

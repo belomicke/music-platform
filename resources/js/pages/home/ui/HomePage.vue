@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { useCurrentUser } from "@/features/auth/current-user"
+import HomePageSection from "./HomePageSection.vue"
+import { usePopularArtists } from "@/features/artist/get-popular-artists"
+import { ArtistList } from "@/entities/artist"
 
-const { user, isAuth } = useCurrentUser()
+const { data: artists, isLoading } = usePopularArtists()
 </script>
 
 <template>
     <div class="home-page">
-        Welcome, {{ isAuth ? user.name : "guest" }}!
+        <home-page-section>
+            <artist-list
+                :artists="artists"
+                v-if="isLoading === false"
+            />
+        </home-page-section>
     </div>
 </template>
 
 <style lang="scss">
 .home-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    font-size: 24px;
-    font-weight: 600;
+    padding: 10px;
 }
 </style>

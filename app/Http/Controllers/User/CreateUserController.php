@@ -6,8 +6,7 @@ namespace App\Http\Controllers\User;
 
 use App\Actions\Auth\SignInAction;
 use App\Actions\User\CreateUserAction;
-use App\DTO\Auth\SignInDTO;
-use App\DTO\User\CreateUserDTO;
+use App\DTOs\Auth\SignInDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Resources\User\CurrentUserResource;
@@ -26,23 +25,13 @@ final class CreateUserController extends Controller
         SignInAction      $signInAction,
     ): JsonResponse
     {
-        $name = $request->input("name");
-        $email = $request->input("email");
-        $password = $request->input("password");
-        $code = $request->input("verification_code");
+        $data = $request->toDTO();
 
-        $user = $createUserAction->execute(
-            data: new CreateUserDTO(
-                name: $name,
-                email: $email,
-                password: $password,
-                verificationCode: $code
-            )
-        );
+        $user = $createUserAction->execute(data: $data);
 
         $signInAction->execute(data: new SignInDTO(
-            email: $email,
-            password: $password,
+            email: $data->email,
+            password: $data->password,
         ));
 
         return $this->success([

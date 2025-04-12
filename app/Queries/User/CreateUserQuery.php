@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Queries\User;
 
-use App\DTO\User\CreateUserDTO;
+use App\DTOs\User\CreateUserDTO;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

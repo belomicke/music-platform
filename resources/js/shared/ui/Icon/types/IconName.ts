@@ -1,1 +1,1 @@
-export type IconName = "app-logo" | "loader" | "close"
+export type IconName = "app-logo" | "loader" | "close" | "user"

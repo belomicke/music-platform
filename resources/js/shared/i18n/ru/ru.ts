@@ -72,8 +72,35 @@ export default {
                 "cancel": "Отмена",
             },
         },
+        "media-card": {
+            "type": {
+                "artist": "Исполнитель",
+            },
+        },
     },
 
-    "user-profile": "Профиль",
-    "log-out": "Выход",
+    "page": {
+        "artist-info": {
+            "header": {
+                "type": "Исполнитель",
+                "subtitle": "{followers} подписчиков",
+            },
+        },
+        "profile": {
+            "header": {
+                "type": "Профиль",
+            },
+        },
+    },
+
+    "layouts": {
+        "app": {
+            "header": {
+                "auth-user-dropdown": {
+                    "user-profile": "Профиль",
+                    "log-out": "Выход",
+                },
+            },
+        },
+    },
 }

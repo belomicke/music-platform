@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\User;
 
-use App\DTO\User\CreateUserDTO;
+use App\DTOs\User\CreateUserDTO;
 use App\Exceptions\Auth\InvalidVerificationCodeException;
 use App\Models\User;
 use App\Queries\EmailVerificationCode\DeleteEmailVerificationCodeQuery;
@@ -29,7 +29,7 @@ final readonly class CreateUserAction
     {
         $verificationCodeIsValid = $this->checkVerificationCode(
             email: $data->email,
-            code: $data->verificationCode
+            code: $data->verification_code
         );
 
         if ($verificationCodeIsValid === false) {

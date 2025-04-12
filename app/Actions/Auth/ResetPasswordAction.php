@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace App\Actions\Auth;
 
-use App\DTO\Auth\ResetPasswordDTO;
+use App\DTOs\Auth\ResetPasswordDTO;
 use App\Exceptions\Auth\ExpiredPasswordResetTokenException;
 use App\Models\User;
+use App\Queries\PasswordResetToken\GetPasswordResetTokenByEmailExistsQuery;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
-final class ResetPasswordAction
+final readonly class ResetPasswordAction
 {
+    public function __construct(
+        private GetPasswordResetTokenByEmailExistsQuery $getPasswordResetTokenByEmailExistsQuery
+    ) {}
+
     /**
      * @throws ExpiredPasswordResetTokenException
      */
     public function execute(ResetPasswordDTO $data): string
     {
-        $tokenExists = DB::table("password_reset_tokens")
-            ->where("email", $data->email)
-            ->exists();
+        $tokenExists = $this->getPasswordResetTokenByEmailExistsQuery->execute(email: $data->email);
 
-        if (!$tokenExists) {
+        if ($tokenExists === false) {
             throw new ExpiredPasswordResetTokenException();
         }
 
@@ -31,7 +33,7 @@ final class ResetPasswordAction
             "token" => $data->token,
             "email" => $data->email,
             "password" => $data->password,
-            "password_confirmation" => $data->passwordConfirmation,
+            "password_confirmation" => $data->password_confirmation,
         ], function (User $user, string $password) {
             $user->password = Hash::make($password);
             $user->save();

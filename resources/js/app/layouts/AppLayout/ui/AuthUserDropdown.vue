@@ -42,18 +42,18 @@ const logOutHandler = () => {
     >
         <template #trigger>
             <user-avatar
-                :id="user.id"
+                clickable
             />
         </template>
         <template #content>
             <i-menu
                 :options="[
                     {
-                        text: t('user-profile'),
+                        text: t('layouts.app.header.auth-user-dropdown.user-profile'),
                         onClick: goToProfileHandler
                     },
                     {
-                        text: t('log-out'),
+                        text: t('layouts.app.header.auth-user-dropdown.log-out'),
                         onClick: logOutHandler
                     }
                 ]"
@@ -62,6 +62,6 @@ const logOutHandler = () => {
     </i-dropdown>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 </style>

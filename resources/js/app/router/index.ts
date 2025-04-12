@@ -1,6 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import { AppLayout, AuthLayout } from "../layouts"
-import { ForgotPasswordPage, HomePage, ProfilePage, ResetPasswordPage, SignInPage, SignUpPage } from "@/pages"
+import {
+    ArtistInfoPage,
+    ForgotPasswordPage,
+    HomePage,
+    ProfilePage,
+    ResetPasswordPage,
+    SignInPage,
+    SignUpPage,
+} from "@/pages"
 import { ROUTE_NAMES, ROUTE_NAMES_ONLY_FOR_GUESTS } from "@/shared/config/router"
 
 const routes: RouteRecordRaw[] = [
@@ -43,6 +51,16 @@ const routes: RouteRecordRaw[] = [
                 path: "/profile/:id",
                 component: ProfilePage,
                 name: ROUTE_NAMES.PROFILE_PAGE,
+            },
+            {
+                path: "/artists/",
+                children: [
+                    {
+                        path: ":id",
+                        component: ArtistInfoPage,
+                        name: ROUTE_NAMES.ARTIST_INFO_PAGE,
+                    },
+                ],
             },
         ],
     },

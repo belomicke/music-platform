@@ -5,6 +5,7 @@ export const ROUTE_NAMES = {
     RESET_PASSWORD: "reset-password",
     FORGOT_PASSWORD: "forgot-password",
     PROFILE_PAGE: "profile",
+    ARTIST_INFO_PAGE: "artist-info",
 }
 
 export const ROUTE_NAMES_ONLY_FOR_GUESTS = [

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Actions\Auth\ResetPasswordAction;
-use App\DTO\Auth\ResetPasswordDTO;
 use App\Exceptions\Auth\ExpiredPasswordResetTokenException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResetPasswordRequest;
@@ -22,17 +21,9 @@ final class ResetPasswordController extends Controller
         ResetPasswordAction  $resetPasswordAction
     ): JsonResponse
     {
-        $token = $request->input("token");
-        $email = $request->input("email");
-        $password = $request->input("password");
-        $passwordConfirmation = $request->input("password_confirmation");
+        $data = $request->toDTO();
 
-        $status = $resetPasswordAction->execute(data: new ResetPasswordDTO(
-            token: $token,
-            email: $email,
-            password: $password,
-            passwordConfirmation: $passwordConfirmation
-        ));
+        $status = $resetPasswordAction->execute(data: $data);
 
         if ($status !== Password::PasswordReset) {
             return $this->error();

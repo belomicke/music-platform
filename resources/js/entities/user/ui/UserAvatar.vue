@@ -1,46 +1,31 @@
 <script setup lang="ts">
-import { computed } from "vue"
-import { storeToRefs } from "pinia"
-import { useUserStore } from "@/entities/user"
+import { IAvatar, IIcon } from "@/shared/ui"
 
-const props = withDefaults(defineProps<{
-    id: string
+withDefaults(defineProps<{
     size?: number
+    clickable?: boolean
 }>(), {
     size: 36,
-})
-
-const userStore = useUserStore()
-const { getUserById } = storeToRefs(userStore)
-
-const user = computed(() => {
-    return getUserById.value(props.id)
+    clickable: false,
 })
 </script>
 
 <template>
-    <div
-        class="user-avatar"
-        :style="{
-            'width': `${size}px`,
-            'height': `${size}px`,
-        }"
+    <i-avatar
+        :size="size"
+        :clickable="clickable"
     >
-        {{ user.name[0].toUpperCase() }}
-    </div>
+        <i-icon
+            icon="user"
+            class="user-avatar__icon"
+            color="rgb(128, 128, 128)"
+        />
+    </i-avatar>
 </template>
 
 <style lang="scss">
-.user-avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #67c23a;
-    border-radius: 50%;
-    user-select: none;
-    cursor: pointer;
-
-    font-size: 16px;
-    font-weight: 800;
+.user-avatar__icon {
+    width: 60%;
+    height: 60%;
 }
 </style>
