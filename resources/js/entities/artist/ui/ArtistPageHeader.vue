@@ -2,10 +2,10 @@
 import { computed } from "vue"
 import { useI18n } from "vue-i18n"
 import { IAvatar, MediaPageHeader } from "@/shared/ui"
-import { IArtist } from "@/shared/api"
+import { type ApiArtist } from "@/shared/api"
 
 const props = defineProps<{
-    artist: IArtist
+    artist: ApiArtist
 }>()
 
 const { t, locale } = useI18n()
@@ -15,7 +15,7 @@ const followers = computed(() => {
 })
 
 const avatarUrl = computed(() => {
-    return props.artist.images[0].url
+    return props.artist.image_url
 })
 </script>
 

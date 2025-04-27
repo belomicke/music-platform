@@ -4,7 +4,10 @@ export const ROUTE_NAMES = {
     SIGN_UP: "sign-up",
     RESET_PASSWORD: "reset-password",
     FORGOT_PASSWORD: "forgot-password",
-    PROFILE_PAGE: "profile",
+
+    USER_INFO_PAGE: "user-info",
+    USER_FOLLOWING_PAGE: "user-following",
+
     ARTIST_INFO_PAGE: "artist-info",
 }
 

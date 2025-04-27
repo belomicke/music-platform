@@ -6,9 +6,7 @@ import { AlertProvider, DialogProvider } from "@/shared/ui"
 <template>
     <auth-provider>
         <dialog-provider>
-            <alert-provider
-                selector="#portals"
-            >
+            <alert-provider>
                 <router-view/>
             </alert-provider>
         </dialog-provider>

@@ -4,35 +4,44 @@ import { ROUTE_NAMES } from "@/shared/config/router"
 export const useNavigation = () => {
     const router = useRouter()
 
-    const goToHomePage = async () => {
-        await router.push({
+    const goToHomePage = () => {
+        router.push({
             name: ROUTE_NAMES.HOME,
         })
     }
 
-    const goToSignInPage = async () => {
-        await router.push({
+    const goToSignInPage = () => {
+        router.push({
             name: ROUTE_NAMES.SIGN_IN,
         })
     }
 
-    const goToSignUpPage = async () => {
-        await router.push({
+    const goToSignUpPage = () => {
+        router.push({
             name: ROUTE_NAMES.SIGN_UP,
         })
     }
 
-    const goToProfilePage = async (id: string) => {
-        await router.push({
-            name: ROUTE_NAMES.PROFILE_PAGE,
+    const goToUserInfoPage = (id: string) => {
+        router.push({
+            name: ROUTE_NAMES.USER_INFO_PAGE,
             params: {
                 id,
             },
         })
     }
 
-    const goToArtistInfoPage = async (id: string) => {
-        await router.push({
+    const goToUserFollowedArtistsPage = (id: string) => {
+        router.push({
+            name: ROUTE_NAMES.USER_FOLLOWING_PAGE,
+            params: {
+                id,
+            },
+        })
+    }
+
+    const goToArtistInfoPage = (id: string) => {
+        router.push({
             name: ROUTE_NAMES.ARTIST_INFO_PAGE,
             params: {
                 id,
@@ -44,7 +53,10 @@ export const useNavigation = () => {
         goToHomePage,
         goToSignInPage,
         goToSignUpPage,
-        goToProfilePage,
+
+        goToUserInfoPage,
+        goToUserFollowedArtistsPage,
+
         goToArtistInfoPage,
     }
 }

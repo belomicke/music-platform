@@ -1,9 +1,10 @@
 import { AxiosResponse } from "axios"
 import { ApiResponse } from "../global"
-import { IArtist } from "@/shared/api"
+import { type ApiArtist } from "@/shared/api"
 
 export type ArtistListResponseData = ApiResponse<{
-    artists: IArtist[]
+    artists: ApiArtist[]
+    count: number
 }>
 
 export type ArtistListResponse = AxiosResponse<ArtistListResponseData>

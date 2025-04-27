@@ -7,9 +7,8 @@ namespace App\Actions\User;
 use App\DTOs\User\CreateUserDTO;
 use App\Exceptions\Auth\InvalidVerificationCodeException;
 use App\Models\User;
-use App\Queries\EmailVerificationCode\DeleteEmailVerificationCodeQuery;
-use App\Queries\EmailVerificationCode\GetEmailVerificationCodeQuery;
-use App\Queries\User\CreateUserQuery;
+use App\Repositories\EmailVerificationCodeRepository;
+use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -17,9 +16,8 @@ use Throwable;
 final readonly class CreateUserAction
 {
     public function __construct(
-        private CreateUserQuery                  $createUserQuery,
-        private GetEmailVerificationCodeQuery    $getEmailVerificationCodeQuery,
-        private DeleteEmailVerificationCodeQuery $deleteEmailVerificationCodeQuery,
+        private UserRepository                  $users,
+        private EmailVerificationCodeRepository $emailVerificationCodes,
     ) {}
 
     /**
@@ -39,8 +37,8 @@ final readonly class CreateUserAction
         try {
             DB::beginTransaction();
 
-            $user = $this->createUserQuery->execute(data: $data);
-            $this->deleteEmailVerificationCodeQuery->execute(email: $data->email);
+            $user = $this->users->create(data: $data);
+            $this->emailVerificationCodes->delete(email: $data->email);
 
             DB::commit();
 
@@ -58,6 +56,6 @@ final readonly class CreateUserAction
 
     private function checkVerificationCode(string $email, string $code): bool
     {
-        return $this->getEmailVerificationCodeQuery->execute(email: $email) === $code;
+        return $this->emailVerificationCodes->getByEmail(email: $email) === $code;
     }
 }

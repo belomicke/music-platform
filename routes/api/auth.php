@@ -12,13 +12,13 @@ use App\Http\Controllers\User\GetCurrentUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "auth"], function () {
-    Route::group(["middleware" => "auth:sanctum"], function () {
+    Route::middleware("auth:sanctum")->group(function () {
         Route::get("me", GetCurrentUserController::class);
 
         Route::delete("log-out", LogOutController::class);
     });
 
-    Route::group(["middleware" => "guest"], function () {
+    Route::middleware("guest")->group(function () {
         Route::post("sign-in", SignInController::class);
         Route::post("sign-up", CreateUserController::class);
 

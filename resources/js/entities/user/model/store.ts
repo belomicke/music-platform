@@ -1,9 +1,9 @@
 import { computed, ref } from "vue"
 import { defineStore } from "pinia"
-import { IUser } from "@/shared/api"
+import { ApiUser } from "@/shared/api"
 
 export const useUserStore = defineStore("users", () => {
-    const users = ref<IUser[]>([])
+    const users = ref<ApiUser[]>([])
 
     const getUserById = computed(() => {
         return (id: string) => {
@@ -11,7 +11,7 @@ export const useUserStore = defineStore("users", () => {
         }
     })
 
-    const addUser = (user: IUser) => {
+    const addUser = (user: ApiUser) => {
         if (!users.value.find(item => item.id === user.id)) {
             users.value.push(user)
         }

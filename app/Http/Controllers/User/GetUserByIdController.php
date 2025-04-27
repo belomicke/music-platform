@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\User;
 
-use App\Actions\User\GetUserByIdAction;
 use App\Exceptions\User\UserNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
 final class GetUserByIdController extends Controller
@@ -16,11 +16,12 @@ final class GetUserByIdController extends Controller
      * @throws UserNotFoundException
      */
     public function __invoke(
-        string            $id,
-        GetUserByIdAction $getUserByIdAction
+        User $user
     ): JsonResponse
     {
-        $user = $getUserByIdAction->execute(id: $id);
+        if ($user->exists === false) {
+            throw new UserNotFoundException();
+        }
 
         return $this->success([
             "user" => UserResource::make($user),

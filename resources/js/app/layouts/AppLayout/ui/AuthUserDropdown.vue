@@ -5,21 +5,21 @@ import { useLogOut } from "@/features/auth/log-out"
 import { UserAvatar } from "@/entities/user"
 import { createDialog, IDropdown, IMenu } from "@/shared/ui"
 import { useNavigation } from "@/shared/hooks"
-import { ICurrentUser } from "@/shared/api"
+import { ApiCurrentUser } from "@/shared/api"
 
 const props = defineProps<{
-    user: ICurrentUser
+    user: ApiCurrentUser
 }>()
 
 const { t } = useI18n()
 
 const dropdownIsOpen = ref<boolean>(false)
-const { goToProfilePage } = useNavigation()
+const { goToUserInfoPage } = useNavigation()
 
 const { fetch: logout } = useLogOut()
 
 const goToProfileHandler = () => {
-    goToProfilePage(props.user.id)
+    goToUserInfoPage(props.user.id)
     dropdownIsOpen.value = false
 }
 

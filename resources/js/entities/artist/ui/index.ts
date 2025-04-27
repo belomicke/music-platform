@@ -1,7 +1,7 @@
-import ArtistList from "./ArtistList.vue"
 import ArtistPageHeader from "./ArtistPageHeader.vue"
 
+export * from "./ArtistList"
+
 export {
-    ArtistList,
     ArtistPageHeader,
 }

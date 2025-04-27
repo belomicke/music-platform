@@ -40,9 +40,12 @@ const withSubtitle = computed(() => {
     align-items: center;
     gap: 32px;
     padding: 40px;
-    background-color: rgb(20, 20, 20);
     position: relative;
     user-select: none;
+
+    @media (max-width: 640px) {
+        flex-direction: column;
+    }
 
     &__info {
         display: flex;

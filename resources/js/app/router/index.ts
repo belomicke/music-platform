@@ -4,10 +4,11 @@ import {
     ArtistInfoPage,
     ForgotPasswordPage,
     HomePage,
-    ProfilePage,
     ResetPasswordPage,
     SignInPage,
     SignUpPage,
+    UserFollowingPage,
+    UserInfoPage,
 } from "@/pages"
 import { ROUTE_NAMES, ROUTE_NAMES_ONLY_FOR_GUESTS } from "@/shared/config/router"
 
@@ -38,6 +39,7 @@ const routes: RouteRecordRaw[] = [
             },
         ],
     },
+
     {
         path: "/",
         component: AppLayout,
@@ -48,12 +50,22 @@ const routes: RouteRecordRaw[] = [
                 name: ROUTE_NAMES.HOME,
             },
             {
-                path: "/profile/:id",
-                component: ProfilePage,
-                name: ROUTE_NAMES.PROFILE_PAGE,
+                path: "/user/:id",
+                children: [
+                    {
+                        path: "",
+                        component: UserInfoPage,
+                        name: ROUTE_NAMES.USER_INFO_PAGE,
+                    },
+                    {
+                        path: "following",
+                        component: UserFollowingPage,
+                        name: ROUTE_NAMES.USER_FOLLOWING_PAGE,
+                    },
+                ],
             },
             {
-                path: "/artists/",
+                path: "/artist/",
                 children: [
                     {
                         path: ":id",
@@ -64,6 +76,7 @@ const routes: RouteRecordRaw[] = [
             },
         ],
     },
+
     {
         path: "/:pathMatch(.*)",
         redirect: "/",

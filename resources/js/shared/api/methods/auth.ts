@@ -1,5 +1,5 @@
 import type { CreateUserDTO, CurrentUserResponse, ResetPasswordDTO, SignInDTO, StatusResponse } from "@/shared/api"
-import { makeRequest } from "@/shared/api/utils/makeRequest"
+import { makeRequest } from "@/shared/api"
 
 export const authMethods = {
     me: async (): Promise<CurrentUserResponse> => {

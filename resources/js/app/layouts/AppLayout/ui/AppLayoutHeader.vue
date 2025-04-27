@@ -7,7 +7,7 @@ import { IIcon } from "@/shared/ui"
 
 const { goToHomePage } = useNavigation()
 
-const { isAuth, user } = useCurrentUser()
+const { data: user, isAuth } = useCurrentUser()
 </script>
 
 <template>

@@ -3,19 +3,13 @@ import { storeToRefs } from "pinia"
 import IAlert from "./IAlert.vue"
 import { useAlertStore } from "../store"
 
-withDefaults(defineProps<{
-    selector?: string
-}>(), {
-    selector: "body",
-})
-
 const alertStore = useAlertStore()
 const { getAlerts } = storeToRefs(alertStore)
 </script>
 
 <template>
     <slot></slot>
-    <Teleport :to="selector">
+    <Teleport to="#portals">
         <i-alert
             class="alert-provider__alert"
             :alert="alert"

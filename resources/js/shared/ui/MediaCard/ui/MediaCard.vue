@@ -1,6 +1,7 @@
 <script setup lang="ts">
+
 defineProps<{
-    image: string
+    image?: string
     title: string
     subtitle: string
 }>()
@@ -8,12 +9,7 @@ defineProps<{
 
 <template>
     <div class="media-card">
-        <div
-            class="media-card__image"
-            :style="{
-                'background-image': `url(${image})`
-            }"
-        />
+        <slot name="cover"></slot>
         <div class="media-card__info">
             <div class="media-card__title">
                 <p>{{ title }}</p>
@@ -31,6 +27,8 @@ defineProps<{
     flex-direction: column;
     gap: 8px;
 
+    height: 270px;
+
     border-radius: 6px;
     border: 1px solid var(--color-border);
     padding: 12px;
@@ -38,18 +36,34 @@ defineProps<{
     cursor: pointer;
     transition: background-color .15s;
 
-    &:hover {
-        background-color: var(--color-background-secondary);
+    @media (hover: hover) {
+        &:hover {
+            background-color: var(--color-background-secondary);
+        }
     }
 
-    &__image {
+    &__cover {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         max-width: 180px;
         width: 100%;
         aspect-ratio: 1 / 1;
+        background-color: var(--color-background-secondary);
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    &__image {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center;
-        border-radius: 50%;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    &__icon {
+        color: var(--color-text-secondary);
     }
 
     &__info {

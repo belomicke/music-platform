@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
 import { ApiResponse } from "../global"
-import { IUser } from "@/shared/api"
+import { ApiUser } from "@/shared/api"
 
 export type UserResponseData = ApiResponse<{
-    user: IUser
+    user: ApiUser
 }>
 
 export type UserResponse = AxiosResponse<UserResponseData>

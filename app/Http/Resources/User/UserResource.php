@@ -23,6 +23,7 @@ final class UserResource extends JsonResource
         return [
             "id" => $this->uuid,
             "name" => $this->name,
+            "followed_artists_count" => $this->followed_artists_count
         ];
     }
 }

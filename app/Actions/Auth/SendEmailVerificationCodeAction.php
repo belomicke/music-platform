@@ -6,27 +6,25 @@ namespace App\Actions\Auth;
 
 use App\Mail\SendEmailVerificationCode;
 use App\Models\EmailVerificationCode;
-use App\Queries\EmailVerificationCode\CreateEmailVerificationCodeQuery;
-use App\Queries\EmailVerificationCode\GetEmailVerificationCodeQuery;
+use App\Repositories\EmailVerificationCodeRepository;
 use Illuminate\Support\Facades\Mail;
 
 final readonly class SendEmailVerificationCodeAction
 {
     public function __construct(
-        private GetEmailVerificationCodeQuery    $getEmailVerificationCodeQuery,
-        private CreateEmailVerificationCodeQuery $createEmailVerificationCodeQuery,
+        private EmailVerificationCodeRepository $emailVerificationCodes,
     ) {}
 
     public function execute(string $email): void
     {
-        $code = $this->getEmailVerificationCodeQuery->execute(email: $email);
+        $code = $this->emailVerificationCodes->getByEmail(email: $email);
 
         if ($code) {
             $this->sendMail(code: $code);
             return;
         }
 
-        $code = $this->createEmailVerificationCodeQuery->execute(email: $email);
+        $code = $this->emailVerificationCodes->create(email: $email);
 
         $this->sendMail(code: $code);
     }

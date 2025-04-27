@@ -27,6 +27,7 @@ import AppLayoutHeader from "./ui/AppLayoutHeader.vue"
 
     &-content {
         width: 100%;
+        max-width: 100vw;
         overflow: auto;
     }
 }

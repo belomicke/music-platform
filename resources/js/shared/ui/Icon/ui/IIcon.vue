@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { AppLogoIcon, CloseIcon, LoaderIcon, UserIcon } from "./icons"
+import { AppLogoIcon, CloseIcon, LoaderIcon, MusicIcon, UserIcon } from "./icons"
 import { IconName } from "../types"
 
 interface IIconProps {
@@ -17,6 +17,7 @@ const iconComponent = computed(() => {
         "app-logo": AppLogoIcon,
         "close": CloseIcon,
         "loader": LoaderIcon,
+        "music": MusicIcon,
         "user": UserIcon,
     }[props.icon]
 })

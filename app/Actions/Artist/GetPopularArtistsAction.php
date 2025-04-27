@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Actions\Artist;
 
-use App\Models\Artist;
-use Illuminate\Database\Eloquent\Collection;
+use App\DTOs\Artist\ArtistMediaListDTO;
+use App\Repositories\ArtistRepository;
 
-final class GetPopularArtistsAction
+final readonly class GetPopularArtistsAction
 {
-    /* @return Collection<Artist> */
-    public function execute(): Collection
+    public function __construct(
+        private ArtistRepository $artists,
+    ) {}
+
+    public function execute(): ArtistMediaListDTO
     {
-        return Artist::query()
-            ->orderBy('popularity', 'desc')
-            ->take(10)
-            ->get();
+        return $this->artists->getPopular();
     }
 }

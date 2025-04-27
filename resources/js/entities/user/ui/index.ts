@@ -1,7 +1,7 @@
-import ProfilePageHeader from "./ProfilePageHeader.vue"
+import UserPageHeader from "./UserPageHeader.vue"
 import UserAvatar from "./UserAvatar.vue"
 
 export {
-    ProfilePageHeader,
+    UserPageHeader,
     UserAvatar,
 }

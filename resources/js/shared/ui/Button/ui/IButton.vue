@@ -7,6 +7,7 @@ interface IButtonProps {
     disabled?: boolean
     icon?: IconName
     loading?: boolean
+    round?: boolean
     text?: boolean
 }
 
@@ -22,6 +23,7 @@ withDefaults(defineProps<IButtonProps>(), {
             variant,
             text && 'text',
             block && 'block',
+            round && 'round',
             icon !== undefined && 'icon'
         ]"
         :disabled="disabled || loading"
@@ -69,6 +71,10 @@ withDefaults(defineProps<IButtonProps>(), {
 
     &.block {
         width: 100%;
+    }
+
+    &.round {
+        border-radius: 999px;
     }
 
     &.icon {

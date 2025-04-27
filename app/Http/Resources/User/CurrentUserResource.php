@@ -24,6 +24,7 @@ final class CurrentUserResource extends JsonResource
             "id" => $this->uuid,
             "name" => $this->name,
             "email" => $this->email,
+            "followed_artists_count" => $this->followed_artists_count
         ];
     }
 }

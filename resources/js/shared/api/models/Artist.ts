@@ -1,14 +1,12 @@
-interface ArtistImage {
-    url: string
-    width: number
-    height: number
-}
-
-export interface IArtist {
+export interface ApiCompactArtist {
     id: string
     name: string
+    image_url: string
+}
+
+export interface ApiArtist extends ApiCompactArtist {
     followers: {
         total: number
+        status: boolean
     }
-    images: ArtistImage[]
 }

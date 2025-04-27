@@ -19,7 +19,7 @@ export const useUserById = (id: ComputedRef<string>) => {
     })
 
     const { fetch, isLoading } = useFetch(async (id: string) => {
-        return await api.users.getUserById(id)
+        return await api.users.getById(id)
     }, {
         onSuccess: (res) => {
             const data = res.data

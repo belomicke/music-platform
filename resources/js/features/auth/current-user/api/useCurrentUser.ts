@@ -1,9 +1,9 @@
 import { onMounted } from "vue"
 import { storeToRefs } from "pinia"
 import { useAuthStore } from "@/entities/auth"
+import { useUserStore } from "@/entities/user"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
-import { useUserStore } from "@/entities/user"
 
 export const useCurrentUser = () => {
     const authStore = useAuthStore()
@@ -40,7 +40,7 @@ export const useCurrentUser = () => {
     })
 
     return {
-        user: getCurrentUser,
+        data: getCurrentUser,
         isAuth: getIsAuth,
         isLoading,
     }

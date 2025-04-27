@@ -79,16 +79,44 @@ export default {
         },
     },
 
+    "features": {
+        "artist": {
+            "following": {
+                "button-text": {
+                    "follow": "Подписаться",
+                    "unfollow": "Уже подписаны",
+                },
+            },
+            "user-followed-artists": {
+                "ui": {
+                    "artists-list-title": "Подписки",
+                },
+            },
+        },
+    },
+
     "page": {
+        "home": {
+            "section-title": {
+                "popular-artists": "Популярные исполнители",
+            },
+        },
         "artist-info": {
             "header": {
                 "type": "Исполнитель",
                 "subtitle": "{followers} подписчиков",
             },
         },
-        "profile": {
-            "header": {
-                "type": "Профиль",
+        "user": {
+            "info-page": {
+                "header": {
+                    "type": "Профиль",
+                },
+            },
+            "following-page": {
+                "header": {
+                    "title": "Подписки {name}",
+                },
             },
         },
     },

@@ -25,14 +25,16 @@ final class CreateUserController extends Controller
         SignInAction      $signInAction,
     ): JsonResponse
     {
-        $data = $request->toDTO();
+        $createUserDTO = $request->toDTO();
 
-        $user = $createUserAction->execute(data: $data);
+        $user = $createUserAction->execute(data: $createUserDTO);
 
-        $signInAction->execute(data: new SignInDTO(
-            email: $data->email,
-            password: $data->password,
-        ));
+        $signInDTO = new SignInDTO(
+            email: $createUserDTO->email,
+            password: $createUserDTO->password
+        );
+
+        $signInAction->execute(data: $signInDTO);
 
         return $this->success([
             "user" => CurrentUserResource::make($user)
