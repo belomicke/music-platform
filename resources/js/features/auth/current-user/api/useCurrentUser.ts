@@ -11,7 +11,7 @@ export const useCurrentUser = () => {
     const { getCurrentUser, getIsAuth } = storeToRefs(authStore)
 
     const { fetch, isLoading } = useFetch(async () => {
-        return api.auth.me()
+        return api.me.get()
     }, {
         onSuccess: (res) => {
             const data = res.data.data
@@ -19,7 +19,7 @@ export const useCurrentUser = () => {
             authStore.setIsAuth(data.user !== null)
             authStore.setCurrentUser(data.user)
 
-            userStore.addUser(data.user)
+            userStore.addItem(data.user)
 
             localStorage.setItem("user", JSON.stringify(data.user))
         },

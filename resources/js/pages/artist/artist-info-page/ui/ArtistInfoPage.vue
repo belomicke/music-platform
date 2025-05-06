@@ -5,7 +5,7 @@ import { useArtistById } from "@/features/artists/get-artist-by-id"
 import { ArtistFollowButton } from "@/features/artists/following"
 import { useCurrentUser } from "@/features/auth/current-user"
 import { ArtistPageHeader } from "@/entities/artist"
-import { MediaPageBody } from "@/shared/ui"
+import { MediaPageActionsContainer, MediaPageBody } from "@/shared/ui"
 
 const route = useRoute()
 
@@ -24,12 +24,12 @@ const { data: artist } = useArtistById(id)
             v-if="artist"
         />
         <media-page-body>
-            <div class="artist-info-page-actions">
+            <media-page-actions-container>
                 <artist-follow-button
                     :artist="artist"
                     v-if="artist && currentUser"
                 />
-            </div>
+            </media-page-actions-container>
         </media-page-body>
     </template>
 </template>

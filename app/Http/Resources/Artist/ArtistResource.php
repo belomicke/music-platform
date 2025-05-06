@@ -29,10 +29,8 @@ final class ArtistResource extends JsonResource
             "id" => $this->uuid,
             "name" => $this->name,
             "image_url" => "/storage/artists/images/avatar/640/$this->uuid.jpeg",
-            "followers" => [
-                "total" => $this->followers_count,
-                "status" => $isFollowed
-            ],
+            "is_followed" => $isFollowed,
+            "followers_count" => $this->followers_count,
         ];
     }
 }

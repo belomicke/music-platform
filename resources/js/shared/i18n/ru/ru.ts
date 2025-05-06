@@ -75,6 +75,7 @@ export default {
         "media-card": {
             "type": {
                 "artist": "Исполнитель",
+                "user": "Профиль",
             },
         },
     },
@@ -87,9 +88,22 @@ export default {
                     "unfollow": "Уже подписаны",
                 },
             },
+        },
+        "user": {
+            "following": {
+                "button-text": {
+                    "follow": "Подписаться",
+                    "unfollow": "Уже подписаны",
+                },
+            },
+            "user-followed-users": {
+                "ui": {
+                    "users-list-title": "Подписки на пользователей",
+                },
+            },
             "user-followed-artists": {
                 "ui": {
-                    "artists-list-title": "Подписки",
+                    "artists-list-title": "Подписки на исполнителей",
                 },
             },
         },
@@ -113,13 +127,25 @@ export default {
                     "type": "Профиль",
                 },
             },
-            "following-page": {
+            "followed-artists": {
                 "header": {
-                    "title": "Подписки {name}",
+                    "title": "Исполнители на которых подписан {name}",
+                },
+            },
+            "followed-users": {
+                "header": {
+                    "title": "Пользователи на которых подписан {name}",
+                },
+            },
+            "followers": {
+                "header": {
+                    "title": "Пользователи которые подписаны на {name}",
                 },
             },
         },
     },
+
+    "followers": "0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков",
 
     "layouts": {
         "app": {

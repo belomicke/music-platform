@@ -4,14 +4,16 @@ import debounce from "lodash.debounce"
 import { useFollowArtist, useUnfollowArtist } from "../api"
 import { useCurrentUser } from "@/features/auth/current-user"
 import { useMediaListStore } from "@/entities/media-list"
-import { useArtistStore } from "@/entities/artist"
+import { useArtistStore, useCompactArtistStore } from "@/entities/artist"
 
 export const useArtistFollowing = (id: ComputedRef<string>) => {
     const mediaListStore = useMediaListStore()
     const { getUserFollowedArtistsMediaListId } = storeToRefs(mediaListStore)
 
     const artistStore = useArtistStore()
-    const { getArtistById } = storeToRefs(artistStore)
+    const { getById: getArtistById } = storeToRefs(artistStore)
+
+    const compactArtistStore = useCompactArtistStore()
 
     const { fetch: follow } = useFollowArtist(id)
     const { fetch: unfollow } = useUnfollowArtist(id)
@@ -26,16 +28,18 @@ export const useArtistFollowing = (id: ComputedRef<string>) => {
         return getArtistById.value(id.value)
     })
 
-    const isFollow = ref<boolean | undefined>(artist.value.followers.status)
+    const isFollow = ref<boolean | undefined>(artist.value.is_followed)
 
     const mutate = async () => {
-        const status = artist.value.followers.status
+        const status = artist.value.is_followed
 
         if (status) {
-            artistStore.unfollowArtist(id.value)
+            artistStore.unfollow(id.value)
+            compactArtistStore.unfollow(id.value)
             mediaListStore.detachItem(mediaListId.value, id.value)
         } else {
-            artistStore.followArtist(id.value)
+            artistStore.follow(id.value)
+            compactArtistStore.follow(id.value)
             mediaListStore.attachItem(mediaListId.value, id.value)
         }
 
@@ -57,7 +61,7 @@ export const useArtistFollowing = (id: ComputedRef<string>) => {
     }, 500)
 
     return {
-        isFollow: artist.value.followers.status,
+        isFollow: computed(() => artist.value.is_followed),
         mutate,
     }
 }

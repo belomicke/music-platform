@@ -2,11 +2,9 @@ export interface ApiCompactArtist {
     id: string
     name: string
     image_url: string
+    is_followed: boolean
 }
 
 export interface ApiArtist extends ApiCompactArtist {
-    followers: {
-        total: number
-        status: boolean
-    }
+    followers_count: number
 }

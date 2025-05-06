@@ -8,13 +8,10 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\SendEmailVerificationCodeController;
 use App\Http\Controllers\Auth\SignInController;
 use App\Http\Controllers\User\CreateUserController;
-use App\Http\Controllers\User\GetCurrentUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["prefix" => "auth"], function () {
     Route::middleware("auth:sanctum")->group(function () {
-        Route::get("me", GetCurrentUserController::class);
-
         Route::delete("log-out", LogOutController::class);
     });
 
@@ -28,4 +25,3 @@ Route::group(["prefix" => "auth"], function () {
         Route::post("reset-password", ResetPasswordController::class);
     });
 });
-

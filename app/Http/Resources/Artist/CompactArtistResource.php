@@ -7,6 +7,7 @@ namespace App\Http\Resources\Artist;
 use App\Models\Artist;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin Artist
@@ -20,10 +21,13 @@ final class CompactArtistResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $isFollowed = Auth::check() && $this->is_followed !== null;
+
         return [
             "id" => $this->uuid,
             "name" => $this->name,
-            "image_url" => "/storage/artists/images/avatar/640/$this->uuid.jpeg"
+            "image_url" => "/storage/artists/images/avatar/640/$this->uuid.jpeg",
+            "is_followed" => $isFollowed
         ];
     }
 }

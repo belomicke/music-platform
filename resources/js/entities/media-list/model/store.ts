@@ -18,6 +18,14 @@ export const useMediaListStore = defineStore("media-lists", () => {
         return (id: string): string => `user:${id}:followed-artists`
     })
 
+    const getUserFollowedUsersMediaListId = computed(() => {
+        return (id: string): string => `user:${id}:followed-users`
+    })
+
+    const getUserFollowersMediaListId = computed(() => {
+        return (id: string): string => `user:${id}:followers`
+    })
+
     const getMediaListById = computed(() => {
         return (id: string): MediaList | undefined => {
             return mediaLists.value.find(item => item.id === id)
@@ -57,6 +65,8 @@ export const useMediaListStore = defineStore("media-lists", () => {
     return {
         getPopularArtistsMediaListId,
         getUserFollowedArtistsMediaListId,
+        getUserFollowedUsersMediaListId,
+        getUserFollowersMediaListId,
 
         getMediaListById,
 

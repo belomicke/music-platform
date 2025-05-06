@@ -11,10 +11,10 @@ const props = defineProps<{
 
 const { t } = useI18n()
 
-const { goToUserFollowedArtistsPage } = useNavigation()
+const { goToUserFollowersPage } = useNavigation()
 
-const followedArtistsCountClickHandler = () => {
-    goToUserFollowedArtistsPage(props.user.id)
+const followersCountClickHandler = () => {
+    goToUserFollowersPage(props.user.id)
 }
 </script>
 
@@ -28,10 +28,10 @@ const followedArtistsCountClickHandler = () => {
             <div class="user-page-header__subtitle">
                 <div
                     class="followed-artists-count"
-                    @click="followedArtistsCountClickHandler"
-                    v-if="user.followed_artists_count > 0"
+                    @click="followersCountClickHandler"
+                    v-if="user.followers_count > 0"
                 >
-                    {{ user.followed_artists_count }} подписок
+                    {{ t("followers", user.followers_count) }}
                 </div>
             </div>
         </template>

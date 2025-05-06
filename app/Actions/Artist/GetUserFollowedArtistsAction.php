@@ -6,17 +6,17 @@ namespace App\Actions\Artist;
 
 use App\DTOs\Artist\ArtistMediaListDTO;
 use App\Models\User;
-use App\Repositories\ArtistRepository;
+use App\Repositories\UserRepository;
 
 final readonly class GetUserFollowedArtistsAction
 {
     public function __construct(
-        private ArtistRepository $artists
+        private UserRepository $users
     ) {}
 
     public function execute(User $user, int $offset): ArtistMediaListDTO
     {
-        return $this->artists->getUserFollowed(
+        return $this->users->getFollowedArtists(
             user: $user,
             offset: $offset
         );

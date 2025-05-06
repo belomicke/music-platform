@@ -1,15 +1,18 @@
 import { createApp } from "vue"
 import { createI18n } from "vue-i18n"
 import { createPinia } from "pinia"
-import { App, router } from "@/app"
 import "./bootstrap"
-import ru from "@/shared/i18n/ru/ru"
+import { App, router } from "@/app"
+import { ruMessages, ruPluralRule } from "@/shared/i18n/ru"
 
 const i18n = createI18n({
     locale: "ru",
     fallbackLocale: "ru",
+    pluralizationRules: {
+        ru: ruPluralRule,
+    },
     messages: {
-        ru,
+        ru: ruMessages,
     },
 })
 

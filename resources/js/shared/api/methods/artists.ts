@@ -1,4 +1,4 @@
-import type { ArtistResponse, CompactArtistListResponse, StatusResponse } from "@/shared/api"
+import type { ArtistResponse, CompactArtistListResponse } from "@/shared/api"
 import { makeRequest } from "@/shared/api"
 
 export const artistsMethods = {
@@ -12,27 +12,6 @@ export const artistsMethods = {
         return makeRequest({
             method: "GET",
             url: `/api/artists`,
-        })
-    },
-    userFollowedArtists: async (id: string, offset: number): Promise<CompactArtistListResponse> => {
-        return makeRequest({
-            method: "GET",
-            url: `/api/users/${id}/artists`,
-            data: {
-                offset,
-            },
-        })
-    },
-    follow: async (id: string): Promise<StatusResponse> => {
-        return makeRequest({
-            method: "PUT",
-            url: `/api/artists/${id}/following`,
-        })
-    },
-    unfollow: async (id: string): Promise<StatusResponse> => {
-        return makeRequest({
-            method: "DELETE",
-            url: `/api/artists/${id}/following`,
         })
     },
 }

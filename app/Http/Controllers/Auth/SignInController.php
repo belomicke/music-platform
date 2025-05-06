@@ -9,15 +9,11 @@ use App\Exceptions\Auth\InvalidCredentialsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Resources\User\CurrentUserResource;
-use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 final class SignInController extends Controller
 {
-    public function __construct(
-        private readonly UserRepository $users
-    ) {}
-
     /**
      * @throws InvalidCredentialsException
      */
@@ -30,8 +26,8 @@ final class SignInController extends Controller
 
         $signInAction->execute(data: $data);
 
-        $user = $this->users->getByEmail(email: $data->email);
-
+        $user = Auth::user();
+        
         return $this->success([
             "user" => CurrentUserResource::make($user)
         ]);

@@ -1,7 +1,9 @@
-import UserPageHeader from "./UserPageHeader.vue"
 import UserAvatar from "./UserAvatar.vue"
+import UserMediaCard from "./UserMediaCard.vue"
+import UserPageHeader from "./UserPageHeader.vue"
 
 export {
-    UserPageHeader,
     UserAvatar,
+    UserMediaCard,
+    UserPageHeader,
 }

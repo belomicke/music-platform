@@ -7,6 +7,7 @@ namespace App\Http\Resources\User;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @mixin User
@@ -20,10 +21,17 @@ final class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $isFollowed = Auth::check() && $this->is_followed !== null;
+
         return [
             "id" => $this->uuid,
             "name" => $this->name,
-            "followed_artists_count" => $this->followed_artists_count
+            "image_url" => "/storage/artists/images/avatar/640/$this->uuid.jpeg",
+            "is_followed" => $isFollowed,
+
+            "followed_artists_count" => $this->followed_artists_count,
+            "followed_users_count" => $this->followed_users_count,
+            "followers_count" => $this->followers_count
         ];
     }
 }

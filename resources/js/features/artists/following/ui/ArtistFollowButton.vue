@@ -15,7 +15,7 @@ const { t } = useI18n()
 const { isFollow, mutate } = useArtistFollowing(id)
 
 const buttonText = computed(() => {
-    if (props.artist.followers.status) {
+    if (props.artist.is_followed) {
         return t("features.artist.following.button-text.unfollow")
     } else {
         return t("features.artist.following.button-text.follow")

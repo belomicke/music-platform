@@ -7,7 +7,9 @@ import {
     ResetPasswordPage,
     SignInPage,
     SignUpPage,
-    UserFollowingPage,
+    UserFollowedArtistsPage,
+    UserFollowedUsersPage,
+    UserFollowersPage,
     UserInfoPage,
 } from "@/pages"
 import { ROUTE_NAMES, ROUTE_NAMES_ONLY_FOR_GUESTS } from "@/shared/config/router"
@@ -58,9 +60,19 @@ const routes: RouteRecordRaw[] = [
                         name: ROUTE_NAMES.USER_INFO_PAGE,
                     },
                     {
-                        path: "following",
-                        component: UserFollowingPage,
-                        name: ROUTE_NAMES.USER_FOLLOWING_PAGE,
+                        path: "followed-artists",
+                        component: UserFollowedArtistsPage,
+                        name: ROUTE_NAMES.USER_FOLLOWED_ARTISTS_PAGE,
+                    },
+                    {
+                        path: "followed-users",
+                        component: UserFollowedUsersPage,
+                        name: ROUTE_NAMES.USER_FOLLOWED_USERS_PAGE,
+                    },
+                    {
+                        path: "followers",
+                        component: UserFollowersPage,
+                        name: ROUTE_NAMES.USER_FOLLOWERS_PAGE,
                     },
                 ],
             },

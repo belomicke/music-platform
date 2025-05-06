@@ -33,7 +33,25 @@ export const useNavigation = () => {
 
     const goToUserFollowedArtistsPage = (id: string) => {
         router.push({
-            name: ROUTE_NAMES.USER_FOLLOWING_PAGE,
+            name: ROUTE_NAMES.USER_FOLLOWED_ARTISTS_PAGE,
+            params: {
+                id,
+            },
+        })
+    }
+
+    const goToUserFollowedUsersPage = (id: string) => {
+        router.push({
+            name: ROUTE_NAMES.USER_FOLLOWED_USERS_PAGE,
+            params: {
+                id,
+            },
+        })
+    }
+
+    const goToUserFollowersPage = (id: string) => {
+        router.push({
+            name: ROUTE_NAMES.USER_FOLLOWERS_PAGE,
             params: {
                 id,
             },
@@ -56,6 +74,8 @@ export const useNavigation = () => {
 
         goToUserInfoPage,
         goToUserFollowedArtistsPage,
+        goToUserFollowedUsersPage,
+        goToUserFollowersPage,
 
         goToArtistInfoPage,
     }

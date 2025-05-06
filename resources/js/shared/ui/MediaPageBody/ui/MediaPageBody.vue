@@ -12,6 +12,7 @@
 .media-page-body {
     display: flex;
     flex-direction: column;
+    gap: 12px;
     padding: 24px;
 }
 </style>

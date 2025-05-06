@@ -2,12 +2,6 @@ import type { CreateUserDTO, CurrentUserResponse, ResetPasswordDTO, SignInDTO, S
 import { makeRequest } from "@/shared/api"
 
 export const authMethods = {
-    me: async (): Promise<CurrentUserResponse> => {
-        return await makeRequest({
-            method: "GET",
-            url: "/api/auth/me",
-        })
-    },
     createUser: async (data: CreateUserDTO): Promise<CurrentUserResponse> => {
         return await makeRequest({
             method: "POST",

@@ -11,7 +11,7 @@ const props = defineProps<{
 const { t, locale } = useI18n()
 
 const followers = computed(() => {
-    return Intl.NumberFormat(locale.value).format(props.artist.followers.total)
+    return Intl.NumberFormat(locale.value).format(props.artist.followers_count)
 })
 
 const avatarUrl = computed(() => {

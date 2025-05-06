@@ -6,7 +6,7 @@ import { api } from "@/shared/api"
 
 export const useArtistById = (id: ComputedRef<string>) => {
     const artistStore = useArtistStore()
-    const { getArtistById } = storeToRefs(artistStore)
+    const { getById: getArtistById } = storeToRefs(artistStore)
 
     const artist = computed(() => {
         return getArtistById.value(id.value)
@@ -16,7 +16,7 @@ export const useArtistById = (id: ComputedRef<string>) => {
         return await api.artists.getById(id.value)
     }, {
         onSuccess: (res) => {
-            artistStore.addArtist(res.data.data.artist)
+            artistStore.addItem(res.data.data.artist)
         },
     })
 

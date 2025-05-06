@@ -5,13 +5,13 @@ import { ApiCompactArtist } from "@/shared/api"
 export const useCompactArtistStore = defineStore("compact-artists", () => {
     const artists = ref<ApiCompactArtist[]>([])
 
-    const getCompactArtistById = computed(() => {
+    const getById = computed(() => {
         return (id: string): ApiCompactArtist | undefined => {
             return artists.value.find(artist => artist.id === id)
         }
     })
 
-    const getCompactArtistsByIds = computed(() => {
+    const getManyById = computed(() => {
         return (ids: string[]): ApiCompactArtist[] | undefined => {
             const result: ApiCompactArtist[] = []
 
@@ -23,21 +23,44 @@ export const useCompactArtistStore = defineStore("compact-artists", () => {
         }
     })
 
-    const addCompactArtist = (artist: ApiCompactArtist) => {
-        if (getCompactArtistById.value(artist.id) === undefined) {
+    const addItem = (artist: ApiCompactArtist) => {
+        if (getById.value(artist.id) === undefined) {
             artists.value.push(artist)
         }
     }
 
-    const addCompactArtists = (value: ApiCompactArtist[]) => {
-        value.forEach(item => addCompactArtist(item))
+    const addItems = (value: ApiCompactArtist[]) => {
+        value.forEach(item => addItem(item))
+    }
+
+    const follow = (id: string) => {
+        const artist = artists.value.find(artist => artist.id === id)
+
+        if (!artist) return
+
+        if (artist.is_followed === false) {
+            artist.is_followed = true
+        }
+    }
+
+    const unfollow = (id: string) => {
+        const artist = artists.value.find(artist => artist.id === id)
+
+        if (!artist) return
+
+        if (artist.is_followed === true) {
+            artist.is_followed = false
+        }
     }
 
     return {
-        getCompactArtistById,
-        getCompactArtistsByIds,
+        getById,
+        getManyById,
 
-        addCompactArtist,
-        addCompactArtists,
+        addItem,
+        addItems,
+
+        follow,
+        unfollow,
     }
 })

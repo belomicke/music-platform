@@ -20,6 +20,12 @@ export const makeRequest = async (config: MakeRequestConfig) => {
             case "POST":
                 axiosConfig.data = config.data
                 break
+            case "PUT":
+                axiosConfig.data = config.data
+                break
+            case "DELETE":
+                axiosConfig.data = config.data
+                break
         }
     }
 

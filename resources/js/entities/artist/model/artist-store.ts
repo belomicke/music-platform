@@ -5,7 +5,7 @@ import { type ApiArtist } from "@/shared/api"
 export const useArtistStore = defineStore("artists", () => {
     const artists = ref<ApiArtist[]>([])
 
-    const getArtistById = computed(() => {
+    const getById = computed(() => {
         return (id: string): ApiArtist | undefined => {
             return artists.value.find(artist => artist.id === id)
         }
@@ -23,46 +23,46 @@ export const useArtistStore = defineStore("artists", () => {
         }
     })
 
-    const addArtist = (artist: ApiArtist) => {
-        if (getArtistById.value(artist.id) === undefined) {
+    const addItem = (artist: ApiArtist) => {
+        if (getById.value(artist.id) === undefined) {
             artists.value.push(artist)
         }
     }
 
-    const addArtists = (value: ApiArtist[]) => {
-        value.forEach(item => addArtist(item))
+    const addItems = (value: ApiArtist[]) => {
+        value.forEach(item => addItem(item))
     }
 
-    const followArtist = (id: string) => {
+    const follow = (id: string) => {
         const artist = artists.value.find(artist => artist.id === id)
 
         if (!artist) return
 
-        if (artist.followers.status === false) {
-            artist.followers.status = true
-            artist.followers.total++
+        if (artist.is_followed === false) {
+            artist.is_followed = true
+            artist.followers_count++
         }
     }
 
-    const unfollowArtist = (id: string) => {
+    const unfollow = (id: string) => {
         const artist = artists.value.find(artist => artist.id === id)
 
         if (!artist) return
 
-        if (artist.followers.status === true) {
-            artist.followers.status = false
-            artist.followers.total--
+        if (artist.is_followed === true) {
+            artist.is_followed = false
+            artist.followers_count--
         }
     }
 
     return {
-        getArtistById,
+        getById,
         getArtistsByIds,
 
-        addArtist,
-        addArtists,
+        addItem,
+        addItems,
 
-        followArtist,
-        unfollowArtist,
+        follow,
+        unfollow,
     }
 })
