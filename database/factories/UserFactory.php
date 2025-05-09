@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Helpers\FakerHelpers;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -23,12 +26,19 @@ class UserFactory extends Factory
      * Define the model's default state.
      *
      * @return array<string, mixed>
+     * @throws ConnectionException
      */
     public function definition(): array
     {
+        $uuid = Str::uuid();
+        $name = fake()->name();
+        $image = FakerHelpers::generateImage(letter: substr($name, 0, 1));
+
+        Storage::disk("public")->put("users/avatars/$uuid.png", $image);
+
         return [
-            'uuid' => Str::uuid(),
-            'name' => fake()->name(),
+            'uuid' => $uuid,
+            'name' => $name,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

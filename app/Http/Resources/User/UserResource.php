@@ -26,7 +26,7 @@ final class UserResource extends JsonResource
         return [
             "id" => $this->uuid,
             "name" => $this->name,
-            "image_url" => "/storage/artists/images/avatar/640/$this->uuid.jpeg",
+            "image_url" => $this->image_url,
             "is_followed" => $isFollowed,
 
             "followed_artists_count" => $this->followed_artists_count,

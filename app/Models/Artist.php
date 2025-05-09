@@ -6,15 +6,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int id
  * @property string uuid
  * @property string name
  * @property int followers_count
+ * @property string image_url
  *
  * @property HasOne is_followed
  */
@@ -31,9 +32,13 @@ class Artist extends Model
         "pivot"
     ];
 
-    public function followers(): BelongsToMany
+    protected $appends = [
+        "image_url"
+    ];
+
+    public function getImageUrlAttribute()
     {
-        return $this->belongsToMany(User::class);
+        return Storage::disk("public")->url("artists/avatars/$this->uuid.png");
     }
 
     public function is_followed(): HasOne

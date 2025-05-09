@@ -31,6 +31,7 @@ const { goToArtistInfoPage } = useNavigation()
     >
         <template #cover>
             <artist-avatar
+                :id="id"
                 :size="164"
             />
         </template>

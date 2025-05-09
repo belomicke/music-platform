@@ -89,10 +89,10 @@ const routes: RouteRecordRaw[] = [
         ],
     },
 
-    {
-        path: "/:pathMatch(.*)",
-        redirect: "/",
-    },
+    // {
+    //     path: "/:pathMatch(.*)",
+    //     redirect: "/",
+    // },
 ]
 
 export const router = createRouter({

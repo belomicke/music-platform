@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useI18n } from "vue-i18n"
-import { IAvatar, MediaPageHeader } from "@/shared/ui"
+import ArtistAvatar from "./ArtistAvatar.vue"
 import { type ApiArtist } from "@/shared/api"
+import { MediaPageHeader } from "@/shared/ui"
 
 const props = defineProps<{
     artist: ApiArtist
@@ -13,10 +14,6 @@ const { t, locale } = useI18n()
 const followers = computed(() => {
     return Intl.NumberFormat(locale.value).format(props.artist.followers_count)
 })
-
-const avatarUrl = computed(() => {
-    return props.artist.image_url
-})
 </script>
 
 <template>
@@ -26,9 +23,10 @@ const avatarUrl = computed(() => {
         :subtitle="t('page.artist-info.header.subtitle', { followers })"
     >
         <template #avatar>
-            <i-avatar
-                :url="avatarUrl"
+            <artist-avatar
+                :id="artist.id"
                 :size="232"
+                can-be-open-in-modal
             />
         </template>
     </media-page-header>

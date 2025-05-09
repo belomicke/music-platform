@@ -37,7 +37,9 @@ const followersCountClickHandler = () => {
         </template>
         <template #avatar>
             <user-avatar
+                :id="user.id"
                 :size="232"
+                can-be-open-in-modal
             />
         </template>
     </media-page-header>
