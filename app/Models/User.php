@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -21,6 +22,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string username
  * @property string email
  * @property string password
+ * @property string image_url
  * @property int followed_artists_count
  * @property int followed_users_count
  * @property int followers_count
@@ -49,6 +51,15 @@ final class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected $appends = [
+        "image_url"
+    ];
+
+    public function getImageUrlAttribute()
+    {
+        return Storage::disk("public")->url("users/avatars/$this->uuid.png");
     }
 
     public function is_followed(): HasOne

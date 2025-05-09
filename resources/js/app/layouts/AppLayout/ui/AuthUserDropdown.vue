@@ -42,6 +42,7 @@ const logOutHandler = () => {
     >
         <template #trigger>
             <user-avatar
+                :id="user.id"
                 clickable
             />
         </template>

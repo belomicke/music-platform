@@ -31,6 +31,7 @@ const { goToUserInfoPage } = useNavigation()
     >
         <template #cover>
             <user-avatar
+                :id="id"
                 :size="164"
             />
         </template>
