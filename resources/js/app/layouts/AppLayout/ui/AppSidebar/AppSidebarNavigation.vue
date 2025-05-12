@@ -114,17 +114,17 @@ const clickOnNavigationOptionHandler = (id: ROUTE_NAME) => {
         height: 48px;
         user-select: none;
 
-        color: rgb(160, 160, 160);
+        color: var(--color-text-secondary);
 
         transition: color .15s;
 
         &:hover {
             cursor: pointer;
-            color: rgb(220, 220, 220);
+            color: var(--color-text-secondary-hover);
         }
 
         &.active {
-            color: rgb(255, 255, 255);
+            color: var(--color-text-primary);
         }
 
         @media (max-width: 1024px) {

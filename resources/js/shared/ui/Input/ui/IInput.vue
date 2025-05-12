@@ -58,7 +58,7 @@ const model = defineModel<string>()
 
         height: 40px;
 
-        color: var(--color-text);
+        color: var(--color-text-primary);
         background-color: transparent;
 
         border: 1px solid var(--color-border);
@@ -76,7 +76,7 @@ const model = defineModel<string>()
         }
 
         &:focus {
-            border-color: var(--color-text);
+            border-color: var(--color-text-primary);
         }
     }
 

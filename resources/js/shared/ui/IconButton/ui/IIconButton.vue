@@ -1,34 +1,21 @@
 <script setup lang="ts">
 import { type IconName, IIcon } from "@/shared/ui"
-import { computed } from "vue"
 
-type IconButtonSizes = "large" | "default"
-type IconButtonVariants = "ghost" | "outline" | "grey"
+export type IconButtonVariants = "primary" | "ghost" | "outline"
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     icon: IconName,
     filled?: boolean
-    size?: IconButtonSizes
+    size?: number
     variant?: IconButtonVariants
     disabled?: boolean
     iconSize?: number
 }>(), {
-    size: "default",
+    size: 40,
     variant: "ghost",
     filled: false,
     disabled: false,
     iconSize: 20,
-})
-
-const iconSize = computed(() => {
-    if (props.iconSize !== 20) return props.iconSize
-
-    switch (props.size) {
-        case "large":
-            return 20
-        case "default":
-            return 20
-    }
 })
 </script>
 
@@ -36,10 +23,13 @@ const iconSize = computed(() => {
     <button
         class="i-icon-button"
         :class="[
-            size,
             variant,
             disabled
         ]"
+        :style="{
+            'width': `${size}px`,
+            'height': `${size}px`,
+        }"
         :disabled="disabled"
     >
         <i-icon
@@ -57,6 +47,7 @@ const iconSize = computed(() => {
     align-items: center;
 
     border-radius: 50%;
+    padding: 0;
 
     cursor: pointer;
 
@@ -70,42 +61,32 @@ const iconSize = computed(() => {
         opacity: .5;
     }
 
-    &.ghost {
-        color: var(--color-text);
-        background-color: rgba(255, 255, 255, 0.08);
+    &.primary {
+        background-color: rgba(26, 26, 26, 0.9);
 
         &:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(51, 51, 51, .9);
+        }
+    }
+
+    &.ghost {
+        color: var(--color-text-primary);
+        background-color: rgba(var(--color-text-primary-rgb), 0.08);
+
+        &:hover:not(:disabled) {
+            background-color: rgba(var(--color-text-primary-rgb), 0.12);
         }
     }
 
     &.outline {
-        color: var(--color-text);
+        color: var(--color-text-primary);
         background-color: transparent;
-        border: 2px solid #4d4d4d;
+        border: 2px solid var(--color-border-lighter);
         transition: border-color .15s;
 
         &:hover:not(:disabled) {
-            border-color: grey;
+            border-color: var(--color-border-lighter-hover);
         }
-    }
-
-    &.grey {
-        background-color: rgb(60, 60, 60);
-
-        &:hover {
-            background-color: rgba(80, 80, 80);
-        }
-    }
-
-    &.large {
-        width: 40px;
-        height: 40px;
-    }
-
-    &.default {
-        width: 32px;
-        height: 32px;
     }
 }
 </style>

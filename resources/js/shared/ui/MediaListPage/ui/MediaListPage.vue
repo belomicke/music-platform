@@ -22,16 +22,12 @@ defineProps<{
     &-header {
         display: flex;
         align-items: center;
-
-        position: sticky;
-        top: 0;
-        background-color: rgba(20, 20, 20, .8);
-        backdrop-filter: blur(12px);
-        z-index: 1;
         padding: 12px 24px;
 
         &__title {
             user-select: none;
+            margin: 0;
+            line-height: 1;
         }
     }
 

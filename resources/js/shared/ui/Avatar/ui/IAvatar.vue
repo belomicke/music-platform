@@ -68,7 +68,7 @@ const clickHandler = (e: MouseEvent) => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(20, 20, 20);
+    background-color: var(--color-background);
     border-radius: 50%;
     user-select: none;
 

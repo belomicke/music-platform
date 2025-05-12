@@ -41,27 +41,27 @@ onMounted(() => {
     z-index: var(--z-index-alert);
 
     &.success {
-        color: #67c23a;
-        background-color: rgb(28.3, 37.4, 23.8);
-        border: 1px solid rgb(61.5, 107, 39);
+        color: var(--color-success);
+        background-color: var(--color-success-light-9);;
+        border: 1px solid var(--color-success-light-5);
     }
 
     &.info {
-        color: #909399;
-        background-color: rgb(32.4, 32.7, 33.3);
-        border: 1px solid rgb(82, 83.5, 86.5);
+        color: var(--color-info);
+        background-color: var(--color-info-light-9);
+        border: 1px solid var(--color-info-light-5);
     }
 
     &.warning {
-        color: #e6a23c;
-        background-color: rgb(41, 34.2, 24);
-        border: 1px solid rgb(125, 91, 40);
+        color: var(--color-warning);
+        background-color: var(--color-warning-light-9);
+        border: 1px solid var(--color-warning-light-5);
     }
 
     &.error {
-        color: #f56c6c;
-        background-color: rgb(42.5, 28.8, 28.8);
-        border: 1px solid rgb(132.5, 64, 64);
+        color: var(--color-danger);
+        background-color: var(--color-danger-light-9);
+        border: 1px solid var(--color-danger-light-5);
     }
 
     &.is-center {

@@ -1,26 +1,79 @@
 :root {
-    --breakpoint-xs: 0;
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
+    --color-body-background: rgb(13, 13, 13);
+    --color-body-background-rgb: 13, 13, 13;
 
-    --color-background: rgb(10, 10, 10);
-    --color-background-rgb: 10, 10, 10;
-    --color-background-secondary: rgb(20, 20, 20);
-    --color-background-secondary-rgb: 20, 20, 20;
+    --color-background: rgb(18, 18, 18);
+    --color-background-rgb: 18, 18, 18;
+
+    --color-background-transparent-8: rgba(var(--color-background-rgb), .8);
+
+    --color-background-hover: rgb(36, 36, 36);
+    --color-background-hover-rgb: 36, 36, 36;
+
+    --color-background-secondary: rgb(25, 25, 25);
+    --color-background-secondary-rgb: 25, 25, 25;
 
     --color-border: rgb(40, 40, 40);
     --color-border-rgb: 40, 40, 40;
+
+    --color-border-lighter: rgb(80, 80, 80);
+    --color-border-lighter-rgb: 80, 80, 80;
+
+    --color-border-lighter-hover: rgb(128, 128, 128);
+    --color-border-lighter-hover-rgb: 128, 128, 128;
+
     --color-border-hover: rgb(80, 80, 80);
     --color-border-hover-rgb: 80, 80, 80;
 
-    --color-text: rgb(250, 250, 250);
-    --color-text-rgb: 250, 250, 250;
+    --color-text-primary: rgb(250, 250, 250);
+    --color-text-primary-rgb: 250, 250, 250;
+
     --color-text-secondary: rgb(160, 160, 160);
-    --color-text-secondary-rgb: 160, 160, 160;
+    --color-text-secondary-hover: rgb(200, 200, 200);
 
     --z-index-dropdown: 999;
     --z-index-dialog: 1000;
     --z-index-alert: 1001;
+
+    --color-success: #67c23a;
+    --color-success-light-3: rgb(78.1, 141.8, 46.6);
+    --color-success-light-5: rgb(61.5, 107, 39);
+    --color-success-light-7: rgb(44.9, 72.2, 31.4);
+    --color-success-light-8: rgb(36.6, 54.8, 27.6);
+    --color-success-light-9: rgb(28.3, 37.4, 23.8);
+    --color-success-dark-2: rgb(133.4, 206.2, 97.4);
+
+    --color-warning: #e6a23c;
+    --color-warning-light-3: rgb(167, 119.4, 48);
+    --color-warning-light-5: #7d5b28;
+    --color-warning-light-7: rgb(83, 62.6, 32);
+    --color-warning-light-8: rgb(62, 48.4, 28);
+    --color-warning-light-9: rgb(41, 34.2, 24);
+    --color-warning-dark-2: rgb(235, 180.6, 99);
+
+    --color-danger: #f56c6c;
+    --color-danger-light-3: rgb(177.5, 81.6, 81.6);
+    --color-danger-light-5: rgb(132.5, 64, 64);
+    --color-danger-light-7: rgb(87.5, 46.4, 46.4);
+    --color-danger-light-8: rgb(65, 37.6, 37.6);
+    --color-danger-light-9: rgb(42.5, 28.8, 28.8);
+    --color-danger-dark-2: rgb(247, 137.4, 137.4);
+
+    --color-error: #f56c6c;
+    --color-error-light-3: rgb(177.5, 81.6, 81.6);
+    --color-error-light-5: rgb(132.5, 64, 64);
+    --color-error-light-7: rgb(87.5, 46.4, 46.4);
+    --color-error-light-8: rgb(65, 37.6, 37.6);
+    --color-error-light-9: rgb(42.5, 28.8, 28.8);
+    --color-error-dark-2: rgb(247, 137.4, 137.4);
+
+    --color-info: #909399;
+    --color-info-light-3: rgb(106.8, 108.9, 113.1);
+    --color-info-light-5: rgb(82, 83.5, 86.5);
+    --color-info-light-7: rgb(57.2, 58.1, 59.9);
+    --color-info-light-8: rgb(44.8, 45.4, 46.6);
+    --color-info-light-9: rgb(32.4, 32.7, 33.3);
+
+
+    --overlay-background-color: rgba(0, 0, 0, .7);
 }

@@ -87,7 +87,7 @@ const openEditAccountInfoModal = () => {
     align-items: center;
     gap: 12px;
 
-    background-color: rgb(20, 20, 20);
+    background-color: var(--color-background);
     padding: 24px 12px;
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -119,7 +119,7 @@ const openEditAccountInfoModal = () => {
         transition: background-color .15s;
 
         &:hover {
-            background-color: rgb(30, 30, 30);
+            background-color: var(--color-background-hover);
         }
     }
 }

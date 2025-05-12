@@ -48,7 +48,9 @@ const text = computed(() => {
         <template #actions>
             <div class="artist-page-header-actions">
                 <artist-follow-button
-                    :artist="artist"
+                    :id="artist.id"
+                    :size="40"
+                    :icon-size="20"
                     v-if="artist"
                 />
             </div>

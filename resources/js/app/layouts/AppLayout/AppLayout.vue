@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppSidebar from "./ui/AppSidebar/AppSidebar.vue"
-import AppLayoutStickyHeader from "./ui/AppLayoutStickyHeader.vue"
+import { StickyHeaderWithNavigation } from "@/shared/ui"
 import { useResponsive } from "@/shared/hooks"
 
 const { deviceType } = useResponsive()
@@ -14,7 +14,9 @@ const { deviceType } = useResponsive()
 
         <div class="app-layout-content__wrapper">
             <div class="app-layout-content">
-                <app-layout-sticky-header/>
+                <sticky-header-with-navigation
+                    scroll-element-query-selector=".app-layout-content"
+                />
                 <router-view></router-view>
             </div>
         </div>
@@ -51,7 +53,7 @@ const { deviceType } = useResponsive()
             width: 100%;
             border-radius: 12px;
             border: 1px solid var(--color-border);
-            background-color: rgb(20, 20, 20);
+            background-color: var(--color-background);
             overflow: hidden;
 
             @media (max-width: 768px) {

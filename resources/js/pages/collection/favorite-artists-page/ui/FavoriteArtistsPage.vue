@@ -2,11 +2,20 @@
 import { useI18n } from "vue-i18n"
 import { FavoriteArtistsList } from "@/features/collection/favorite-artists"
 import { useCurrentUser } from "@/features/auth/current-user"
-import { MediaListPage } from "@/shared/ui"
+import { MediaListPage, setStickyHeaderTitle } from "@/shared/ui"
+import { onMounted, onUnmounted } from "vue"
 
 const { t } = useI18n()
 
 const { data: user } = useCurrentUser()
+
+onMounted(() => {
+    setStickyHeaderTitle(t("page.user.followed-artists.header.title"))
+})
+
+onUnmounted(() => {
+    setStickyHeaderTitle("")
+})
 </script>
 
 <template>

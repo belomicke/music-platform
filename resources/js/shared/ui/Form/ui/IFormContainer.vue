@@ -69,7 +69,7 @@ const logoIsClickable = computed(() => {
             font-size: 22px;
             line-height: 32px;
             font-weight: 500;
-            color: var(--color-text);
+            color: var(--color-text-primary);
             margin: 0;
             text-align: center;
         }

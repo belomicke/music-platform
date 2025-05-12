@@ -57,10 +57,6 @@ const closeHandler = () => {
 
 <style lang="scss">
 .i-dialog {
-    --dialog-modal-background-color: rgba(0, 0, 0, 0.5);
-    --dialog-background-color: rgb(33, 33, 33);
-    --dialog-box-shadow-color: rgb(16, 16, 16, 0.6);
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,15 +74,14 @@ const closeHandler = () => {
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: var(--dialog-modal-background-color);
+        background-color: var(--overlay-background-color);
     }
 
     &__container {
         display: inline-flex;
         flex-direction: column;
         min-width: 384px;
-        background-color: var(--dialog-background-color);
-        box-shadow: 0 .25rem .5rem .125rem var(--dialog-box-shadow-color);
+        background-color: var(--color-background-secondary);
         z-index: var(--z-index-dialog);
         border-radius: 1rem;
         user-select: none;

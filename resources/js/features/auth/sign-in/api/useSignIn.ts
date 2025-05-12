@@ -10,6 +10,7 @@ export const useSignIn = (options: UseFetchOptions<CurrentUserResponse>) => {
         onSuccess: (res) => {
             localStorage.setItem("user", JSON.stringify(res.data.data.user))
             window.location.reload()
+            window.history.replaceState({}, "")
         },
         ...options,
     })

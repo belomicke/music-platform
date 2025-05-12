@@ -103,19 +103,19 @@ withDefaults(defineProps<IButtonProps>(), {
 
     &.primary {
         color: var(--color-background);
-        background-color: var(--color-text);
+        background-color: var(--color-text-primary);
 
         &:hover:not(:disabled) {
-            background-color: rgba(var(--color-text-rgb), .7);
+            background-color: rgba(var(--color-text-primary-rgb), .7);
         }
 
         &.text {
-            color: var(--color-text);
+            color: var(--color-text-primary);
         }
     }
 
     &.secondary {
-        color: var(--color-text);
+        color: var(--color-text-primary);
         background-color: var(--color-border);
 
         &:hover:not(:disabled) {
@@ -124,7 +124,7 @@ withDefaults(defineProps<IButtonProps>(), {
     }
 
     &.outline {
-        color: var(--color-text);
+        color: var(--color-text-primary);
         background-color: transparent;
         border: 1px solid var(--color-border);
 
@@ -134,7 +134,7 @@ withDefaults(defineProps<IButtonProps>(), {
     }
 
     &.ghost {
-        color: var(--color-text);
+        color: var(--color-text-primary);
         background-color: rgba(255, 255, 255, 0.08);
 
         &:hover:not(:disabled) {
@@ -143,7 +143,7 @@ withDefaults(defineProps<IButtonProps>(), {
     }
 
     &.danger {
-        color: var(--color-text);
+        color: var(--color-text-primary);
         background-color: #f56c6c;
 
         &:hover:not(:disabled) {
@@ -159,12 +159,12 @@ withDefaults(defineProps<IButtonProps>(), {
         background-color: transparent;
 
         &:hover:not(:disabled) {
-            background-color: rgba(var(--color-text-rgb), .2);
+            background-color: rgba(var(--color-text-primary-rgb), .2);
         }
     }
 
     &.link {
-        color: var(--color-text);
+        color: var(--color-text-primary);
         background-color: transparent;
         padding: 0;
         font-weight: 400;

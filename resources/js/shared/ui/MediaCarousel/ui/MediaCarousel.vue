@@ -140,12 +140,14 @@ const clickOnTitleHandler = () => {
                 <i-icon-button
                     variant="outline"
                     icon="chevron-left"
+                    :size="32"
                     @click="scrollToLeft"
                     :disabled="!canScrollToLeft"
                 />
                 <i-icon-button
                     variant="outline"
                     icon="chevron-right"
+                    :size="32"
                     @click="scrollToRight"
                     :disabled="!canScrollToRight"
                 />

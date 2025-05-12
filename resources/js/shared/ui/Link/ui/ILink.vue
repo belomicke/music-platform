@@ -17,7 +17,7 @@ defineProps<ILinkProps>()
 
 <style lang="scss">
 .i-link {
-    color: var(--color-text);
+    color: var(--color-text-primary);
 
     text-underline-offset: 4px;
     text-decoration-color: var(--color-text-secondary);

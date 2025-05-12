@@ -101,7 +101,7 @@ const closeDropdown = () => {
         transition: background-color .15s;
 
         &:hover, &.active {
-            background-color: rgb(20, 20, 20);
+            background-color: var(--color-background);
         }
 
         @media (max-width: 1024px) {

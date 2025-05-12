@@ -39,10 +39,10 @@ export const useMediaListStore = defineStore("media-list", () => {
     const attachItem = (id: string, value: string) => {
         const mediaList = mediaLists.value.find(item => item.id === id)
 
-        if (!mediaList) return
-
-        mediaList.items.unshift(value)
-        mediaList.count++
+        if (mediaList && mediaList.items.find(item => item === value) === undefined) {
+            mediaList.items.unshift(value)
+            mediaList.count++
+        }
     }
 
     const detachItem = (id: string, value: string) => {

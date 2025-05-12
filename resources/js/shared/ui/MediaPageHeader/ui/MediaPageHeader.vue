@@ -44,7 +44,7 @@ defineProps<{
     }
 
     &__type {
-        color: rgba(255, 255, 255, .5);
+        color: var(--color-text-secondary);
         font-size: 14px;
         line-height: 20px;
         font-weight: 500;

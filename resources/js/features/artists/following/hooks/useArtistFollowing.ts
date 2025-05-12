@@ -2,17 +2,17 @@ import { computed, ComputedRef, ref } from "vue"
 import { storeToRefs } from "pinia"
 import debounce from "lodash.debounce"
 import { useFollowArtist, useUnfollowArtist } from "../api"
-import { useMediaListStore } from "@/entities/media-list"
 import { useArtistStore, useCompactArtistStore } from "@/entities/artist"
+import { useMediaListStore } from "@/entities/media-list"
 
 export const useArtistFollowing = (id: ComputedRef<string>) => {
     const mediaListStore = useMediaListStore()
     const { getFavoriteArtistsMediaListId } = storeToRefs(mediaListStore)
 
     const artistStore = useArtistStore()
-    const { getById: getArtistById } = storeToRefs(artistStore)
 
     const compactArtistStore = useCompactArtistStore()
+    const { getById: getArtistById } = storeToRefs(compactArtistStore)
 
     const { fetch: follow } = useFollowArtist(id)
     const { fetch: unfollow } = useUnfollowArtist(id)
@@ -33,7 +33,6 @@ export const useArtistFollowing = (id: ComputedRef<string>) => {
         if (status) {
             artistStore.unfollow(id.value)
             compactArtistStore.unfollow(id.value)
-            mediaListStore.detachItem(mediaListId.value, id.value)
         } else {
             artistStore.follow(id.value)
             compactArtistStore.follow(id.value)

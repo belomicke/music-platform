@@ -121,7 +121,7 @@ const clearChanges = () => {
                             @click="openAvatarFilePicker"
                         />
                         <i-icon-button
-                            variant="grey"
+                            variant="primary"
                             class="avatar-changer__change-button"
                             icon="pencil"
                             :icon-size="16"
@@ -155,7 +155,7 @@ const clearChanges = () => {
     display: flex;
     flex-direction: column;
 
-    background-color: rgb(20, 20, 20);
+    background-color: var(--color-background);
     border-radius: 12px;
     min-width: 320px;
     width: 420px;

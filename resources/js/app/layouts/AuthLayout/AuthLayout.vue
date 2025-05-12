@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from "vue"
 import { useRoute } from "vue-router"
-import { IButton } from "@/shared/ui"
+import { IIconButton } from "@/shared/ui"
 import { useNavigation } from "@/shared/hooks"
 
 const route = useRoute()
@@ -17,7 +17,8 @@ watch(route, () => {
 <template>
     <div class="auth-layout">
         <div class="auth-layout-header">
-            <i-button
+            <i-icon-button
+                variant="ghost"
                 icon="close"
                 @click="goToHomePage"
             />
