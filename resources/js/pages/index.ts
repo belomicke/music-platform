@@ -1,4 +1,5 @@
 export * from "./artist"
 export * from "./auth"
+export * from "./collection"
 export * from "./home"
-export * from "./user"
+export * from "./search"

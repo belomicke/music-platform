@@ -4,6 +4,6 @@ import { api } from "@/shared/api"
 
 export const useFollowArtist = (id: ComputedRef<string>) => {
     return useFetch(async () => {
-        return await api.me.followArtist(id.value)
+        return await api.artists.follow(id.value)
     })
 }

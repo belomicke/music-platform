@@ -35,6 +35,7 @@ watch(route, () => {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: 24px;
 
     width: 100%;
     height: 100%;
@@ -44,16 +45,15 @@ watch(route, () => {
         justify-content: end;
         align-items: center;
         padding: 0 20px;
-        height: 64px;
+        min-height: 64px;
         width: 100%;
     }
 
     &-content {
         border: 1px solid var(--color-border);
         padding: 20px;
-        border-radius: 6px;
+        border-radius: 12px;
 
-        margin: 0 auto;
         width: 100%;
 
         @media (max-width: 576px) {
@@ -70,7 +70,7 @@ watch(route, () => {
     }
 
     &-footer {
-        height: 76px;
+        min-height: 76px;
         width: 100%;
     }
 }

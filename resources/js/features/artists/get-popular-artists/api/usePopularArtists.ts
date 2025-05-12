@@ -23,7 +23,7 @@ export const usePopularArtists = () => {
     })
 
     const { fetch, isLoading } = useFetch(async () => {
-        return await api.artists.popular()
+        return await api.artists.getPopular()
     }, {
         onSuccess: (res) => {
             const data = res.data.data

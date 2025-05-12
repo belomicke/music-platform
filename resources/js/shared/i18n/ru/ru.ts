@@ -81,29 +81,15 @@ export default {
     },
 
     "features": {
-        "artist": {
-            "following": {
-                "button-text": {
-                    "follow": "Подписаться",
-                    "unfollow": "Уже подписаны",
-                },
-            },
-        },
         "user": {
-            "following": {
-                "button-text": {
-                    "follow": "Подписаться",
-                    "unfollow": "Уже подписаны",
+            "followed-users": {
+                "ui": {
+                    "list-title": "Подписки на пользователей",
                 },
             },
-            "user-followed-users": {
+            "followed-artists": {
                 "ui": {
-                    "users-list-title": "Подписки на пользователей",
-                },
-            },
-            "user-followed-artists": {
-                "ui": {
-                    "artists-list-title": "Подписки на исполнителей",
+                    "list-title": "Любимые исполнители",
                 },
             },
         },
@@ -129,7 +115,7 @@ export default {
             },
             "followed-artists": {
                 "header": {
-                    "title": "Исполнители на которых подписан {name}",
+                    "title": "Исполнители",
                 },
             },
             "followed-users": {
@@ -145,7 +131,7 @@ export default {
         },
     },
 
-    "followers": "0 подписчиков | {n} подписчик | {n} подписчика | {n} подписчиков",
+    "followers": "0 подписчиков | 1 подписчик | {count} подписчика | {count} подписчиков",
 
     "layouts": {
         "app": {

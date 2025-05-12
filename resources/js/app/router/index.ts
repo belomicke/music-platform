@@ -2,15 +2,14 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import { AppLayout, AuthLayout } from "../layouts"
 import {
     ArtistInfoPage,
+    CollectionPage,
+    FavoriteArtistsPage,
     ForgotPasswordPage,
     HomePage,
     ResetPasswordPage,
+    SearchPage,
     SignInPage,
     SignUpPage,
-    UserFollowedArtistsPage,
-    UserFollowedUsersPage,
-    UserFollowersPage,
-    UserInfoPage,
 } from "@/pages"
 import { ROUTE_NAMES, ROUTE_NAMES_ONLY_FOR_GUESTS } from "@/shared/config/router"
 
@@ -52,27 +51,22 @@ const routes: RouteRecordRaw[] = [
                 name: ROUTE_NAMES.HOME,
             },
             {
-                path: "/user/:id",
+                path: "/search",
+                component: SearchPage,
+                name: ROUTE_NAMES.SEARCH,
+            },
+            {
+                path: "/collection",
                 children: [
                     {
                         path: "",
-                        component: UserInfoPage,
-                        name: ROUTE_NAMES.USER_INFO_PAGE,
+                        component: CollectionPage,
+                        name: ROUTE_NAMES.COLLECTION,
                     },
                     {
-                        path: "followed-artists",
-                        component: UserFollowedArtistsPage,
-                        name: ROUTE_NAMES.USER_FOLLOWED_ARTISTS_PAGE,
-                    },
-                    {
-                        path: "followed-users",
-                        component: UserFollowedUsersPage,
-                        name: ROUTE_NAMES.USER_FOLLOWED_USERS_PAGE,
-                    },
-                    {
-                        path: "followers",
-                        component: UserFollowersPage,
-                        name: ROUTE_NAMES.USER_FOLLOWERS_PAGE,
+                        path: "artists",
+                        component: FavoriteArtistsPage,
+                        name: ROUTE_NAMES.FAVOURITE_ARTISTS_PAGE,
                     },
                 ],
             },
@@ -89,10 +83,10 @@ const routes: RouteRecordRaw[] = [
         ],
     },
 
-    // {
-    //     path: "/:pathMatch(.*)",
-    //     redirect: "/",
-    // },
+    {
+        path: "/:pathMatch(.*)",
+        redirect: "/",
+    },
 ]
 
 export const router = createRouter({
@@ -105,6 +99,12 @@ router.beforeEach((to, _, next) => {
 
     if (isAuth) {
         if (ROUTE_NAMES_ONLY_FOR_GUESTS.indexOf(to.name as string) !== -1) {
+            return next({
+                name: ROUTE_NAMES.HOME,
+            })
+        }
+    } else {
+        if (to.path.startsWith("/collection")) {
             return next({
                 name: ROUTE_NAMES.HOME,
             })

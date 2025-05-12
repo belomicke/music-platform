@@ -1,5 +1,5 @@
-import PopularArtistList from "./ui/PopularArtistList.vue"
+import PopularArtistsCarousel from "./ui/PopularArtistsCarousel.vue"
 
 export {
-    PopularArtistList,
+    PopularArtistsCarousel,
 }

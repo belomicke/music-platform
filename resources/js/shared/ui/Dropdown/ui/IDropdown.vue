@@ -44,14 +44,23 @@ onUnmounted(() => {
 })
 
 const calculateDropdownPosition = () => {
-    const rect = triggerRef.value.getBoundingClientRect()
+    const triggerRect = triggerRef.value.getBoundingClientRect()
+    const contentRect = contentRef.value.getBoundingClientRect()
 
     if (props.positionY === "bottom") {
-        y.value = rect.top + rect.height + 10
+        y.value = triggerRect.top + triggerRect.height + 10
+    }
+
+    if (props.positionY === "top") {
+        y.value = triggerRect.top - contentRect.height - 10
     }
 
     if (props.positionX === "right") {
-        x.value = rect.right
+        x.value = triggerRect.right
+    }
+
+    if (props.positionX === "left") {
+        x.value = triggerRect.left
     }
 }
 
@@ -72,11 +81,13 @@ const clickOnBackgroundHandler = () => {
     >
         <slot name="trigger"></slot>
     </div>
-    <teleport
-        to="#portals"
-        v-if="model"
-    >
-        <div class="i-dropdown__modal">
+    <teleport to="#portals">
+        <div
+            class="i-dropdown__modal"
+            :class="[
+                model && 'active'
+            ]"
+        >
             <div
                 class="i-dropdown__background"
                 @click="clickOnBackgroundHandler"
@@ -86,9 +97,7 @@ const clickOnBackgroundHandler = () => {
                 :style="styles"
                 ref="contentRef"
             >
-                <slot name="content">
-                    hello
-                </slot>
+                <slot name="content"></slot>
             </div>
         </div>
     </teleport>
@@ -102,7 +111,15 @@ const clickOnBackgroundHandler = () => {
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: var(--z-index-dropdown);
+        z-index: 1000;
+
+        pointer-events: none;
+        opacity: 0;
+
+        &.active {
+            pointer-events: all;
+            opacity: 1;
+        }
     }
 
     &__background {

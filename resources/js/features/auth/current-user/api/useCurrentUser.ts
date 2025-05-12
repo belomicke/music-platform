@@ -1,14 +1,11 @@
 import { onMounted } from "vue"
 import { storeToRefs } from "pinia"
 import { useAuthStore } from "@/entities/auth"
-import { useCompactUserStore, useUserStore } from "@/entities/user"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
 export const useCurrentUser = () => {
     const authStore = useAuthStore()
-    const userStore = useUserStore()
-    const compactUserStore = useCompactUserStore()
     const { getCurrentUser, getIsAuth } = storeToRefs(authStore)
 
     const { fetch, isLoading } = useFetch(async () => {
@@ -17,16 +14,8 @@ export const useCurrentUser = () => {
         onSuccess: (res) => {
             const data = res.data.data
 
-            authStore.setIsAuth(data.user !== null)
+            authStore.setIsAuth(true)
             authStore.setCurrentUser(data.user)
-
-            userStore.addItem(data.user)
-            compactUserStore.addItem({
-                id: data.user.id,
-                name: data.user.id,
-                image_url: data.user.image_url,
-                is_followed: false,
-            })
 
             localStorage.setItem("user", JSON.stringify(data.user))
         },
