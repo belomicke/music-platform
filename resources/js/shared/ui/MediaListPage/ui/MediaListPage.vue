@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router"
-import { IButton } from "@/shared/ui"
-
 defineProps<{
     title: string
 }>()
-
-const router = useRouter()
-
-const goBackHandler = () => {
-    router.back()
-}
 </script>
 
 <template>
     <div class="media-list-page">
         <div class="media-list-page-header">
-            <i-button
-                icon="chevron-left"
-                variant="ghost"
-                :icon-size="32"
-                round
-                @click="goBackHandler"
-            />
             <h1 class="media-list-page-header__title">
                 {{ title }}
             </h1>
@@ -38,7 +22,6 @@ const goBackHandler = () => {
     &-header {
         display: flex;
         align-items: center;
-        gap: 16px;
 
         position: sticky;
         top: 0;

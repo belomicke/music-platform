@@ -11,5 +11,6 @@ export type IconName =
     | "log-out"
     | "musical-note"
     | "music"
+    | "pencil"
     | "search"
     | "user"

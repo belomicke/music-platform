@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import { useI18n } from "vue-i18n"
 import AppSidebarFooterDropdown from "./AppSidebarFooterDropdown.vue"
 import { useCurrentUser } from "@/features/auth/current-user"
 import { CurrentUserAvatar } from "@/entities/auth"
 import { useNavigation, useResponsive } from "@/shared/hooks"
 import { IButton, IDropdown } from "@/shared/ui"
+
+const { t } = useI18n()
 
 const { data: user, isAuth } = useCurrentUser()
 
@@ -35,7 +38,10 @@ const closeDropdown = () => {
                         ]"
                     >
                         <current-user-avatar/>
-                        <div class="app-sidebar-footer__name">
+                        <div
+                            class="app-sidebar-footer__name"
+                            v-if="deviceType === 'desktop'"
+                        >
                             {{ user.name }}
                         </div>
                     </div>
@@ -54,13 +60,13 @@ const closeDropdown = () => {
                     variant="primary"
                     @click="goToSignInPage"
                 >
-                    Войти
+                    {{ t("layouts.app.sidebar.footer.auth-buttons.sign-in") }}
                 </i-button>
                 <i-button
                     variant="outline"
                     @click="goToSignUpPage"
                 >
-                    Зарегистрироваться
+                    {{ t("layouts.app.sidebar.footer.auth-buttons.sign-up") }}
                 </i-button>
             </div>
             <div class="app-sidebar-footer__auth-buttons_compact" v-if="deviceType === 'tablet'">
@@ -97,6 +103,10 @@ const closeDropdown = () => {
         &:hover, &.active {
             background-color: rgb(20, 20, 20);
         }
+
+        @media (max-width: 1024px) {
+            justify-content: center;
+        }
     }
 
     &__name {
@@ -110,7 +120,7 @@ const closeDropdown = () => {
         flex-direction: column;
         gap: 12px;
         width: 100%;
-        
+
         &_compact {
             display: flex;
             flex-direction: column;

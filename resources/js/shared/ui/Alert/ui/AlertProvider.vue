@@ -14,7 +14,7 @@ const { getAlerts } = storeToRefs(alertStore)
             class="alert-provider__alert"
             :alert="alert"
             :style="{
-                'transform': `translate(calc(${index * 100}% + ${index * 10}px), -50%)`
+                'transform': `translate(-50%, calc(${index > 0 ? index + '* 100% + 10px' : index + '* 100%'}))`
             }"
             v-for="(alert, index) in getAlerts"
             :key="alert.id"

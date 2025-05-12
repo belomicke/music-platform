@@ -3,7 +3,7 @@ import { type IconName, IIcon } from "@/shared/ui"
 import { computed } from "vue"
 
 type IconButtonSizes = "large" | "default"
-type IconButtonVariants = "ghost" | "outline"
+type IconButtonVariants = "ghost" | "outline" | "grey"
 
 const props = withDefaults(defineProps<{
     icon: IconName,
@@ -11,14 +11,18 @@ const props = withDefaults(defineProps<{
     size?: IconButtonSizes
     variant?: IconButtonVariants
     disabled?: boolean
+    iconSize?: number
 }>(), {
     size: "default",
     variant: "ghost",
     filled: false,
     disabled: false,
+    iconSize: 20,
 })
 
 const iconSize = computed(() => {
+    if (props.iconSize !== 20) return props.iconSize
+
     switch (props.size) {
         case "large":
             return 20
@@ -86,6 +90,13 @@ const iconSize = computed(() => {
         }
     }
 
+    &.grey {
+        background-color: rgb(60, 60, 60);
+
+        &:hover {
+            background-color: rgba(80, 80, 80);
+        }
+    }
 
     &.large {
         width: 40px;

@@ -8,4 +8,11 @@ export const meMethods = {
             url: "/api/me",
         })
     },
+    editAccountInfo: async (data: FormData): Promise<CurrentUserResponse> => {
+        return await makeRequest({
+            method: "POST",
+            url: "/api/me",
+            data,
+        })
+    },
 }

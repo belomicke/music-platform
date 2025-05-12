@@ -13,6 +13,7 @@ import {
     LogOutIcon,
     MusicalNoteIcon,
     MusicIcon,
+    PencilIcon,
     SearchIcon,
     UserIcon,
 } from "./icons"
@@ -43,6 +44,7 @@ const iconComponent = computed(() => {
         "log-out": LogOutIcon,
         "musical-note": MusicalNoteIcon,
         "music": MusicIcon,
+        "pencil": PencilIcon,
         "search": SearchIcon,
         "user": UserIcon,
     }[props.icon]

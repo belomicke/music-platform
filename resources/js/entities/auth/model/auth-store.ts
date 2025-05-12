@@ -15,7 +15,10 @@ export const useAuthStore = defineStore("auth", () => {
     })
 
     const setCurrentUser = (value: ApiCurrentUser) => {
-        user.value = value
+        user.value = {
+            ...value,
+            image_url: value.image_url + "?t=" + new Date().getTime(),
+        }
     }
 
     const setIsAuth = (value: boolean) => {

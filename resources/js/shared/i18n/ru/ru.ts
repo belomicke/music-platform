@@ -72,21 +72,34 @@ export default {
                 "cancel": "Отмена",
             },
         },
-        "media-card": {
-            "type": {
-                "artist": "Исполнитель",
-                "user": "Профиль",
-            },
-        },
     },
 
     "features": {
-        "user": {
-            "followed-users": {
+        "me": {
+            "edit-account-info": {
                 "ui": {
-                    "list-title": "Подписки на пользователей",
+                    "modal": {
+                        "title": "Ваши данные",
+                        "inputs": {
+                            "name": {
+                                "label": "Как к вам обращаться?",
+                                "placeholder": "Публичное имя",
+                            },
+                        },
+                        "buttons": {
+                            "submit": {
+                                "text": "Сохранить",
+                            },
+                        },
+                    },
+                },
+                "errors": {
+                    "invalid-type": "Файл не является изображением",
+                    "invalid-size": "Размер файла не должен превышать 2 MB",
                 },
             },
+        },
+        "user": {
             "followed-artists": {
                 "ui": {
                     "list-title": "Любимые исполнители",
@@ -104,28 +117,12 @@ export default {
         "artist-info": {
             "header": {
                 "type": "Исполнитель",
-                "subtitle": "{followers} подписчиков",
             },
         },
         "user": {
-            "info-page": {
-                "header": {
-                    "type": "Профиль",
-                },
-            },
             "followed-artists": {
                 "header": {
                     "title": "Исполнители",
-                },
-            },
-            "followed-users": {
-                "header": {
-                    "title": "Пользователи на которых подписан {name}",
-                },
-            },
-            "followers": {
-                "header": {
-                    "title": "Пользователи которые подписаны на {name}",
                 },
             },
         },
@@ -135,10 +132,32 @@ export default {
 
     "layouts": {
         "app": {
-            "header": {
-                "auth-user-dropdown": {
-                    "user-profile": "Профиль",
-                    "log-out": "Выход",
+            "sidebar": {
+                "navigation": {
+                    "options": {
+                        "home": "Главная",
+                        "search": "Поиск",
+                        "collection": "Коллекция",
+                    },
+                },
+                "footer": {
+                    "auth-buttons": {
+                        "sign-in": "Войти",
+                        "sign-up": "Зарегистрироваться",
+                    },
+                    "dropdown": {
+                        "dialogs": {
+                            "log-out": {
+                                "title": "Выход",
+                                "message": "Вы действительно хотите выйти?",
+                                "confirm-button-text": "Выйти",
+                            },
+                        },
+                        "options": {
+                            "edit-account-info": "Настройки профиля",
+                            "log-out": "Выйти из аккаунта",
+                        },
+                    },
                 },
             },
         },

@@ -36,10 +36,10 @@ const calculateItemsCountPerRow = () => {
     } else if (rect.width >= 1010) {
         itemsCountPerRow.value = 5
         return
-    } else if (rect.width >= 815) {
+    } else if (rect.width >= 768) {
         itemsCountPerRow.value = 4
         return
-    } else if (rect.width >= 618) {
+    } else if (rect.width >= 540) {
         itemsCountPerRow.value = 3
         return
     } else {

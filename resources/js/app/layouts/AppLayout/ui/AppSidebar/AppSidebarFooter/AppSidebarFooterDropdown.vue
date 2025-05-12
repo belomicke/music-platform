@@ -1,23 +1,54 @@
 <script setup lang="ts">
+import { computed, ref } from "vue"
+import { useI18n } from "vue-i18n"
+import { EditAccountInfoModal } from "@/features/me/edit-account-info"
 import { useCurrentUser } from "@/features/auth/current-user"
-import { CurrentUserAvatar } from "@/entities/auth"
-import { createDialog, IIcon } from "@/shared/ui"
-import ISeparator from "@/shared/ui/Separator/ui/ISeparator.vue"
 import { useLogOut } from "@/features/auth/log-out"
+import { CurrentUserAvatar } from "@/entities/auth"
+import { createDialog, IconName, IIcon, ISeparator } from "@/shared/ui"
+
+interface Option {
+    text: string
+    icon: IconName
+    onClick: () => void
+}
+
+const { t } = useI18n()
 
 const emit = defineEmits(["close"])
+
+const editAccountInfoModalIsOpen = ref<boolean>(false)
 
 const { data: user } = useCurrentUser()
 
 const { fetch: logOut } = useLogOut()
 
+const options = computed((): Option[] => {
+    return [
+        {
+            text: t("layouts.app.sidebar.footer.dropdown.options.edit-account-info"),
+            icon: "user",
+            onClick: () => openEditAccountInfoModal(),
+        },
+        {
+            text: t("layouts.app.sidebar.footer.dropdown.options.log-out"),
+            icon: "log-out",
+            onClick: () => logOutHandler(),
+        },
+    ]
+})
+
 const logOutHandler = () => {
     createDialog({
-        title: "Выход",
-        message: "Вы действительно хотите выйти?",
-        confirmButtonText: "Выйти",
+        title: t("layouts.app.sidebar.footer.dropdown.dialogs.log-out.title"),
+        message: t("layouts.app.sidebar.footer.dropdown.dialogs.log-out.message"),
+        confirmButtonText: t("layouts.app.sidebar.footer.dropdown.dialogs.log-out.confirm-button-text"),
         onConfirm: () => logOut(),
     })
+}
+
+const openEditAccountInfoModal = () => {
+    editAccountInfoModalIsOpen.value = true
 }
 </script>
 
@@ -33,19 +64,20 @@ const logOutHandler = () => {
         <div class="app-sidebar-footer-dropdown__options">
             <div
                 class="app-sidebar-footer-dropdown__option"
+                @click="option.onClick"
+
+                v-for="option in options"
+                :key="option.text"
             >
-                <i-icon icon="user"/>
-                Настройки профиля
-            </div>
-            <div
-                class="app-sidebar-footer-dropdown__option"
-                @click="logOutHandler"
-            >
-                <i-icon icon="log-out"/>
-                Выйти из аккаунта
+                <i-icon :icon="option.icon"/>
+                {{ option.text }}
             </div>
         </div>
     </div>
+
+    <edit-account-info-modal
+        v-model:is-open="editAccountInfoModalIsOpen"
+    />
 </template>
 
 <style lang="scss">

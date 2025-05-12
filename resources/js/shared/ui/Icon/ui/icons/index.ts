@@ -10,6 +10,7 @@ import LoaderIcon from "./LoaderIcon.vue"
 import LogInIcon from "./LogInIcon.vue"
 import LogOutIcon from "./LogOutIcon.vue"
 import MusicIcon from "./MusicIcon.vue"
+import PencilIcon from "./PencilIcon.vue"
 import SearchIcon from "./SearchIcon.vue"
 import UserIcon from "./UserIcon.vue"
 
@@ -26,6 +27,7 @@ export {
     LogInIcon,
     LogOutIcon,
     MusicIcon,
+    PencilIcon,
     SearchIcon,
     UserIcon,
 }

@@ -16,12 +16,16 @@ const props = withDefaults(defineProps<{
     canBeOpenInModal: false,
 })
 
+const emit = defineEmits(["click"])
+
 const modalIsOpen = ref<boolean>(false)
 
-const clickHandler = () => {
+const clickHandler = (e: MouseEvent) => {
     if (props.canBeOpenInModal) {
         modalIsOpen.value = true
     }
+
+    emit("click", e)
 }
 </script>
 

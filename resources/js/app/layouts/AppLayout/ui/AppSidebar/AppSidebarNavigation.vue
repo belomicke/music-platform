@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useRoute } from "vue-router"
+import { useI18n } from "vue-i18n"
 import { useCurrentUser } from "@/features/auth/current-user"
 import { ROUTE_NAME, ROUTE_NAMES } from "@/shared/config/router"
 import { useNavigation } from "@/shared/hooks"
@@ -12,6 +13,8 @@ interface Option {
     isActive: boolean
     icon: IconName | ""
 }
+
+const { t } = useI18n()
 
 const route = useRoute()
 const { goToHomePage, goToSearchPage, goToCollectionPage } = useNavigation()
@@ -33,13 +36,13 @@ const options = computed((): Option[] => {
     const result: Option[] = [
         {
             id: "home",
-            text: "Главная",
+            text: t("layouts.app.sidebar.navigation.options.home"),
             isActive: activeOption.value === ROUTE_NAMES.HOME,
             icon: "home",
         },
         {
             id: "search",
-            text: "Поиск",
+            text: t("layouts.app.sidebar.navigation.options.search"),
             isActive: activeOption.value === ROUTE_NAMES.SEARCH,
             icon: "search",
         },
@@ -48,7 +51,7 @@ const options = computed((): Option[] => {
     if (isAuth.value) {
         result.push({
             id: "collection",
-            text: "Коллекция",
+            text: t("layouts.app.sidebar.navigation.options.collection"),
             isActive: activeOption.value === ROUTE_NAMES.COLLECTION,
             icon: "musical-note",
         })
