@@ -5,7 +5,11 @@ interface IButtonProps {
     variant?: "primary" | "secondary" | "outline" | "ghost" | "link" | "danger"
     block?: boolean
     disabled?: boolean
+
     icon?: IconName
+    iconSize?: number
+    iconFilled?: boolean
+
     loading?: boolean
     round?: boolean
     text?: boolean
@@ -13,6 +17,8 @@ interface IButtonProps {
 
 withDefaults(defineProps<IButtonProps>(), {
     variant: "primary",
+    iconSize: 16,
+    iconFilled: false,
 })
 </script>
 
@@ -36,6 +42,8 @@ withDefaults(defineProps<IButtonProps>(), {
         />
         <i-icon
             :icon="icon"
+            :size="iconSize"
+            :filled="iconFilled"
             v-if="icon"
         />
         <slot v-else></slot>
@@ -61,7 +69,7 @@ withDefaults(defineProps<IButtonProps>(), {
 
     padding: 8px 16px;
 
-    border-radius: 6px;
+    border-radius: 12px;
 
     height: 36px;
 
@@ -78,13 +86,13 @@ withDefaults(defineProps<IButtonProps>(), {
     }
 
     &.icon {
-        padding: 0;
-        height: 36px;
-        width: 36px;
+        padding: 10px;
+        height: 40px;
+        width: 40px;
 
         & > svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
         }
     }
 
@@ -127,10 +135,10 @@ withDefaults(defineProps<IButtonProps>(), {
 
     &.ghost {
         color: var(--color-text);
-        background-color: transparent;
+        background-color: rgba(255, 255, 255, 0.08);
 
         &:hover:not(:disabled) {
-            background-color: var(--color-border);
+            background-color: rgba(255, 255, 255, 0.12);
         }
     }
 

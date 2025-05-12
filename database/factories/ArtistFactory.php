@@ -31,7 +31,7 @@ class ArtistFactory extends Factory
         return [
             'uuid' => $uuid,
             'name' => $name,
-            'followers_count' => 100,
+            'followers_count' => 1,
         ];
     }
 }

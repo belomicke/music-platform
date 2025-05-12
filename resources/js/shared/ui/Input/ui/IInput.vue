@@ -62,7 +62,7 @@ const model = defineModel<string>()
         background-color: transparent;
 
         border: 1px solid var(--color-border);
-        border-radius: 6px;
+        border-radius: 12px;
 
         font-size: 14px;
         line-height: 20px;

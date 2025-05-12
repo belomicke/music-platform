@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { useI18n } from "vue-i18n"
 import { useArtistFollowing } from "../hooks/useArtistFollowing"
+import { useCurrentUser } from "@/features/auth/current-user"
 import { type ApiArtist } from "@/shared/api"
 import { IButton } from "@/shared/ui"
 
@@ -11,26 +11,21 @@ const props = defineProps<{
 
 const id = computed(() => props.artist.id)
 
-const { t } = useI18n()
-const { isFollow, mutate } = useArtistFollowing(id)
+const { isAuth } = useCurrentUser()
 
-const buttonText = computed(() => {
-    if (props.artist.is_followed) {
-        return t("features.artist.following.button-text.unfollow")
-    } else {
-        return t("features.artist.following.button-text.follow")
-    }
-})
+const { mutate } = useArtistFollowing(id)
 </script>
 
 <template>
     <i-button
         @click="mutate"
-        :variant="isFollow ? 'outline' : 'primary'"
+        variant="ghost"
         round
-    >
-        {{ buttonText }}
-    </i-button>
+        icon="heart"
+        :icon-size="16"
+        :icon-filled="artist.is_followed"
+        :disabled="isAuth === false"
+    />
 </template>
 
 <style lang="scss">

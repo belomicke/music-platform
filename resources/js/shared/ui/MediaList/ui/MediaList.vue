@@ -1,24 +1,14 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, useTemplateRef } from "vue"
 import _ from "lodash"
-import MediaListRow from "./MediaListRow.vue"
-import { IInfiniteScroll, IVirtualScroll } from "@/shared/ui"
+import { IInfiniteScroll, IVirtualScroll, MediaListRow } from "@/shared/ui"
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
     items: string[]
     hasMore: boolean
-    title?: string
-    oneRow?: boolean
-}>(), {
-    title: "",
-    oneRow: false,
-})
+}>()
 
-const emit = defineEmits(["click-on-title", "load-more"])
-
-const clickOnTitleHandler = () => {
-    emit("click-on-title")
-}
+const emit = defineEmits(["load-more"])
 
 const artistListRef = useTemplateRef("artistListRef")
 
@@ -36,18 +26,29 @@ onUnmounted(() => {
 const calculateItemsCountPerRow = () => {
     const el = artistListRef.value as HTMLDivElement
 
+    if (!el) return 2
+
     const rect = el.getBoundingClientRect()
 
-    const width = rect.width
-
-    itemsCountPerRow.value = Math.max(Math.floor(width / 190), 1)
+    if (rect.width >= 1206) {
+        itemsCountPerRow.value = 6
+        return
+    } else if (rect.width >= 1010) {
+        itemsCountPerRow.value = 5
+        return
+    } else if (rect.width >= 815) {
+        itemsCountPerRow.value = 4
+        return
+    } else if (rect.width >= 618) {
+        itemsCountPerRow.value = 3
+        return
+    } else {
+        itemsCountPerRow.value = 2
+        return
+    }
 }
 
 const rows = computed(() => {
-    if (props.oneRow) {
-        return [props.items.slice(0, itemsCountPerRow.value)]
-    }
-
     return _.chunk(props.items, itemsCountPerRow.value)
 })
 
@@ -59,56 +60,31 @@ const loadMoreHandler = () => {
 <template>
     <div
         class="media-list"
-        :class="[
-            oneRow && 'one-row'
-        ]"
         ref="artistListRef"
     >
-        <div
-            class="media-list__title"
-            v-if="title"
-        >
-            <h1 @click="clickOnTitleHandler">{{ title }}</h1>
-        </div>
         <div class="media-list__rows">
-
-            <media-list-row
-                :items-count-per-row="itemsCountPerRow"
-                v-if="oneRow"
+            <i-infinite-scroll
+                :has-more="hasMore"
+                @load-more="loadMoreHandler"
             >
-                <slot
-                    name="item"
-                    :item="item"
-                    v-for="item in rows[0]"
-                    :key="item"
-                />
-            </media-list-row>
-
-            <template v-else>
-                <i-infinite-scroll
-                    :has-more="hasMore"
-                    @load-more="loadMoreHandler"
+                <i-virtual-scroll
+                    :count="rows.length"
+                    :estimate-size="270"
+                    :gap="20"
+                    window
                 >
-                    <i-virtual-scroll
-                        :count="rows.length"
-                        :estimate-size="270"
-                        :gap="20"
-                        window
-                    >
-                        <template #item="{ virtualRow }">
-                            <media-list-row :items-count-per-row="itemsCountPerRow">
-                                <slot
-                                    name="item"
-                                    :item="item"
-                                    v-for="item in rows[virtualRow.index]"
-                                    :key="item"
-                                />
-                            </media-list-row>
-                        </template>
-                    </i-virtual-scroll>
-                </i-infinite-scroll>
-            </template>
-
+                    <template #item="{ virtualRow }">
+                        <media-list-row>
+                            <slot
+                                name="item"
+                                :item="item"
+                                v-for="item in rows[virtualRow.index]"
+                                :key="item"
+                            />
+                        </media-list-row>
+                    </template>
+                </i-virtual-scroll>
+            </i-infinite-scroll>
         </div>
     </div>
 </template>
@@ -118,12 +94,6 @@ const loadMoreHandler = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-
-    width: calc(100vw - 48px);
-
-    &.one-row {
-        overflow: hidden;
-    }
 
     &__title {
         display: flex;
@@ -145,7 +115,10 @@ const loadMoreHandler = () => {
     &__rows {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 24px;
+
+        container-name: media-list-container;
+        container-type: inline-size;
     }
 }
 </style>

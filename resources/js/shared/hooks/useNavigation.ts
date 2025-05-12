@@ -10,6 +10,18 @@ export const useNavigation = () => {
         })
     }
 
+    const goToSearchPage = () => {
+        router.push({
+            name: ROUTE_NAMES.SEARCH,
+        })
+    }
+
+    const goToCollectionPage = (() => {
+        router.push({
+            name: ROUTE_NAMES.COLLECTION,
+        })
+    })
+
     const goToSignInPage = () => {
         router.push({
             name: ROUTE_NAMES.SIGN_IN,
@@ -22,36 +34,9 @@ export const useNavigation = () => {
         })
     }
 
-    const goToUserInfoPage = (id: string) => {
+    const goToFavoriteArtistsPage = (id: string) => {
         router.push({
-            name: ROUTE_NAMES.USER_INFO_PAGE,
-            params: {
-                id,
-            },
-        })
-    }
-
-    const goToUserFollowedArtistsPage = (id: string) => {
-        router.push({
-            name: ROUTE_NAMES.USER_FOLLOWED_ARTISTS_PAGE,
-            params: {
-                id,
-            },
-        })
-    }
-
-    const goToUserFollowedUsersPage = (id: string) => {
-        router.push({
-            name: ROUTE_NAMES.USER_FOLLOWED_USERS_PAGE,
-            params: {
-                id,
-            },
-        })
-    }
-
-    const goToUserFollowersPage = (id: string) => {
-        router.push({
-            name: ROUTE_NAMES.USER_FOLLOWERS_PAGE,
+            name: ROUTE_NAMES.FAVOURITE_ARTISTS_PAGE,
             params: {
                 id,
             },
@@ -69,13 +54,13 @@ export const useNavigation = () => {
 
     return {
         goToHomePage,
+        goToSearchPage,
+        goToCollectionPage,
+
         goToSignInPage,
         goToSignUpPage,
 
-        goToUserInfoPage,
-        goToUserFollowedArtistsPage,
-        goToUserFollowedUsersPage,
-        goToUserFollowersPage,
+        goToFavoriteArtistsPage,
 
         goToArtistInfoPage,
     }

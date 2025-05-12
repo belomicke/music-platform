@@ -1,11 +1,12 @@
 import { computed, ComputedRef, onMounted } from "vue"
 import { storeToRefs } from "pinia"
-import { useArtistStore } from "@/entities/artist"
+import { useArtistStore, useCompactArtistStore } from "@/entities/artist"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
 export const useArtistById = (id: ComputedRef<string>) => {
     const artistStore = useArtistStore()
+    const compactArtistStore = useCompactArtistStore()
     const { getById: getArtistById } = storeToRefs(artistStore)
 
     const artist = computed(() => {
@@ -16,7 +17,15 @@ export const useArtistById = (id: ComputedRef<string>) => {
         return await api.artists.getById(id.value)
     }, {
         onSuccess: (res) => {
-            artistStore.addItem(res.data.data.artist)
+            const artist = res.data.data.artist
+
+            artistStore.addItem(artist)
+            compactArtistStore.addItem({
+                id: artist.id,
+                name: artist.name,
+                image_url: artist.image_url,
+                is_followed: artist.is_followed,
+            })
         },
     })
 

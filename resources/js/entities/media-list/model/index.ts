@@ -1,4 +1,4 @@
-import { useMediaListStore } from "./store"
+import { useMediaListStore } from "./media-list-store"
 
 export {
     useMediaListStore,

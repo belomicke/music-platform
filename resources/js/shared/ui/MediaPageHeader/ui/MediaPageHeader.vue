@@ -1,35 +1,20 @@
 <script setup lang="ts">
-import { computed, useSlots } from "vue"
-
-const props = withDefaults(defineProps<{
+defineProps<{
     title: string
-    subtitle?: string
     type: string
-}>(), {
-    subtitle: "",
-})
-
-const slots = useSlots()
-
-const withSubtitle = computed(() => {
-    return props.subtitle.length !== 0 || slots["subtitle"] !== undefined
-})
+}>()
 </script>
 
 <template>
     <div class="media-page-header">
         <slot name="avatar"/>
-        <div class="media-page-header__info">
-            <div class="media-page-header__type">{{ type }}</div>
-            <h1 class="media-page-header__title">{{ title }}</h1>
-            <div
-                class="media-page-header__subtitle"
-                v-if="withSubtitle"
-            >
-                <slot name="subtitle">
-                    {{ subtitle }}
-                </slot>
+        <div class="media-page-header__content">
+            <div class="media-page-header__info">
+                <div class="media-page-header__type">{{ type }}</div>
+                <h1 class="media-page-header__title">{{ title }}</h1>
+                <slot name="meta"/>
             </div>
+            <slot name="actions"/>
         </div>
     </div>
 </template>
@@ -38,24 +23,36 @@ const withSubtitle = computed(() => {
 .media-page-header {
     display: flex;
     align-items: center;
-    gap: 32px;
-    padding: 40px;
-    position: relative;
+    gap: 24px;
+    padding: 20px 24px;
     user-select: none;
 
     @media (max-width: 640px) {
         flex-direction: column;
     }
 
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
     &__info {
         display: flex;
         flex-direction: column;
-        z-index: 1;
+        margin-bottom: 32px;
+    }
+
+    &__type {
+        color: rgba(255, 255, 255, .5);
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
     }
 
     &__title {
-        font-size: 6rem;
-        line-height: 1;
+        font-size: 48px;
+        line-height: 48px;
         margin: 0;
     }
 
