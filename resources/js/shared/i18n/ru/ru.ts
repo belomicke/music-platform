@@ -114,6 +114,11 @@ export default {
                 "popular-artists": "Популярные исполнители",
             },
         },
+        "search": {
+            "input": {
+                "placeholder": "Трек, альбом, исполнитель",
+            },
+        },
         "artist-info": {
             "header": {
                 "type": "Исполнитель",

@@ -24,6 +24,22 @@ export const useMediaListStore = defineStore("media-list", () => {
         }
     })
 
+    const mediaListExists = (id: string) => {
+        const mediaList = mediaLists.value.find(item => item.id === id)
+
+        return mediaList !== undefined
+    }
+
+    const createMediaList = (value: MediaList) => {
+        const mediaList = mediaLists.value.find(item => item.id === value.id)
+
+        if (mediaList) {
+            return
+        }
+
+        mediaLists.value.push(value)
+    }
+
     const addItemsToMediaList = (value: MediaList) => {
         const mediaList = mediaLists.value.find(item => item.id === value.id)
 
@@ -32,7 +48,12 @@ export const useMediaListStore = defineStore("media-list", () => {
             return
         }
 
-        mediaList.items.push(...value.items)
+        value.items.forEach(item => {
+            if (mediaList.items.find(i => i === item) === undefined) {
+                mediaList.items.push(item)
+            }
+        })
+
         mediaList.count = value.count
     }
 
@@ -59,6 +80,9 @@ export const useMediaListStore = defineStore("media-list", () => {
         getFavoriteArtistsMediaListId,
 
         getMediaListById,
+
+        createMediaList,
+        mediaListExists,
 
         addItemsToMediaList,
 

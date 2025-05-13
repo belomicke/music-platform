@@ -19,7 +19,7 @@ const loadMoreHandler = () => {
 }
 
 const clickOnTitleHandler = () => {
-    goToFavoriteArtistsPage(id.value)
+    goToFavoriteArtistsPage()
 }
 </script>
 

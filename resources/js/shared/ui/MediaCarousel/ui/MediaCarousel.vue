@@ -25,6 +25,7 @@ const carouselScrollRef = useTemplateRef("carouselScrollRef")
 const { deviceType } = useResponsive()
 
 const scrollProgress = ref<number>(0)
+const clientWidth = ref<number>(0)
 const isScrolling = ref<boolean>(false)
 
 watch(isScrolling, () => {
@@ -38,11 +39,7 @@ watch(isScrolling, () => {
 })
 
 const scrollWidth = computed(() => {
-    const el = carouselScrollRef.value as HTMLDivElement
-
-    if (!el) return 0
-
-    return props.items.length * ITEM_WIDTH + (props.items.length - 1) * ITEMS_GAP - el.clientWidth
+    return props.items.length * ITEM_WIDTH + (props.items.length - 1) * ITEMS_GAP - clientWidth.value
 })
 
 const canScrollToLeft = computed(() => {
@@ -53,8 +50,8 @@ const canScrollToRight = computed(() => {
     const el = carouselScrollRef.value as HTMLDivElement
 
     if (!el) return
-
-    return scrollProgress.value < scrollWidth.value
+    
+    return scrollWidth.value - scrollProgress.value > 1
 })
 
 onMounted(() => {
@@ -62,6 +59,8 @@ onMounted(() => {
 
     if (!el) return
 
+    getClientWidth()
+    window.addEventListener("resize", getClientWidth)
     el.addEventListener("scroll", setScrollProgress)
 })
 
@@ -70,6 +69,7 @@ onUnmounted(() => {
 
     if (!el) return
 
+    window.removeEventListener("resize", getClientWidth)
     el.removeEventListener("scroll", setScrollProgress)
 })
 
@@ -89,11 +89,6 @@ const scrollToRight = () => {
 
     isScrolling.value = true
 
-    if (el.scrollLeft + ONE_STEP_OF_SCROLL >= scrollWidth.value) {
-        el.scrollLeft = scrollWidth.value
-        return
-    }
-
     el.scrollLeft += ONE_STEP_OF_SCROLL
 }
 
@@ -105,12 +100,15 @@ const scrollToLeft = () => {
 
     isScrolling.value = true
 
-    if (el.scrollLeft < ONE_STEP_OF_SCROLL) {
-        el.scrollLeft = 0
-        return
-    }
-
     el.scrollLeft -= ONE_STEP_OF_SCROLL
+}
+
+const getClientWidth = () => {
+    const el = carouselScrollRef.value as HTMLDivElement
+
+    if (!el) return
+
+    clientWidth.value = el.clientWidth
 }
 
 const clickOnTitleHandler = () => {

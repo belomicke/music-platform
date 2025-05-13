@@ -17,7 +17,7 @@ const id = computed(() => props.id)
 const { data: artists } = useFavoriteArtists(id)
 
 const clickOnTitleHandler = () => {
-    goToFavoriteArtistsPage(props.id)
+    goToFavoriteArtistsPage()
 }
 </script>
 

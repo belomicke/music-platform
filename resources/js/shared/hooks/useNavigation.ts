@@ -34,12 +34,9 @@ export const useNavigation = () => {
         })
     }
 
-    const goToFavoriteArtistsPage = (id: string) => {
+    const goToFavoriteArtistsPage = () => {
         router.push({
             name: ROUTE_NAMES.FAVOURITE_ARTISTS_PAGE,
-            params: {
-                id,
-            },
         })
     }
 

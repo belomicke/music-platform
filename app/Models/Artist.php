@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 
 /**
  * @property int id
@@ -21,11 +22,11 @@ use Illuminate\Support\Facades\Storage;
  */
 class Artist extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
-        'uuid',
-        'name',
+        "uuid",
+        "name",
     ];
 
     protected $hidden = [
@@ -35,6 +36,13 @@ class Artist extends Model
     protected $appends = [
         "image_url"
     ];
+
+    public function toSearchableArray(): array
+    {
+        return [
+            "name" => $this->name,
+        ];
+    }
 
     public function getImageUrlAttribute()
     {

@@ -33,10 +33,14 @@ watch(route, () => {
 onMounted(() => {
     getHistoryState()
 
+    if (!scrollElement.value) return
+
     scrollElement.value.addEventListener("scroll", onScrollHandler)
 })
 
 onUnmounted(() => {
+    if (!scrollElement.value) return
+
     scrollElement.value.removeEventListener("scroll", onScrollHandler)
 })
 
@@ -75,8 +79,11 @@ const scrollToTop = () => {
 </script>
 
 <template>
-    <div class="media-page-sticky-header">
-        <div class="media-page-sticky-header__navigation">
+    <div
+        class="sticky-header-with-navigation"
+        v-if="stickyHeaderStore.getIsMount"
+    >
+        <div class="sticky-header-with-navigation__navigation">
             <i-icon-button
                 icon="chevron-left"
                 variant="ghost"
@@ -93,7 +100,7 @@ const scrollToTop = () => {
             />
         </div>
         <div
-            class="media-page-sticky-header__title"
+            class="sticky-header-with-navigation__title"
             :class="[
                 scrollTop > 100 && 'visible'
             ]"
@@ -106,7 +113,7 @@ const scrollToTop = () => {
 </template>
 
 <style lang="scss">
-.media-page-sticky-header {
+.sticky-header-with-navigation {
     display: flex;
     align-items: center;
     gap: 24px;
