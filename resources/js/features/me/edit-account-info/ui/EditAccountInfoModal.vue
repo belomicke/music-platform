@@ -86,6 +86,7 @@ const submitForm = () => {
     }
 
     editAccountInfo(data)
+    avatarFile.value = undefined
 }
 
 const clearChanges = () => {
