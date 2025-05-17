@@ -34,9 +34,11 @@ class Release extends Model
 
     public function toSearchableArray(): array
     {
-        return [
-            "title" => $this->title
-        ];
+        return $this
+            ->with("artists")
+            ->where("id", $this->id)
+            ->first()
+            ->toArray();
     }
 
     public function getImageUrlAttribute(): string

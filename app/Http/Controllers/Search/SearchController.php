@@ -15,7 +15,7 @@ final class SearchController extends Controller
     public function __invoke(Request $request, SearchAction $searchAction)
     {
         $query = $request->input("query");
-        $type = $request->input("type");
+        $type = $request->input("type", "all");
 
         $result = $searchAction->execute(
             query: $query,

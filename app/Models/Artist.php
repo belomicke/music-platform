@@ -43,9 +43,11 @@ class Artist extends Model
 
     public function toSearchableArray(): array
     {
-        return [
-            "name" => $this->name,
-        ];
+        return $this
+            ->with("releases")
+            ->where("id", $this->id)
+            ->first()
+            ->toArray();
     }
 
     public function getImageUrlAttribute()
