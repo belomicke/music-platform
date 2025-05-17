@@ -66,6 +66,19 @@ export default {
         },
     },
 
+    "entities": {
+        "release": {
+            "plural": "Релизы",
+            "types": {
+                "album": "Альбом",
+                "single": "Сингл",
+            },
+        },
+        "artist": {
+            "plural": "Исполнители",
+        },
+    },
+
     "ui": {
         "dialog": {
             "action": {
@@ -99,10 +112,15 @@ export default {
                 },
             },
         },
-        "user": {
+        "collection": {
             "followed-artists": {
                 "ui": {
                     "list-title": "Любимые исполнители",
+                },
+            },
+            "followed-releases": {
+                "ui": {
+                    "list-title": "Любимые релизы",
                 },
             },
         },
@@ -118,16 +136,35 @@ export default {
             "input": {
                 "placeholder": "Трек, альбом, исполнитель",
             },
+            "recent-searches": {
+                "note": "Здесь будут ваши недавние запросы",
+            },
+            "no-results": {
+                "title": "Ничего не нашли",
+                "text": "Попробуйте написать по-другому",
+            },
         },
         "artist-info": {
             "header": {
                 "type": "Исполнитель",
             },
         },
-        "user": {
+        "release": {
+            "info": {
+                "header": {
+                    "type": "Альбом",
+                },
+            },
+        },
+        "collection": {
             "followed-artists": {
                 "header": {
                     "title": "Исполнители",
+                },
+            },
+            "followed-releases": {
+                "header": {
+                    "title": "Релизы",
                 },
             },
         },

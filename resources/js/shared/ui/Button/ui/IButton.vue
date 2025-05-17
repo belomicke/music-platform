@@ -73,7 +73,6 @@ withDefaults(defineProps<IButtonProps>(), {
 
     height: 36px;
 
-    user-select: none;
 
     transition: background-color .15s;
 

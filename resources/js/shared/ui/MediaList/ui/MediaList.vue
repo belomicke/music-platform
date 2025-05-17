@@ -69,7 +69,7 @@ const loadMoreHandler = () => {
             >
                 <i-virtual-scroll
                     :count="rows.length"
-                    :estimate-size="270"
+                    :estimate-size="228"
                     :gap="20"
                     window
                 >
@@ -97,7 +97,6 @@ const loadMoreHandler = () => {
 
     &__title {
         display: flex;
-        user-select: none;
 
         & > h1 {
             font-size: 20px;

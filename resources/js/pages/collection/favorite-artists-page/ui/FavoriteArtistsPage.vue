@@ -1,34 +1,20 @@
 <script setup lang="ts">
+import { computed } from "vue"
 import { useI18n } from "vue-i18n"
-import { FavoriteArtistsList } from "@/features/collection/favorite-artists"
-import { useCurrentUser } from "@/features/auth/current-user"
-import { MediaListPage, setStickyHeaderTitle } from "@/shared/ui"
-import { onMounted, onUnmounted } from "vue"
+import { FavoriteArtistsList } from "@/features/collection/get-favorite-artists"
+import { MediaListPage, useStickyHeaderTitle } from "@/shared/ui"
 
 const { t } = useI18n()
 
-const { data: user } = useCurrentUser()
-
-onMounted(() => {
-    setStickyHeaderTitle(t("page.user.followed-artists.header.title"))
+const title = computed(() => {
+    return t("entities.artist.plural")
 })
 
-onUnmounted(() => {
-    setStickyHeaderTitle("")
-})
+useStickyHeaderTitle(title)
 </script>
 
 <template>
-    <media-list-page
-        :title="t('page.user.followed-artists.header.title')"
-        v-if="user"
-    >
-        <favorite-artists-list
-            :id="user.id"
-        />
+    <media-list-page :title="title">
+        <favorite-artists-list/>
     </media-list-page>
 </template>
-
-<style lang="scss">
-
-</style>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\StorageService;
 use Database\Factories\UserFactory;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -11,7 +12,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -54,7 +54,10 @@ final class User extends Authenticatable implements MustVerifyEmail
 
     public function getImageUrlAttribute()
     {
-        return Storage::disk("public")->url("users/avatars/$this->uuid.png");
+        return StorageService::getMediaAvatar(
+            uuid: $this->uuid,
+            type: "users"
+        );
     }
 
     public function followed_artists(): BelongsToMany
@@ -64,6 +67,16 @@ final class User extends Authenticatable implements MustVerifyEmail
             "artist_user",
             "user_id",
             "artist_id"
+        )->withTimestamps();
+    }
+
+    public function followed_releases(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Release::class,
+            "release_user",
+            "user_id",
+            "release_id"
         )->withTimestamps();
     }
 }

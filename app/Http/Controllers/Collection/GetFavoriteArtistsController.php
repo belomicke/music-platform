@@ -6,15 +6,15 @@ namespace App\Http\Controllers\Collection;
 
 use App\Actions\Collection\GetFavoriteArtistsAction;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Artist\GetFavoriteArtistsRequest;
+use App\Http\Requests\Collection\GetMediaListRequest;
 use App\Http\Resources\Artist\CompactArtistResource;
 use Illuminate\Http\JsonResponse;
 
 final class GetFavoriteArtistsController extends Controller
 {
     public function __invoke(
-        GetFavoriteArtistsRequest $request,
-        GetFavoriteArtistsAction  $getFavoriteArtistsAction
+        GetMediaListRequest      $request,
+        GetFavoriteArtistsAction $getFavoriteArtistsAction
     ): JsonResponse
     {
         $offset = (int)$request->input("offset", 0);

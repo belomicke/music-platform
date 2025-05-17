@@ -136,7 +136,6 @@ const scrollToTop = () => {
         font-weight: 600;
         opacity: 0;
         pointer-events: none;
-        user-select: none;
         cursor: pointer;
         transition: opacity .15s, color .15s;
 
@@ -146,7 +145,7 @@ const scrollToTop = () => {
         }
 
         &:hover {
-            color: var(--color-text-secondary);
+            color: var(--color-primary-hover);
         }
     }
 }

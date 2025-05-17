@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch } from "vue"
+import { computed } from "vue"
 import { useRoute } from "vue-router"
+import { ArtistReleasesCarousel } from "@/features/releases/get-artist-releases"
 import { useArtistById } from "@/features/artists/get-artist-by-id"
 import { ArtistPageHeader } from "@/entities/artist"
-import { setStickyHeaderTitle } from "@/shared/ui"
+import { useStickyHeaderTitle } from "@/shared/ui"
 
 const route = useRoute()
 
@@ -13,30 +14,31 @@ const id = computed(() => {
 
 const { data: artist } = useArtistById(id)
 
-watch(artist, () => {
-    if (artist.value) {
-        setStickyHeaderTitle(artist.value.name)
-    }
-})
+useStickyHeaderTitle(computed(() => {
+    if (!artist.value) return ""
 
-onMounted(() => {
-    if (artist.value) setStickyHeaderTitle(artist.value.name)
-})
-
-onUnmounted(() => {
-    setStickyHeaderTitle("")
-})
+    return artist.value.name
+}))
 </script>
 
 <template>
-    <template v-if="artist">
+    <div
+        class="artist-info-page"
+        v-if="artist"
+    >
         <artist-page-header
             :artist="artist"
-            v-if="artist"
         />
-    </template>
+        <div class="content">
+            <artist-releases-carousel
+                :id="artist.id"
+            />
+        </div>
+    </div>
 </template>
 
-<style lang="scss">
-
+<style scoped lang="scss">
+.content {
+    padding: 0 0 24px;
+}
 </style>

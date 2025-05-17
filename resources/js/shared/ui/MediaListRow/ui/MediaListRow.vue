@@ -15,7 +15,6 @@
     justify-content: space-between;
     gap: 24px;
     width: 100%;
-    height: 270px;
 
     --min-column-size: 10.75rem;
 

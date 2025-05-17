@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\DTOs\User\CreateUserDTO;
-use App\Models\Artist;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -30,20 +28,6 @@ final class UserRepository
         $user->save();
 
         return $user->fresh();
-    }
-
-    public function followArtist(Artist $artist): void
-    {
-        Auth::user()
-            ->followed_artists()
-            ->attach($artist);
-    }
-
-    public function unfollowArtist(Artist $artist): void
-    {
-        Auth::user()
-            ->followed_artists()
-            ->detach($artist);
     }
 
     public function incrementFollowedArtistsCount(User $user): void

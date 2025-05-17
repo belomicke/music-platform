@@ -18,6 +18,10 @@ export const useMediaListStore = defineStore("media-list", () => {
         return `favorite-artists`
     })
 
+    const getFavoriteReleasesMediaListId = computed(() => {
+        return `favorite-releases`
+    })
+
     const getMediaListById = computed(() => {
         return (id: string): MediaList | undefined => {
             return mediaLists.value.find(item => item.id === id)
@@ -78,6 +82,7 @@ export const useMediaListStore = defineStore("media-list", () => {
     return {
         getPopularArtistsMediaListId,
         getFavoriteArtistsMediaListId,
+        getFavoriteReleasesMediaListId,
 
         getMediaListById,
 

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Auth\CreateTokenController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -16,6 +17,8 @@ Route::group(["prefix" => "auth"], function () {
     });
 
     Route::middleware("guest")->group(function () {
+        Route::post("token", CreateTokenController::class);
+
         Route::post("sign-in", SignInController::class);
         Route::post("sign-up", CreateUserController::class);
 

@@ -84,7 +84,6 @@ const closeHandler = () => {
         background-color: var(--color-background-secondary);
         z-index: var(--z-index-dialog);
         border-radius: 1rem;
-        user-select: none;
     }
 
     &__header {

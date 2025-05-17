@@ -37,7 +37,6 @@ onMounted(() => {
     border-radius: 6px;
     padding: 8px 16px;
     cursor: pointer;
-    user-select: none;
     z-index: var(--z-index-alert);
 
     &.success {

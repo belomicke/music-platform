@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n"
 import { IIcon } from "@/shared/ui"
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -9,8 +12,12 @@ import { IIcon } from "@/shared/ui"
             icon="search"
             :size="40"
         />
-        <h3 class="search-page-no-results__title">Ничего не нашли</h3>
-        <div class="search-page-no-results__subtitle">Попробуйте написать по-другому</div>
+        <h3 class="search-page-no-results__title">
+            {{ t("page.search.no-results.title") }}
+        </h3>
+        <div class="search-page-no-results__subtitle">
+            {{ t("page.search.no-results.text") }}
+        </div>
     </div>
 </template>
 

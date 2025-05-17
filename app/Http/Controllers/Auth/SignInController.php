@@ -9,8 +9,8 @@ use App\Exceptions\Auth\InvalidCredentialsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignInRequest;
 use App\Http\Resources\User\CurrentUserResource;
+use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 final class SignInController extends Controller
 {
@@ -26,8 +26,8 @@ final class SignInController extends Controller
 
         $signInAction->execute(data: $data);
 
-        $user = Auth::user();
-        
+        $user = AuthService::user();
+
         return $this->success([
             "user" => CurrentUserResource::make($user)
         ]);

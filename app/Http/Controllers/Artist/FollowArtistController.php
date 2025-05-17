@@ -27,7 +27,7 @@ final class FollowArtistController extends Controller
         }
 
         $followArtistAction->execute(
-            uuid: $artist->uuid,
+            artist: $artist,
         );
 
         return $this->success();

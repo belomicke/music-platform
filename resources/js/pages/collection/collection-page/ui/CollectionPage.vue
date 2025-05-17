@@ -1,23 +1,31 @@
 <script setup lang="ts">
-import { FavoriteArtistsCarousel } from "@/features/collection/favorite-artists"
-import { useCurrentUser } from "@/features/auth/current-user"
+import { onMounted } from "vue"
+import { FavoriteArtistsCarousel } from "@/features/collection/get-favorite-artists"
+import { FavoriteReleasesCarousel } from "@/features/collection/get-favorite-releases"
+import { useCollection } from "@/features/collection/get-collection"
 
-const { data: user } = useCurrentUser()
+const { data, fetch: getCollection, isLoading } = useCollection()
+
+onMounted(() => {
+    getCollection()
+})
 </script>
 
 <template>
     <div
         class="collection-page"
-        v-if="user"
+        v-if="isLoading === false && data !== undefined"
     >
-        <favorite-artists-carousel
-            :id="user.id"
-        />
+        <favorite-artists-carousel/>
+        <favorite-releases-carousel/>
     </div>
 </template>
 
 <style lang="scss">
 .collection-page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
     padding-bottom: 24px;
 }
 </style>

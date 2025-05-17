@@ -25,7 +25,6 @@ defineProps<{
         padding: 12px 24px;
 
         &__title {
-            user-select: none;
             margin: 0;
             line-height: 1;
         }

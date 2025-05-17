@@ -113,7 +113,6 @@ const openEditAccountInfoModal = () => {
         padding: 12px 16px;
         font-size: 16px;
         font-weight: 500;
-        user-select: none;
         cursor: pointer;
         border-radius: 12px;
         transition: background-color .15s;

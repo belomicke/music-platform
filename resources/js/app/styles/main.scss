@@ -10,6 +10,11 @@ html {
     color-scheme: dark;
 }
 
+::selection {
+    color: #000;
+    background-color: #facc4a;
+}
+
 body {
     margin: 0;
     background-color: var(--color-body-background);

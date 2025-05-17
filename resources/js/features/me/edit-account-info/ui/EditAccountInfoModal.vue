@@ -119,6 +119,7 @@ const clearChanges = () => {
                             :size="96"
                             clickable
                             icon="user"
+                            round
                             @click="openAvatarFilePicker"
                         />
                         <i-icon-button

@@ -6,8 +6,8 @@ namespace App\Repositories;
 
 use App\DTOs\Artist\ArtistMediaListDTO;
 use App\Models\Artist;
+use App\Services\AuthService;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 final class ArtistRepository
 {
@@ -25,7 +25,7 @@ final class ArtistRepository
 
         $count = Artist::query()->count();
 
-        if (Auth::check()) {
+        if (AuthService::check()) {
             $artists->load(relations: ["is_followed"]);
         }
 
@@ -38,6 +38,16 @@ final class ArtistRepository
     public function search(string $query, int $limit = 36): Collection
     {
         return Artist::search(query: $query)->take(limit: $limit)->get();
+    }
+
+    public function follow(Artist $artist): void
+    {
+        AuthService::user()->followed_artists()->attach($artist);
+    }
+
+    public function unfollow(Artist $artist): void
+    {
+        AuthService::user()->followed_artists()->detach($artist);
     }
 
     public function incrementFollowersCount(Artist $artist): void

@@ -23,6 +23,7 @@ const { getCurrentUser: user } = storeToRefs(authStore)
         :size="size"
         :clickable="clickable"
         :can-be-open-in-modal="canBeOpenInModal"
+        round
         icon="user"
     />
 </template>

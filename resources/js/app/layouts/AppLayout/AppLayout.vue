@@ -40,7 +40,7 @@ const { deviceType } = useResponsive()
         grid-template-columns: var(--sidebar-width-compact) 1fr;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
         display: flex;
         padding: 0;
     }
@@ -56,7 +56,7 @@ const { deviceType } = useResponsive()
             background-color: var(--color-background);
             overflow: hidden;
 
-            @media (max-width: 768px) {
+            @media (max-width: 767px) {
                 border: none;
                 border-radius: 0;
             }

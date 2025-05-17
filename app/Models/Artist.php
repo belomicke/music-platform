@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Services\AuthService;
+use App\Services\StorageService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Collection;
 use Laravel\Scout\Searchable;
 
 /**
@@ -17,6 +19,8 @@ use Laravel\Scout\Searchable;
  * @property string name
  * @property int followers_count
  * @property string image_url
+ *
+ * @property Collection<Release> releases
  *
  * @property HasOne is_followed
  */
@@ -46,14 +50,25 @@ class Artist extends Model
 
     public function getImageUrlAttribute()
     {
-        return Storage::disk("public")->url("artists/avatars/$this->uuid.png");
+        return StorageService::getMediaAvatar(
+            uuid: $this->uuid,
+            type: "artists"
+        );
     }
 
     public function is_followed(): HasOne
     {
-        $id = Auth::user()->id ?? 0;
+        $id = AuthService::user()->id ?? 0;
 
         return $this->hasOne(UserFollowedArtistPivot::class)
             ->where("user_id", $id);
+    }
+
+    public function releases(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            related: Release::class,
+            table: "artist_release"
+        );
     }
 }

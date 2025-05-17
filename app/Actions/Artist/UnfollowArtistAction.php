@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Actions\Artist;
 
-use App\Exceptions\Artist\ArtistNotFoundException;
+use App\Models\Artist;
 use App\Repositories\ArtistRepository;
 use App\Repositories\UserRepository;
+use App\Services\AuthService;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -22,20 +22,14 @@ final readonly class UnfollowArtistAction
     /**
      * @throws Throwable
      */
-    public function execute(string $uuid): void
+    public function execute(Artist $artist): void
     {
-        $artist = $this->artists->getByUUID(uuid: $uuid);
-
-        if ($artist === null) {
-            throw new ArtistNotFoundException();
-        }
-
         try {
             DB::beginTransaction();
 
             if ($artist->is_followed()->exists()) {
-                $this->users->unfollowArtist(artist: $artist);
-                $this->users->decrementFollowedArtistsCount(user: Auth::user());
+                $this->artists->unfollow(artist: $artist);
+                $this->users->decrementFollowedArtistsCount(user: AuthService::user());
                 $this->artists->decrementFollowersCount(artist: $artist);
             }
 

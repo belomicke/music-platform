@@ -2,8 +2,10 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import { AppLayout, AuthLayout } from "../layouts"
 import {
     ArtistInfoPage,
+    ArtistReleasesPage,
     CollectionPage,
     FavoriteArtistsPage,
+    FavoriteReleasesPage,
     ForgotPasswordPage,
     HomePage,
     ResetPasswordPage,
@@ -12,6 +14,7 @@ import {
     SignUpPage,
 } from "@/pages"
 import { ROUTE_NAMES, ROUTE_NAMES_ONLY_FOR_GUESTS } from "@/shared/config/router"
+import { ReleaseInfoPage } from "@/pages/release/release-info-page"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -66,7 +69,12 @@ const routes: RouteRecordRaw[] = [
                     {
                         path: "artists",
                         component: FavoriteArtistsPage,
-                        name: ROUTE_NAMES.FAVOURITE_ARTISTS_PAGE,
+                        name: ROUTE_NAMES.FAVORITE_ARTISTS_PAGE,
+                    },
+                    {
+                        path: "releases",
+                        component: FavoriteReleasesPage,
+                        name: ROUTE_NAMES.FAVORITE_RELEASES_PAGE,
                     },
                 ],
             },
@@ -78,7 +86,17 @@ const routes: RouteRecordRaw[] = [
                         component: ArtistInfoPage,
                         name: ROUTE_NAMES.ARTIST_INFO_PAGE,
                     },
+                    {
+                        path: ":id/releases",
+                        component: ArtistReleasesPage,
+                        name: ROUTE_NAMES.ARTIST_RELEASES_PAGE,
+                    },
                 ],
+            },
+            {
+                path: "/release/:id",
+                component: ReleaseInfoPage,
+                name: ROUTE_NAMES.RELEASE_INFO_PAGE,
             },
         ],
     },

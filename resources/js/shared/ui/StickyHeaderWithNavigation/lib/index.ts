@@ -1,7 +1,7 @@
-import { setStickyHeaderTitle } from "./setStickyHeaderTitle"
 import { setStickyHeaderIsMount } from "./setStickyHeaderIsMount"
+import { useStickyHeaderTitle } from "./useStickyHeaderTitle"
 
 export {
-    setStickyHeaderTitle,
     setStickyHeaderIsMount,
+    useStickyHeaderTitle,
 }

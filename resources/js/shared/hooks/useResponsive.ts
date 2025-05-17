@@ -14,7 +14,7 @@ export const useResponsive = () => {
     const deviceType = computed<DeviceType>(() => {
         if (width.value > 1024) {
             return "desktop"
-        } else if (width.value > 768) {
+        } else if (width.value >= 768) {
             return "tablet"
         } else {
             return "mobile"

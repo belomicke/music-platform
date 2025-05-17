@@ -10,6 +10,11 @@ use Intervention\Image\ImageManager;
 
 class StorageService
 {
+    public static function getMediaAvatar(string $uuid, string $type): string
+    {
+        return Storage::disk("public")->url("$type/avatars/$uuid.png");
+    }
+
     public static function saveUserAvatar(User $user, UploadedFile $file): void
     {
         $image = ImageManager::imagick()

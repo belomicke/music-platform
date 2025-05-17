@@ -36,13 +36,37 @@ export const useNavigation = () => {
 
     const goToFavoriteArtistsPage = () => {
         router.push({
-            name: ROUTE_NAMES.FAVOURITE_ARTISTS_PAGE,
+            name: ROUTE_NAMES.FAVORITE_ARTISTS_PAGE,
+        })
+    }
+
+    const goToFavoriteReleasesPage = () => {
+        router.push({
+            name: ROUTE_NAMES.FAVORITE_RELEASES_PAGE,
         })
     }
 
     const goToArtistInfoPage = (id: string) => {
         router.push({
             name: ROUTE_NAMES.ARTIST_INFO_PAGE,
+            params: {
+                id,
+            },
+        })
+    }
+
+    const goToArtistReleasesPage = (id: string) => {
+        router.push({
+            name: ROUTE_NAMES.ARTIST_RELEASES_PAGE,
+            params: {
+                id,
+            },
+        })
+    }
+
+    const goToReleaseInfoPage = (id: string) => {
+        router.push({
+            name: ROUTE_NAMES.RELEASE_INFO_PAGE,
             params: {
                 id,
             },
@@ -58,7 +82,11 @@ export const useNavigation = () => {
         goToSignUpPage,
 
         goToFavoriteArtistsPage,
+        goToFavoriteReleasesPage,
 
         goToArtistInfoPage,
+        goToArtistReleasesPage,
+
+        goToReleaseInfoPage,
     }
 }

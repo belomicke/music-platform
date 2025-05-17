@@ -112,7 +112,6 @@ const closeDropdown = () => {
     &__name {
         font-size: 16px;
         font-weight: 500;
-        user-select: none;
     }
 
     &__auth-buttons {

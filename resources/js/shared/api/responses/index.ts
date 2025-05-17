@@ -1,3 +1,5 @@
 export * from "./artist"
+export * from "./collection"
 export * from "./global"
+export * from "./release"
 export * from "./user"

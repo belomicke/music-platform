@@ -50,7 +50,7 @@ const canScrollToRight = computed(() => {
     const el = carouselScrollRef.value as HTMLDivElement
 
     if (!el) return
-    
+
     return scrollWidth.value - scrollProgress.value > 1
 })
 
@@ -174,7 +174,7 @@ const clickOnTitleHandler = () => {
 .media-carousel {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     width: 100%;
     padding: 0 24px;
     overflow: hidden;
@@ -183,7 +183,7 @@ const clickOnTitleHandler = () => {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        user-select: none;
+        padding-top: 16px;
     }
 
     &__controls {

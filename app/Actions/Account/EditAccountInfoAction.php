@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Actions\Account;
 
 use App\Models\User;
+use App\Services\AuthService;
 use App\Services\StorageService;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 
 final class EditAccountInfoAction
 {
     public function execute(string|null $name, UploadedFile|null $avatar): User
     {
-        $user = Auth::user();
+        $user = AuthService::user();
 
         if ($name !== null) {
             $user->name = $name;

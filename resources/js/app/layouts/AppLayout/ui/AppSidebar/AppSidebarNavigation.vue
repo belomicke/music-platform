@@ -112,7 +112,6 @@ const clickOnNavigationOptionHandler = (id: ROUTE_NAME) => {
         font-weight: 500;
         padding: 6px 12px;
         height: 48px;
-        user-select: none;
 
         color: var(--color-text-secondary);
 

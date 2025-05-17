@@ -8,9 +8,13 @@ export type ROUTE_NAME =
     | "reset-password"
     | "forgot-password"
 
-    | "favourite-artists"
+    | "favorite-artists"
+    | "favorite-releases"
 
     | "artist-info"
+    | "artist-releases"
+
+    | "release-info"
 
 export const ROUTE_NAMES = {
     HOME: "home",
@@ -22,9 +26,13 @@ export const ROUTE_NAMES = {
     RESET_PASSWORD: "reset-password",
     FORGOT_PASSWORD: "forgot-password",
 
-    FAVOURITE_ARTISTS_PAGE: "favourite-artists",
+    FAVORITE_ARTISTS_PAGE: "favorite-artists",
+    FAVORITE_RELEASES_PAGE: "favorite-releases",
 
     ARTIST_INFO_PAGE: "artist-info",
+    ARTIST_RELEASES_PAGE: "artist-releases",
+
+    RELEASE_INFO_PAGE: "release-info",
 }
 
 export const ROUTE_NAMES_ONLY_FOR_GUESTS = [

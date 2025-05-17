@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Collection\GetCollectionController;
 use App\Http\Controllers\Collection\GetFavoriteArtistsController;
+use App\Http\Controllers\Collection\GetFavoriteReleasesController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -11,5 +13,8 @@ Route::group([
         "auth:sanctum"
     ]
 ], function () {
+    Route::get("", GetCollectionController::class);
+
     Route::get("artists", GetFavoriteArtistsController::class);
+    Route::get("releases", GetFavoriteReleasesController::class);
 });

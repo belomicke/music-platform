@@ -42,7 +42,6 @@ const model = defineModel<string>()
     display: flex;
     flex-direction: column;
     gap: 8px;
-    user-select: none;
 
     & + & {
         margin-top: 16px;
