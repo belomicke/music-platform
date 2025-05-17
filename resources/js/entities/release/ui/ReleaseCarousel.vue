@@ -13,12 +13,19 @@ const props = withDefaults(defineProps<{
     clickableTitle: false,
 })
 
-const emit = defineEmits(["click-on-title"])
+const emit = defineEmits([
+    "click-on-title",
+    "click-on-item",
+])
 
 const items = computed(() => props.releases.map(release => release.id))
 
 const clickOnTitleHandler = () => {
     emit("click-on-title")
+}
+
+const clickOnItemHandler = (id: string) => {
+    emit("click-on-item", id)
 }
 </script>
 
@@ -31,12 +38,9 @@ const clickOnTitleHandler = () => {
     >
         <template #item="{ item }">
             <release-media-card
+                @click="clickOnItemHandler(item)"
                 :id="item"
             />
         </template>
     </media-carousel>
 </template>
-
-<style scoped lang="scss">
-
-</style>

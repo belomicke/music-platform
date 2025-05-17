@@ -6,10 +6,12 @@ import SearchPageNoResults from "./SearchPageNoResults.vue"
 import SearchPageLoader from "./SearchPageLoader.vue"
 import SearchPageInput from "./SearchPageInput.vue"
 import RecentSearches from "./RecentSearches.vue"
-import { SearchType, useSearch } from "@/features/search"
+import { useCreateRecentSearch } from "@/features/recent-searches/create-recent-search"
+import { useSearch } from "@/features/search"
 import { ReleaseCarousel } from "@/entities/release"
 import { ArtistCarousel } from "@/entities/artist"
 import { setStickyHeaderIsMount } from "@/shared/ui"
+import { SearchType } from "@/shared/api"
 
 const { t } = useI18n()
 const route = useRoute()
@@ -23,6 +25,8 @@ const bestResults = computed(() => true)
 
 const { data, noResults, isLoading } = useSearch(query, type, bestResults)
 
+const { fetch: createRecentSearch } = useCreateRecentSearch()
+
 onMounted(() => {
     setStickyHeaderIsMount(false)
 })
@@ -30,6 +34,20 @@ onMounted(() => {
 onUnmounted(() => {
     setStickyHeaderIsMount(true)
 })
+
+const clickOnArtistMediaCardHandler = (id: string) => {
+    createRecentSearch({
+        id,
+        type: "artist",
+    })
+}
+
+const clickOnReleaseMediaCardHandler = (id: string) => {
+    createRecentSearch({
+        id,
+        type: "release",
+    })
+}
 </script>
 
 <template>
@@ -53,11 +71,13 @@ onUnmounted(() => {
                         :artists="data.artists"
                         :title="t('entities.artist.plural')"
                         v-if="data.artists.length"
+                        @click-on-item="clickOnArtistMediaCardHandler"
                     />
                     <release-carousel
                         :releases="data.releases"
                         :title="t('entities.release.plural')"
                         v-if="data.releases.length"
+                        @click-on-item="clickOnReleaseMediaCardHandler"
                     />
                 </template>
             </div>

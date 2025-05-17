@@ -10,6 +10,8 @@ const props = defineProps<{
     id: string
 }>()
 
+const emit = defineEmits(["click"])
+
 const compactArtistStore = useCompactArtistStore()
 const { getById: getCompactArtistById } = storeToRefs(compactArtistStore)
 
@@ -19,6 +21,7 @@ const artist = computed(() => getCompactArtistById.value(id.value))
 const { goToArtistInfoPage } = useNavigation()
 
 const goToArtistsInfoPageHandler = () => {
+    emit("click")
     goToArtistInfoPage(id.value)
 }
 </script>

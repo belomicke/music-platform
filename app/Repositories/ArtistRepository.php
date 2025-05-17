@@ -16,6 +16,11 @@ final class ArtistRepository
         return Artist::query()->where('uuid', $uuid)->first();
     }
 
+    public function getManyByUUID(array $uuids): Collection
+    {
+        return Artist::query()->whereIn('uuid', $uuids)->get();
+    }
+
     public function getPopular(): ArtistMediaListDTO
     {
         $artists = Artist::query()

@@ -10,6 +10,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -78,5 +79,10 @@ final class User extends Authenticatable implements MustVerifyEmail
             "user_id",
             "release_id"
         )->withTimestamps();
+    }
+
+    public function recent_searches(): HasMany
+    {
+        return $this->HasMany(RecentSearch::class);
     }
 }

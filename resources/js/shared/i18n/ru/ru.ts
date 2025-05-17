@@ -68,6 +68,7 @@ export default {
 
     "entities": {
         "release": {
+            "single": "Релиз",
             "plural": "Релизы",
             "types": {
                 "album": "Альбом",
@@ -75,6 +76,7 @@ export default {
             },
         },
         "artist": {
+            "single": "Исполнитель",
             "plural": "Исполнители",
         },
     },
@@ -138,6 +140,7 @@ export default {
             },
             "recent-searches": {
                 "note": "Здесь будут ваши недавние запросы",
+                "clear": "Очистить историю",
             },
             "no-results": {
                 "title": "Ничего не нашли",

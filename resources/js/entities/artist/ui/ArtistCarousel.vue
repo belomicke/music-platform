@@ -13,12 +13,19 @@ const props = withDefaults(defineProps<{
     clickableTitle: false,
 })
 
-const emit = defineEmits(["click-on-title"])
+const emit = defineEmits([
+    "click-on-title",
+    "click-on-item",
+])
 
 const items = computed(() => props.artists.map(artist => artist.id))
 
 const clickOnTitleHandler = () => {
     emit("click-on-title")
+}
+
+const clickOnItemHandler = (id: string) => {
+    emit("click-on-item", id)
 }
 </script>
 
@@ -31,6 +38,7 @@ const clickOnTitleHandler = () => {
     >
         <template #item="{ item }">
             <artist-media-card
+                @click="clickOnItemHandler(item)"
                 :id="item"
             />
         </template>

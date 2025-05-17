@@ -63,7 +63,7 @@ export const useSearch = (
     })
 
     const { fetch, isLoading } = useFetch(async () => {
-        return api.search(query.value, type.value, bestResults.value)
+        return api.search.search(query.value, type.value, bestResults.value)
     }, {
         onSuccess: (data) => {
             handleArtistsFromResponse(data.data.data.artists)

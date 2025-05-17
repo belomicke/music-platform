@@ -1,25 +1,25 @@
 import { ref } from "vue"
 import { ApiErrorResponse } from "@/shared/api/responses"
 
-export type UseFetchOptions<S> = {
-    onSuccess?: (res: S) => void
+export type UseFetchOptions<Response, Params> = {
+    onSuccess?: (res: Response, params: Params) => void
     onError?: (data: ApiErrorResponse) => void
 }
 
-export const useFetch = <T, S = {}>(
-    callback: (params: S) => Promise<T>,
-    options: UseFetchOptions<T> = {},
+export const useFetch = <Params = {}, Response = {}>(
+    callback: (params: Params) => Promise<Response>,
+    options: UseFetchOptions<Response, Params> = {},
 ) => {
     const isLoading = ref<boolean>(false)
 
-    const fetch = async (params?: S) => {
+    const fetch = async (params?: Params) => {
         if (isLoading.value) return
 
         isLoading.value = true
 
         callback(params).then(res => {
             if (typeof options.onSuccess === "function") {
-                options.onSuccess(res)
+                options.onSuccess(res, params)
             }
         }).catch((error) => {
             if (typeof options.onError === "function") {
