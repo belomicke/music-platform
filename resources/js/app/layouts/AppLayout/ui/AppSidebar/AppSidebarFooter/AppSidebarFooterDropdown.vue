@@ -55,7 +55,7 @@ const openEditAccountInfoModal = () => {
 <template>
     <div class="app-sidebar-footer-dropdown">
         <current-user-avatar
-            :size="52"
+            size="52px"
         />
         <div class="app-sidebar-footer-dropdown__username">{{ user.name }}</div>
 

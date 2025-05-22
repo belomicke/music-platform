@@ -32,7 +32,7 @@ const goToArtist = (id: string) => {
         <template #avatar>
             <i-avatar
                 :url="release.image_url"
-                :size="204"
+                size="204px"
                 can-be-open-in-modal
             />
         </template>
@@ -43,7 +43,7 @@ const goToArtist = (id: string) => {
             >
                 <i-avatar
                     :url="release.artists[0].image_url"
-                    :size="20"
+                    size="20px"
                     round
                 />
                 <div

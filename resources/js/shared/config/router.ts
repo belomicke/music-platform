@@ -28,6 +28,7 @@ export const ROUTE_NAMES = {
 
     FAVORITE_ARTISTS_PAGE: "favorite-artists",
     FAVORITE_RELEASES_PAGE: "favorite-releases",
+    FAVORITE_TRACKS_PAGE: "favorite-tracks",
 
     ARTIST_INFO_PAGE: "artist-info",
     ARTIST_RELEASES_PAGE: "artist-releases",

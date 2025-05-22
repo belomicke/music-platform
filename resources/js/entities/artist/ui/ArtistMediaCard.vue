@@ -6,9 +6,12 @@ import { useCompactArtistStore } from "@/entities/artist"
 import { useNavigation } from "@/shared/hooks"
 import { IAvatar } from "@/shared/ui"
 
-const props = defineProps<{
-    id: string
-}>()
+const props = withDefaults(defineProps<{
+    id: string,
+    avatarSize?: string
+}>(), {
+    avatarSize: "100%",
+})
 
 const emit = defineEmits(["click"])
 
@@ -33,7 +36,7 @@ const goToArtistsInfoPageHandler = () => {
     >
         <i-avatar
             :url="artist.image_url"
-            :size="200"
+            :size="avatarSize"
             round
             clickable
             with-overlay
@@ -66,8 +69,6 @@ const goToArtistsInfoPageHandler = () => {
     flex-direction: column;
     gap: 8px;
     align-items: center;
-
-    min-width: 10.75rem;
 
     &__title {
         font-size: 13px;

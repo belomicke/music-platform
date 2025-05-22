@@ -21,7 +21,7 @@ const { deviceType } = useResponsive()
         <template #avatar>
             <i-avatar
                 :url="artist.image_url"
-                :size="deviceType === 'mobile' ? 168 : 204"
+                :size="deviceType === 'mobile' ? '168px' : '204px'"
                 can-be-open-in-modal
                 round
             />

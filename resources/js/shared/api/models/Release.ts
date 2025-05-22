@@ -11,6 +11,7 @@ export interface ApiRelease {
     is_followed: boolean
 
     artists: ApiCompactArtist[]
+    tracks: string[]
 
     type: "album" | "single"
 }

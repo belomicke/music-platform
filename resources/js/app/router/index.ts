@@ -6,15 +6,16 @@ import {
     CollectionPage,
     FavoriteArtistsPage,
     FavoriteReleasesPage,
+    FavoriteTracksPage,
     ForgotPasswordPage,
     HomePage,
+    ReleaseInfoPage,
     ResetPasswordPage,
     SearchPage,
     SignInPage,
     SignUpPage,
 } from "@/pages"
 import { ROUTE_NAMES, ROUTE_NAMES_ONLY_FOR_GUESTS } from "@/shared/config/router"
-import { ReleaseInfoPage } from "@/pages/release/release-info-page"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -75,6 +76,11 @@ const routes: RouteRecordRaw[] = [
                         path: "releases",
                         component: FavoriteReleasesPage,
                         name: ROUTE_NAMES.FAVORITE_RELEASES_PAGE,
+                    },
+                    {
+                        path: "tracks",
+                        component: FavoriteTracksPage,
+                        name: ROUTE_NAMES.FAVORITE_TRACKS_PAGE,
                     },
                 ],
             },

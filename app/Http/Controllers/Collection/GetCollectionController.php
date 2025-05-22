@@ -8,6 +8,7 @@ use App\Actions\Collection\GetCollectionAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Artist\CompactArtistResource;
 use App\Http\Resources\Release\ReleaseResource;
+use App\Http\Resources\Track\TrackResource;
 use Illuminate\Http\JsonResponse;
 
 final class GetCollectionController extends Controller
@@ -24,7 +25,11 @@ final class GetCollectionController extends Controller
             "releases" => [
                 "items" => ReleaseResource::collection($collection->releases->releases),
                 "count" => $collection->releases->count
-            ]
+            ],
+            "tracks" => [
+                "items" => TrackResource::collection($collection->tracks->tracks),
+                "count" => $collection->tracks->count
+            ],
         ]);
     }
 }

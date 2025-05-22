@@ -23,6 +23,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string password
  * @property string image_url
  * @property int followed_artists_count
+ * @property int followed_releases_count
+ * @property int favorite_tracks_count
  */
 final class User extends Authenticatable implements MustVerifyEmail
 {
@@ -65,9 +67,7 @@ final class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(
             Artist::class,
-            "artist_user",
-            "user_id",
-            "artist_id"
+            "artist_user"
         )->withTimestamps();
     }
 
@@ -75,9 +75,15 @@ final class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(
             Release::class,
-            "release_user",
-            "user_id",
-            "release_id"
+            "release_user"
+        )->withTimestamps();
+    }
+
+    public function favorite_tracks(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Track::class,
+            "track_user"
         )->withTimestamps();
     }
 

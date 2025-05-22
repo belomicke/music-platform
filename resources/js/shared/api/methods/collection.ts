@@ -1,4 +1,9 @@
-import type { CollectionResponse, CompactArtistListResponse, ReleaseListResponse } from "@/shared/api"
+import type {
+    CollectionResponse,
+    CompactArtistListResponse,
+    ReleaseListResponse,
+    TrackListResponse,
+} from "@/shared/api"
 import { makeRequest } from "@/shared/api"
 
 export const collectionMethods = {
@@ -21,6 +26,15 @@ export const collectionMethods = {
         return makeRequest({
             method: "GET",
             url: `/api/collection/releases`,
+            data: {
+                offset,
+            },
+        })
+    },
+    getFavoriteTracks: async (offset: number): Promise<TrackListResponse> => {
+        return makeRequest({
+            method: "GET",
+            url: `/api/collection/tracks`,
             data: {
                 offset,
             },

@@ -1,17 +1,11 @@
-export interface ApiCompactUser {
+export interface ApiCurrentUser {
     id: string
     name: string
     image_url: string
 
-    is_followed: boolean
-}
+    email: string
 
-export interface ApiUser extends ApiCompactUser {
     followed_artists_count: number
     followed_users_count: number
-    followers_count: number
-}
-
-export interface ApiCurrentUser extends ApiUser {
-    email: string
+    favorite_tracks_count: number
 }

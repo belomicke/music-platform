@@ -17,10 +17,12 @@ final readonly class GetCollectionAction
     {
         $artists = $this->collection->getFavoriteArtists(limit: 12);
         $releases = $this->collection->getFavoriteReleases(limit: 12);
+        $tracks = $this->collection->getFavoriteTracks(limit: 10);
 
         return new CollectionDTO(
             artists: $artists,
-            releases: $releases
+            releases: $releases,
+            tracks: $tracks
         );
     }
 }

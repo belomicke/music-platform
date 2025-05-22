@@ -24,7 +24,8 @@ use Laravel\Scout\Searchable;
  *
  * @property bool is_followed
  *
- * @property Collection artists
+ * @property Collection<Artist> artists
+ * @property Collection<Track> tracks
  *
  * @method static create(array $attributes = [])
  */
@@ -62,6 +63,14 @@ class Release extends Model
         return $this->belongsToMany(
             related: Artist::class,
             table: "artist_release"
+        );
+    }
+
+    public function tracks(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            related: Track::class,
+            table: "release_track"
         );
     }
 }

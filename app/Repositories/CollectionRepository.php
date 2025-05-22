@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\DTOs\Artist\ArtistMediaListDTO;
 use App\DTOs\Release\ReleaseMediaListDTO;
+use App\DTOs\Track\TrackMediaListDTO;
 use App\Services\AuthService;
 
 final class CollectionRepository
@@ -56,7 +57,7 @@ final class CollectionRepository
                 direction: "desc"
             );
 
-        $count = $user->followed_releases()->count();
+        $count = $user->followed_releases_count;
 
         if ($offset > 0) {
             $releases->skip(value: $offset);
@@ -64,12 +65,61 @@ final class CollectionRepository
 
         $releases = $releases->take(value: $limit)->get();
 
+        $releases->load(relations: [
+            "artists",
+            "tracks",
+        ]);
+
         if (AuthService::check()) {
-            $releases->load(relations: ["is_followed"]);
+            $releases->load(relations: [
+                "is_followed",
+                "artists.is_followed"
+            ]);
         }
 
         return new ReleaseMediaListDTO(
             releases: $releases,
+            count: $count
+        );
+    }
+
+    public function getFavoriteTracks(
+        int $offset = 0,
+        int $limit = 50
+    ): TrackMediaListDTO
+    {
+        $user = AuthService::user();
+
+        $tracks = $user
+            ->favorite_tracks()
+            ->orderByPivot(
+                column: "created_at",
+                direction: "desc"
+            );
+
+        $count = $user->favorite_tracks_count;
+
+        if ($offset > 0) {
+            $tracks->skip(value: $offset);
+        }
+
+        $tracks = $tracks->take(value: $limit)->get();
+
+        $tracks->load(relations: [
+            "releases",
+            "releases.artists",
+            "artists",
+        ]);
+
+        if (AuthService::check()) {
+            $tracks->load(relations: [
+                "releases.is_followed",
+                "artists.is_followed"
+            ]);
+        }
+
+        return new TrackMediaListDTO(
+            tracks: $tracks,
             count: $count
         );
     }

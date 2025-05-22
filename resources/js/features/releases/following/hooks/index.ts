@@ -1,5 +1,1 @@
-import { useReleaseFollowing } from "./useReleaseFollowing"
-
-export {
-    useReleaseFollowing,
-}
+export * from "./useReleaseFollowing"

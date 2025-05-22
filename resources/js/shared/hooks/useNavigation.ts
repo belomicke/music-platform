@@ -46,6 +46,12 @@ export const useNavigation = () => {
         })
     }
 
+    const goToFavoriteTracksPage = () => {
+        router.push({
+            name: ROUTE_NAMES.FAVORITE_TRACKS_PAGE,
+        })
+    }
+
     const goToArtistInfoPage = (id: string) => {
         router.push({
             name: ROUTE_NAMES.ARTIST_INFO_PAGE,
@@ -83,6 +89,7 @@ export const useNavigation = () => {
 
         goToFavoriteArtistsPage,
         goToFavoriteReleasesPage,
+        goToFavoriteTracksPage,
 
         goToArtistInfoPage,
         goToArtistReleasesPage,

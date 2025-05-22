@@ -116,7 +116,7 @@ const clearChanges = () => {
                     <div class="avatar-changer__avatar">
                         <i-avatar
                             :url="avatarUrl"
-                            :size="96"
+                            size="96px"
                             clickable
                             icon="user"
                             round

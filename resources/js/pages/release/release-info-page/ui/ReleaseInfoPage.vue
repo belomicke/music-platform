@@ -3,6 +3,7 @@ import { computed } from "vue"
 import { useRoute } from "vue-router"
 import ReleaseInfoPageHeader from "./ReleaseInfoPageHeader.vue"
 import { useReleaseById } from "@/features/releases/get-release-by-id"
+import { TrackList } from "@/entities/track"
 import { useStickyHeaderTitle } from "@/shared/ui"
 
 const route = useRoute()
@@ -28,9 +29,9 @@ useStickyHeaderTitle(computed(() => {
         <release-info-page-header
             :release="release"
         />
+        <track-list
+            :ids="release.tracks"
+            with-index
+        />
     </div>
 </template>
-
-<style scoped lang="scss">
-
-</style>

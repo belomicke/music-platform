@@ -2,14 +2,17 @@
 import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { useI18n } from "vue-i18n"
+import { ReleaseFollowButton } from "@/features/releases/following"
 import { useReleaseStore } from "@/entities/release"
 import { useNavigation } from "@/shared/hooks"
-import { ReleaseFollowButton } from "@/features/releases/following"
 import { IAvatar } from "@/shared/ui"
 
-const props = defineProps<{
-    id: string
-}>()
+const props = withDefaults(defineProps<{
+    id: string,
+    avatarSize?: string
+}>(), {
+    avatarSize: "100%",
+})
 
 const { t } = useI18n()
 
@@ -45,7 +48,7 @@ const goToArtist = (id: string) => {
     >
         <i-avatar
             :url="release.image_url"
-            :size="200"
+            :size="avatarSize"
             clickable
             with-overlay
             @click="goToRelease"
@@ -98,7 +101,6 @@ const goToArtist = (id: string) => {
     flex-direction: column;
     gap: 8px;
     align-items: center;
-    min-width: 10.75rem;
 }
 
 .info {

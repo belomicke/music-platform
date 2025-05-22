@@ -22,6 +22,10 @@ export const useMediaListStore = defineStore("media-list", () => {
         return `favorite-releases`
     })
 
+    const getFavoriteTracksMediaListId = computed(() => {
+        return `favorite-tracks`
+    })
+
     const getMediaListById = computed(() => {
         return (id: string): MediaList | undefined => {
             return mediaLists.value.find(item => item.id === id)
@@ -61,13 +65,16 @@ export const useMediaListStore = defineStore("media-list", () => {
         mediaList.count = value.count
     }
 
-    const attachItem = (id: string, value: string) => {
+    const attachItem = (id: string, value: string): boolean => {
         const mediaList = mediaLists.value.find(item => item.id === id)
 
         if (mediaList && mediaList.items.find(item => item === value) === undefined) {
             mediaList.items.unshift(value)
             mediaList.count++
+            return true
         }
+
+        return false
     }
 
     const detachItem = (id: string, value: string) => {
@@ -83,6 +90,7 @@ export const useMediaListStore = defineStore("media-list", () => {
         getPopularArtistsMediaListId,
         getFavoriteArtistsMediaListId,
         getFavoriteReleasesMediaListId,
+        getFavoriteTracksMediaListId,
 
         getMediaListById,
 

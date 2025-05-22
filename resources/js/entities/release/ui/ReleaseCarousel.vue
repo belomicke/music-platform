@@ -32,15 +32,24 @@ const clickOnItemHandler = (id: string) => {
 <template>
     <media-carousel
         :title="title"
-        :items="items"
+        :count="items.length"
+        :item-width="200"
         :clickable-title="clickableTitle"
         @click-on-title="clickOnTitleHandler"
     >
         <template #item="{ item }">
             <release-media-card
-                @click="clickOnItemHandler(item)"
-                :id="item"
+                class="release-carousel__item"
+                avatar-size="200px"
+                @click="clickOnItemHandler(items[item])"
+                :id="items[item]"
             />
         </template>
     </media-carousel>
 </template>
+
+<style lang="scss">
+.release-carousel__item {
+    width: 200px;
+}
+</style>

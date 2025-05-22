@@ -5,6 +5,7 @@ import { meMethods } from "./me"
 import { recentSearchesMethods } from "./recent_searches"
 import { releasesMethods } from "./releases"
 import { searchMethods } from "./search"
+import { trackMethods } from "./tracks"
 
 export const api = {
     artists: artistsMethods,
@@ -14,4 +15,5 @@ export const api = {
     recent_searches: recentSearchesMethods,
     releases: releasesMethods,
     search: searchMethods,
+    tracks: trackMethods,
 }

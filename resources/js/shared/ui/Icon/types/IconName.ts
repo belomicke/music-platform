@@ -12,5 +12,6 @@ export type IconName =
     | "musical-note"
     | "music"
     | "pencil"
+    | "play"
     | "search"
     | "user"

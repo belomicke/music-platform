@@ -33,7 +33,3 @@ const { isFollow, mutate } = useReleaseFollowing(id)
         :disabled="isAuth === false"
     />
 </template>
-
-<style lang="scss">
-
-</style>

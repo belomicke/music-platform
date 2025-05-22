@@ -6,12 +6,14 @@ namespace App\Actions;
 
 use App\Repositories\ArtistRepository;
 use App\Repositories\ReleaseRepository;
+use App\Repositories\TrackRepository;
 
 final readonly class SearchAction
 {
     public function __construct(
         private ArtistRepository  $artists,
-        private ReleaseRepository $releases
+        private ReleaseRepository $releases,
+        private TrackRepository   $tracks
     ) {}
 
     public function execute(
@@ -29,9 +31,15 @@ final readonly class SearchAction
             limit: $type === "releases" ? 36 : 9
         );
 
+        $tracks = $this->tracks->search(
+            query: $query,
+            limit: $type === "tracks" ? 50 : 8
+        );
+
         return [
             "artists" => $artists,
-            "releases" => $releases
+            "releases" => $releases,
+            "tracks" => $tracks
         ];
     }
 }

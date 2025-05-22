@@ -4,11 +4,11 @@ import { useAuthStore } from "../model"
 import { IAvatar } from "@/shared/ui"
 
 withDefaults(defineProps<{
-    size?: number
+    size?: string
     clickable?: boolean
     canBeOpenInModal?: boolean
 }>(), {
-    size: 36,
+    size: "36px",
     clickable: false,
     canBeOpenInModal: false,
 })

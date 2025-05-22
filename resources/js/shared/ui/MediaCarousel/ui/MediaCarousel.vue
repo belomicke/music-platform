@@ -4,15 +4,15 @@ import { useResponsive } from "@/shared/hooks"
 import { IIconButton } from "@/shared/ui"
 
 const props = withDefaults(defineProps<{
-    items: string[]
+    count: number
     title?: string
     clickableTitle?: boolean
+    itemWidth?: number
 }>(), {
     title: "",
     clickableTitle: false,
 })
 
-const ITEM_WIDTH = 200
 const ITEMS_GAP = 16
 
 const ONE_STEP_OF_SCROLL = 500
@@ -39,7 +39,7 @@ watch(isScrolling, () => {
 })
 
 const scrollWidth = computed(() => {
-    return props.items.length * ITEM_WIDTH + (props.items.length - 1) * ITEMS_GAP - clientWidth.value
+    return props.count * props.itemWidth + (props.count - 1) * ITEMS_GAP - clientWidth.value
 })
 
 const canScrollToLeft = computed(() => {
@@ -156,16 +156,12 @@ const clickOnTitleHandler = () => {
             role="list"
             ref="carouselScrollRef"
         >
-            <div
-                class="media-carousel__item"
-                v-for="item in items"
-                :key="item"
-            >
-                <slot
-                    name="item"
-                    :item="item"
-                />
-            </div>
+            <slot
+                name="item"
+                :item="index"
+                v-for="(_, index) in new Array(count)"
+                :key="index"
+            />
         </div>
     </div>
 </template>
@@ -217,14 +213,6 @@ const clickOnTitleHandler = () => {
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         scrollbar-width: none;
-    }
-
-    &__item {
-        width: 200px;
-
-        & > div {
-            width: 200px;
-        }
     }
 }
 </style>

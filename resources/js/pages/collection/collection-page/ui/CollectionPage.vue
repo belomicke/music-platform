@@ -2,6 +2,7 @@
 import { onMounted } from "vue"
 import { FavoriteArtistsCarousel } from "@/features/collection/get-favorite-artists"
 import { FavoriteReleasesCarousel } from "@/features/collection/get-favorite-releases"
+import { FavoriteTracksPreview } from "@/features/collection/get-favorite-tracks"
 import { useCollection } from "@/features/collection/get-collection"
 
 const { data, fetch: getCollection, isLoading } = useCollection()
@@ -16,6 +17,7 @@ onMounted(() => {
         class="collection-page"
         v-if="isLoading === false && data !== undefined"
     >
+        <favorite-tracks-preview/>
         <favorite-artists-carousel/>
         <favorite-releases-carousel/>
     </div>

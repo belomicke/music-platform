@@ -1,5 +1,5 @@
 import type { AxiosResponse } from "axios"
-import type { ApiCompactArtist, ApiRelease, ApiResponse } from "@/shared/api"
+import type { ApiCompactArtist, ApiRelease, ApiResponse, ApiTrack } from "@/shared/api"
 
 export type CollectionResponseData = ApiResponse<{
     artists: {
@@ -8,6 +8,10 @@ export type CollectionResponseData = ApiResponse<{
     }
     releases: {
         items: ApiRelease[]
+        count: number
+    }
+    tracks: {
+        items: ApiTrack[]
         count: number
     }
 }>

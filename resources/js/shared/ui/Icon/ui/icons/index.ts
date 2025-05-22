@@ -11,6 +11,7 @@ import LogInIcon from "./LogInIcon.vue"
 import LogOutIcon from "./LogOutIcon.vue"
 import MusicIcon from "./MusicIcon.vue"
 import PencilIcon from "./PencilIcon.vue"
+import PlayIcon from "./PlayIcon.vue"
 import SearchIcon from "./SearchIcon.vue"
 import UserIcon from "./UserIcon.vue"
 
@@ -28,6 +29,7 @@ export {
     LogOutIcon,
     MusicIcon,
     PencilIcon,
+    PlayIcon,
     SearchIcon,
     UserIcon,
 }

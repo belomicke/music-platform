@@ -12,6 +12,7 @@ import { ReleaseCarousel } from "@/entities/release"
 import { ArtistCarousel } from "@/entities/artist"
 import { setStickyHeaderIsMount } from "@/shared/ui"
 import { SearchType } from "@/shared/api"
+import TrackCarousel from "@/entities/track/ui/TrackCarousel.vue"
 
 const { t } = useI18n()
 const route = useRoute()
@@ -67,6 +68,11 @@ const clickOnReleaseMediaCardHandler = (id: string) => {
                 v-else
             >
                 <template v-if="type === 'all'">
+                    <track-carousel
+                        :tracks="data.tracks"
+                        :title="t('entities.artist.plural')"
+                        v-if="data.tracks.length"
+                    />
                     <artist-carousel
                         :artists="data.artists"
                         :title="t('entities.artist.plural')"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type IconName, IIcon } from "@/shared/ui"
 
-export type IconButtonVariants = "primary" | "ghost" | "outline"
+export type IconButtonVariants = "primary" | "ghost" | "outline" | "transparent"
 
 withDefaults(defineProps<{
     icon: IconName,
@@ -86,6 +86,17 @@ withDefaults(defineProps<{
 
         &:hover:not(:disabled) {
             border-color: var(--color-border-lighter-hover);
+        }
+    }
+
+    &.transparent {
+        padding: 0;
+        color: rgba(255, 255, 255, .5);
+        background-color: transparent;
+        transition: color .15s;
+
+        &:hover:not(:disabled) {
+            color: rgb(230, 230, 230);
         }
     }
 }

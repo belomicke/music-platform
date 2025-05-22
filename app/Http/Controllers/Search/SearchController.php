@@ -8,6 +8,7 @@ use App\Actions\SearchAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Artist\CompactArtistResource;
 use App\Http\Resources\Release\ReleaseResource;
+use App\Http\Resources\Track\TrackResource;
 use Illuminate\Http\Request;
 
 final class SearchController extends Controller
@@ -24,7 +25,8 @@ final class SearchController extends Controller
 
         return $this->success([
             "artists" => CompactArtistResource::collection($result["artists"]),
-            "releases" => ReleaseResource::collection($result["releases"])
+            "releases" => ReleaseResource::collection($result["releases"]),
+            "tracks" => TrackResource::collection($result["tracks"]),
         ]);
     }
 }

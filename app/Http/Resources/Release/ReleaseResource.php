@@ -23,17 +23,20 @@ final class ReleaseResource extends JsonResource
     public function toArray(Request $request): array
     {
         $isFollowed = AuthService::check() && $this->is_followed !== null;
-        
+
+        $tracks = $this->tracks->pluck("uuid")->toArray();
+
         return [
             "id" => $this->uuid,
             "title" => $this->title,
-            "like_count" => $this->like_count,
-            "track_count" => $this->track_count,
-
             "image_url" => $this->image_url,
             "is_followed" => $isFollowed,
 
+            "like_count" => $this->like_count,
+            "track_count" => $this->track_count,
+
             "artists" => CompactArtistResource::collection($this->artists),
+            "tracks" => $tracks,
 
             "type" => $this->type,
             "release_date" => $this->release_date,

@@ -4,14 +4,14 @@ import { IconName, IIcon, IModal } from "@/shared/ui"
 
 const props = withDefaults(defineProps<{
     url?: string
-    size?: number
+    size?: string
     clickable?: boolean
     icon?: IconName
     canBeOpenInModal?: boolean
     round?: boolean,
     withOverlay?: boolean
 }>(), {
-    size: 36,
+    size: "36px",
     url: "",
     clickable: false,
     icon: "app-logo",
@@ -39,6 +39,7 @@ const clickHandler = (e: MouseEvent) => {
         :class="[
             round && 'round'
         ]"
+        v-bind="$attrs"
     >
         <img
             class="i-avatar"
@@ -48,15 +49,24 @@ const clickHandler = (e: MouseEvent) => {
                 withOverlay && 'with-overlay'
             ]"
             :style="{
-                'max-width': `${size}px`,
+                'width': size,
             }"
             @click="clickHandler"
+            alt="avatar"
+            v-if="url"
         />
-        <div class="i-avatar__icon-container">
+        <div
+            class="i-avatar__icon-container"
+            :style="{
+                'width': size,
+                'height': size
+            }"
+            v-if="icon && url.length === 0"
+        >
             <i-icon
                 class="i-avatar__icon"
                 :icon="icon"
-                v-if="icon && url.length === 0"
+
             />
         </div>
         <div class="overlay">
@@ -126,6 +136,14 @@ const clickHandler = (e: MouseEvent) => {
                 background-color: var(--overlay-background-color);
             }
         }
+    }
+
+    &__icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--color-background-hover);
+        border-radius: 6px;
     }
 
     &__icon {
