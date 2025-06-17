@@ -114,5 +114,6 @@ const clickOnReleaseMediaCardHandler = (id: string) => {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-bottom: 24px;
 }
 </style>

@@ -2,7 +2,6 @@
 import AppPlayerSonataControls from "./AppPlayerSonataControls.vue"
 import AppPlayerSonataTimecode from "./AppPlayerSonataTimecode.vue"
 import AppPlayerSonataPlayMode from "./AppPlayerSonataPlayMode.vue"
-import { IIconButton } from "@/shared/ui"
 import { ApiTrack } from "@/shared/api"
 
 defineProps<{
@@ -13,11 +12,6 @@ defineProps<{
 <template>
     <div class="app-player-sonata">
         <div class="sonata-controls">
-            <i-icon-button
-                icon="heart"
-                variant="transparent"
-                :icon-size="24"
-            />
             <app-player-sonata-controls/>
             <app-player-sonata-play-mode/>
         </div>
