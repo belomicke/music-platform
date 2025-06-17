@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\Release;
 
-use App\Http\Resources\Artist\CompactArtistResource;
+use App\Http\Resources\Artist\ArtistResource;
 use App\Models\Release;
 use App\Services\AuthService;
+use App\Services\Cache\ReleaseCacheService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,9 +24,9 @@ final class ReleaseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $isFollowed = AuthService::check() && $this->is_followed !== null;
-
-        $tracks = $this->tracks->pluck("uuid")->toArray();
+        $isFollowed = $this->getIsFollowed();
+        $artists = $this->getArtists();
+        $tracks = $this->getTracks()->pluck(value: "uuid")->toArray();
 
         return [
             "id" => $this->uuid,
@@ -35,11 +37,66 @@ final class ReleaseResource extends JsonResource
             "like_count" => $this->like_count,
             "track_count" => $this->track_count,
 
-            "artists" => CompactArtistResource::collection($this->artists),
+            "artists" => ArtistResource::collection($artists),
             "tracks" => $tracks,
 
             "type" => $this->type,
             "release_date" => $this->release_date,
         ];
+    }
+
+    private function getIsFollowed(): bool
+    {
+        if (AuthService::check() === false) {
+            return false;
+        }
+
+        return ReleaseCacheService::getIsFollowed(
+            id: $this->id,
+            default: function () {
+                $value = $this->is_followed !== null;
+
+                ReleaseCacheService::setIsFollowed(
+                    id: $this->id,
+                    value: $value
+                );
+
+                return $value;
+            }
+        );
+    }
+
+    private function getArtists(): Collection
+    {
+        return ReleaseCacheService::getArtists(
+            id: $this->uuid,
+            default: function () {
+                $artists = $this->artists;
+
+                ReleaseCacheService::setArtists(
+                    id: $this->uuid,
+                    value: $artists
+                );
+
+                return $artists;
+            }
+        );
+    }
+
+    private function getTracks(): Collection
+    {
+        return ReleaseCacheService::getTracks(
+            id: $this->uuid,
+            default: function () {
+                $tracks = $this->tracks;
+
+                ReleaseCacheService::setTracks(
+                    id: $this->uuid,
+                    value: $tracks
+                );
+
+                return $tracks;
+            }
+        );
     }
 }

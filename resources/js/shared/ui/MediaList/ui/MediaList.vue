@@ -69,7 +69,7 @@ const loadMoreHandler = () => {
             >
                 <i-virtual-scroll
                     :count="rows.length"
-                    :estimate-size="228"
+                    :estimate-size="248"
                     :gap="20"
                     window
                 >

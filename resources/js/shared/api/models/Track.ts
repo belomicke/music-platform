@@ -1,5 +1,5 @@
 import type { ApiRelease } from "./Release"
-import type { ApiCompactArtist } from "./Artist"
+import type { ApiArtist } from "./Artist"
 
 export interface ApiTrack {
     id: string
@@ -8,6 +8,6 @@ export interface ApiTrack {
 
     is_favorite: boolean
 
-    artists: ApiCompactArtist[]
+    artists: ApiArtist[]
     releases: ApiRelease[]
 }

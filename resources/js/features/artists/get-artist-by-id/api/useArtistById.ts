@@ -1,14 +1,18 @@
 import { computed, ComputedRef, onMounted, watch } from "vue"
+import { AxiosError } from "axios"
 import { storeToRefs } from "pinia"
-import { useArtistStore, useCompactArtistStore } from "@/entities/artist"
+import { useArtistStore } from "@/entities/artist"
 import { useMediaListStore } from "@/entities/media-list"
 import { useReleaseStore } from "@/entities/release"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
-export const useArtistById = (id: ComputedRef<string>) => {
+interface Options {
+    onError: (err: AxiosError) => void
+}
+
+export const useArtistById = (id: ComputedRef<string>, options?: Options) => {
     const artistStore = useArtistStore()
-    const compactArtistStore = useCompactArtistStore()
     const { getById: getArtistById } = storeToRefs(artistStore)
 
     const releaseStore = useReleaseStore()
@@ -26,12 +30,6 @@ export const useArtistById = (id: ComputedRef<string>) => {
             const artist = res.data.data.artist
 
             artistStore.addItem(artist)
-            compactArtistStore.addItem({
-                id: artist.id,
-                name: artist.name,
-                image_url: artist.image_url,
-                is_followed: artist.is_followed,
-            })
 
             const releases = res.data.data.releases
 
@@ -42,6 +40,11 @@ export const useArtistById = (id: ComputedRef<string>) => {
                 items: releases.items.map(release => release.id),
                 count: releases.count,
             })
+        },
+        onError: (err) => {
+            if (options && typeof options.onError === "function") {
+                options.onError(err)
+            }
         },
     })
 

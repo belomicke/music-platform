@@ -2,10 +2,10 @@
 import { computed } from "vue"
 import ArtistMediaCard from "./ArtistMediaCard.vue"
 import { MediaCarousel } from "@/shared/ui"
-import type { ApiCompactArtist } from "@/shared/api"
+import type { ApiArtist } from "@/shared/api"
 
 const props = withDefaults(defineProps<{
-    artists: ApiCompactArtist[]
+    artists: ApiArtist[]
     title?: string
     clickableTitle?: boolean
 }>(), {

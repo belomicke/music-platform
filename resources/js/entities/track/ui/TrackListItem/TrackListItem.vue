@@ -1,28 +1,59 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { storeToRefs } from "pinia"
-import TrackListItemDuration from "./TrackListItemDuration.vue"
-import TrackListItemNumber from "./TrackListItemNumber.vue"
+import TrackListItemIndex from "./TrackListItemIndex.vue"
 import TrackListItemCover from "./TrackListItemCover.vue"
 import TrackListItemInfo from "./TrackListItemInfo.vue"
 import { TrackFavoriteButton } from "@/features/tracks/following"
+import { useBackendPlayerStore } from "@/entities/backend-player"
 import { useTrackStore } from "@/entities/track"
+import { ITimecode } from "@/shared/ui"
 
 const props = withDefaults(defineProps<{
     id: string
-    index?: number
+    queueId: string
+    index: number
+    withIndex?: boolean
     withArtists?: boolean
     withCover?: boolean
 }>(), {
-    index: 0,
+    withIndex: false,
     withArtists: false,
     withCover: false,
 })
+
+const emit = defineEmits([
+    "play",
+    "pause",
+])
+
+const backendPlayerStore = useBackendPlayerStore()
+const { getTrack: playerTrack, getIsPlaying: playerIsPlaying } = storeToRefs(backendPlayerStore)
 
 const trackStore = useTrackStore()
 const { getById } = storeToRefs(trackStore)
 
 const track = computed(() => getById.value(props.id))
+
+const isActive = computed(() => {
+    if (!playerTrack.value) return false
+
+    return playerTrack.value.id === track.value.id
+})
+
+const isPlaying = computed(() => {
+    return isActive.value && playerIsPlaying.value
+})
+
+const playHandler = async () => {
+    if (!playerTrack.value) {
+        await backendPlayerStore.setTrack(props.queueId, props.index)
+    } else if (playerTrack.value.id !== props.id) {
+        await backendPlayerStore.setTrack(props.queueId, props.index)
+    }
+
+    await backendPlayerStore.play()
+}
 </script>
 
 <template>
@@ -34,12 +65,25 @@ const track = computed(() => getById.value(props.id))
         class="track-list-item"
         v-else
     >
-        <track-list-item-number
+        <track-list-item-index
+            :track="track"
+
+            :is-playing="isPlaying"
+            :is-active="isActive"
+
             :number="index"
-            v-if="index !== 0"
+            @play="playHandler"
+            @pause="backendPlayerStore.pause"
+            v-if="withIndex"
         />
         <track-list-item-cover
             :track="track"
+
+            :is-playing="isPlaying"
+            :is-active="isActive"
+
+            @play="playHandler"
+            @pause="backendPlayerStore.pause"
             v-if="withCover"
         />
         <track-list-item-info
@@ -50,8 +94,8 @@ const track = computed(() => getById.value(props.id))
             <track-favorite-button
                 :track="track"
             />
-            <track-list-item-duration
-                :track="track"
+            <i-timecode
+                :seconds="track.duration_ms / 1000"
             />
         </div>
     </div>

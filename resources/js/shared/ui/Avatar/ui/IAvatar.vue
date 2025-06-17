@@ -5,6 +5,7 @@ import { IconName, IIcon, IModal } from "@/shared/ui"
 const props = withDefaults(defineProps<{
     url?: string
     size?: string
+    maxSize?: string
     clickable?: boolean
     icon?: IconName
     canBeOpenInModal?: boolean
@@ -12,6 +13,7 @@ const props = withDefaults(defineProps<{
     withOverlay?: boolean
 }>(), {
     size: "36px",
+    maxSize: "100%",
     url: "",
     clickable: false,
     icon: "app-logo",
@@ -37,7 +39,8 @@ const clickHandler = (e: MouseEvent) => {
     <div
         class="i-avatar-container"
         :class="[
-            round && 'round'
+            round && 'round',
+            withOverlay && 'with-overlay'
         ]"
         v-bind="$attrs"
     >
@@ -103,10 +106,10 @@ const clickHandler = (e: MouseEvent) => {
     justify-content: center;
     align-items: center;
     background-color: var(--color-background);
-    border-radius: 6px;
     background-size: cover;
     background-position: center center;
     aspect-ratio: 1 / 1;
+    border-radius: 6px;
     width: 100%;
 
     &.clickable {
@@ -115,27 +118,6 @@ const clickHandler = (e: MouseEvent) => {
 
     .i-avatar-container.round & {
         border-radius: 50%;
-    }
-
-    &.with-overlay {
-        &::after {
-            content: "";
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            border-radius: 6px;
-            top: 0;
-            left: 0;
-            transition: background-color .15s;
-
-            .i-avatar-container.round & {
-                border-radius: 50%;
-            }
-
-            .i-avatar-container:hover & {
-                background-color: var(--overlay-background-color);
-            }
-        }
     }
 
     &__icon-container {
@@ -165,13 +147,27 @@ const clickHandler = (e: MouseEvent) => {
     left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 6px;
     pointer-events: none;
+    transition: background-color .15s;
+
+    .i-avatar-container.with-overlay:hover & {
+        background-color: rgba(0, 0, 0, .5);
+    }
+
+    .i-avatar-container.round & {
+        border-radius: 50%;
+    }
 
     &__actions {
         position: absolute;
         left: 0;
         padding: 0 10px;
         width: 100%;
+
+        & > * {
+            pointer-events: all;
+        }
 
         &.top {
             top: 0;
@@ -196,10 +192,6 @@ const clickHandler = (e: MouseEvent) => {
                 opacity: 1;
             }
         }
-    }
-
-    &__action {
-        pointer-events: all;
     }
 }
 </style>

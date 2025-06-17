@@ -9,11 +9,12 @@ use App\Exceptions\Track\TrackNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Models\Track;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 final class AddTrackToFavoriteController extends Controller
 {
     /**
-     * @throws TrackNotFoundException
+     * @throws Throwable
      */
     public function __invoke(
         Track                    $track,

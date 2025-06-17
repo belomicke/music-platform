@@ -7,7 +7,7 @@ import { useReleaseStore } from "@/entities/release"
 
 export const useReleaseFollowing = (id: ComputedRef<string>) => {
     const mediaListStore = useMediaListStore()
-    const { getFavoriteArtistsMediaListId } = storeToRefs(mediaListStore)
+    const { getFavoriteReleasesMediaListId } = storeToRefs(mediaListStore)
 
     const releaseStore = useReleaseStore()
     const { getById: getReleaseById } = storeToRefs(releaseStore)
@@ -16,7 +16,7 @@ export const useReleaseFollowing = (id: ComputedRef<string>) => {
     const { fetch: unfollow } = useUnfollowRelease(id)
 
     const mediaListId = computed(() => {
-        return getFavoriteArtistsMediaListId.value
+        return getFavoriteReleasesMediaListId.value
     })
 
     const release = computed(() => {

@@ -1,10 +1,10 @@
 import { computed, ComputedRef, onMounted, watch } from "vue"
 import { storeToRefs } from "pinia"
 import { useMediaListStore } from "@/entities/media-list"
-import { useCompactArtistStore } from "@/entities/artist"
+import { useArtistStore } from "@/entities/artist"
 import { useReleaseStore } from "@/entities/release"
 import { useTrackStore } from "@/entities/track"
-import { api, type ApiCompactArtist, ApiRelease, ApiTrack, SearchType } from "@/shared/api"
+import { api, ApiArtist, ApiRelease, ApiTrack, SearchType } from "@/shared/api"
 import { useFetch } from "@/shared/hooks"
 
 export const useSearch = (
@@ -13,12 +13,12 @@ export const useSearch = (
     bestResults: ComputedRef<boolean>,
 ) => {
     const mediaListStore = useMediaListStore()
-    const compactArtistStore = useCompactArtistStore()
+    const artistStore = useArtistStore()
     const releaseStore = useReleaseStore()
     const trackStore = useTrackStore()
 
     const { getMediaListById } = storeToRefs(mediaListStore)
-    const { getManyById: getManyArtistsById } = storeToRefs(compactArtistStore)
+    const { getManyById: getManyArtistsById } = storeToRefs(artistStore)
     const { getManyById: getManyReleasesById } = storeToRefs(releaseStore)
     const { getManyById: getManyTracksById } = storeToRefs(trackStore)
 
@@ -104,8 +104,8 @@ export const useSearch = (
         }
     })
 
-    const handleArtistsFromResponse = (artists: ApiCompactArtist[]) => {
-        compactArtistStore.addItems(artists)
+    const handleArtistsFromResponse = (artists: ApiArtist[]) => {
+        artistStore.addItems(artists)
 
         const dto = {
             id: artistsMediaListId.value,

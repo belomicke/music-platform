@@ -6,7 +6,8 @@ namespace App\Actions\Track;
 
 use App\Models\Track;
 use App\Repositories\TrackRepository;
-use App\Repositories\UserRepository;
+use App\Services\AuthService;
+use App\Services\Cache\TrackCacheService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -14,7 +15,6 @@ use Throwable;
 final readonly class AddTrackToFavoriteAction
 {
     public function __construct(
-        private UserRepository  $users,
         private TrackRepository $tracks
     ) {}
 
@@ -27,7 +27,9 @@ final readonly class AddTrackToFavoriteAction
             DB::beginTransaction();
 
             $this->tracks->addToFavorite(track: $track);
-            $this->users->incrementFavoriteTracksCount();
+            AuthService::incrementFavoriteTracksCount();
+            TrackCacheService::setIsFavorite(id: $track->id, value: true);
+            TrackCacheService::clearFavoriteTracks();
 
             DB::commit();
         } catch (Throwable $e) {

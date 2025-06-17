@@ -21,8 +21,10 @@ final class GetReleaseController extends Controller
         }
 
         $release->load(relations: [
+            "is_followed",
             "artists",
-            "artists.is_followed"
+            "artists.is_followed",
+            "tracks"
         ]);
 
         return $this->success([

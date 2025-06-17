@@ -27,7 +27,7 @@ final class UnfollowArtistController extends Controller
         }
 
         $unfollowArtistAction->execute(
-            uuid: $artist->uuid,
+            artist: $artist,
         );
 
         return $this->success();

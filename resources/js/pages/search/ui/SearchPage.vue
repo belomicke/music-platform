@@ -7,12 +7,12 @@ import SearchPageLoader from "./SearchPageLoader.vue"
 import SearchPageInput from "./SearchPageInput.vue"
 import RecentSearches from "./RecentSearches.vue"
 import { useCreateRecentSearch } from "@/features/recent-searches/create-recent-search"
+import TrackCarousel from "@/entities/track/ui/TrackCarousel.vue"
 import { useSearch } from "@/features/search"
 import { ReleaseCarousel } from "@/entities/release"
 import { ArtistCarousel } from "@/entities/artist"
 import { setStickyHeaderIsMount } from "@/shared/ui"
 import { SearchType } from "@/shared/api"
-import TrackCarousel from "@/entities/track/ui/TrackCarousel.vue"
 
 const { t } = useI18n()
 const route = useRoute()
@@ -27,6 +27,10 @@ const bestResults = computed(() => true)
 const { data, noResults, isLoading } = useSearch(query, type, bestResults)
 
 const { fetch: createRecentSearch } = useCreateRecentSearch()
+
+const queueId = computed(() => {
+    return `search:${query.value}`
+})
 
 onMounted(() => {
     setStickyHeaderIsMount(false)
@@ -70,6 +74,7 @@ const clickOnReleaseMediaCardHandler = (id: string) => {
                 <template v-if="type === 'all'">
                     <track-carousel
                         :tracks="data.tracks"
+                        :queue-id="queueId"
                         :title="t('entities.artist.plural')"
                         v-if="data.tracks.length"
                     />

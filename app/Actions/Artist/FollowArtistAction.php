@@ -6,8 +6,8 @@ namespace App\Actions\Artist;
 
 use App\Models\Artist;
 use App\Repositories\ArtistRepository;
-use App\Repositories\UserRepository;
 use App\Services\AuthService;
+use App\Services\Cache\ArtistCacheService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -16,7 +16,6 @@ final readonly class FollowArtistAction
 {
     public function __construct(
         private ArtistRepository $artists,
-        private UserRepository   $users
     ) {}
 
     /**
@@ -29,8 +28,8 @@ final readonly class FollowArtistAction
 
             if ($artist->is_followed()->exists() === false) {
                 $this->artists->follow(artist: $artist);
-                $this->users->incrementFollowedArtistsCount(user: AuthService::user());
-                $this->artists->incrementFollowersCount(artist: $artist);
+                AuthService::incrementFollowedArtistsCount();
+                ArtistCacheService::setIsFollowed(id: $artist->id, value: true);
             }
 
             DB::commit();

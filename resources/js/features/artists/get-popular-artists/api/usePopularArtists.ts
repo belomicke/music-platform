@@ -1,13 +1,13 @@
 import { computed, onMounted } from "vue"
 import { storeToRefs } from "pinia"
-import { useCompactArtistStore } from "@/entities/artist"
+import { useArtistStore } from "@/entities/artist"
 import { useMediaListStore } from "@/entities/media-list"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
 export const usePopularArtists = () => {
-    const compactArtistStore = useCompactArtistStore()
-    const { getManyById: getManyCompactArtistsById } = storeToRefs(compactArtistStore)
+    const artistStore = useArtistStore()
+    const { getManyById: getManyArtistsById } = storeToRefs(artistStore)
 
     const mediaListStore = useMediaListStore()
     const { getMediaListById, getPopularArtistsMediaListId } = storeToRefs(mediaListStore)
@@ -19,7 +19,7 @@ export const usePopularArtists = () => {
     const artists = computed(() => {
         if (mediaList.value === undefined) return []
 
-        return getManyCompactArtistsById.value(mediaList.value.items)
+        return getManyArtistsById.value(mediaList.value.items)
     })
 
     const { fetch, isLoading } = useFetch(async () => {
@@ -28,7 +28,7 @@ export const usePopularArtists = () => {
         onSuccess: (res) => {
             const data = res.data.data
 
-            compactArtistStore.addItems(data.artists)
+            artistStore.addItems(data.artists)
 
             mediaListStore.addItemsToMediaList({
                 id: getPopularArtistsMediaListId.value,

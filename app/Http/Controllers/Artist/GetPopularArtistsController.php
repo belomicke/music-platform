@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Artist;
 
 use App\Actions\Artist\GetPopularArtistsAction;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Artist\CompactArtistResource;
+use App\Http\Resources\Artist\ArtistResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -20,7 +20,7 @@ final class GetPopularArtistsController extends Controller
         $data = $getPopularArtistsAction->execute();
 
         return $this->success([
-            "artists" => CompactArtistResource::collection($data->artists),
+            "artists" => ArtistResource::collection($data->artists),
             "count" => $data->count,
         ]);
     }

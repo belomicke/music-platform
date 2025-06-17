@@ -13,10 +13,17 @@ import {
     LogOutIcon,
     MusicalNoteIcon,
     MusicIcon,
+    NextIcon,
+    PauseIcon,
     PencilIcon,
     PlayIcon,
+    PreviousIcon,
+    RepeatIcon,
+    RepeatOneIcon,
     SearchIcon,
     UserIcon,
+    VolumeIcon,
+    VolumeOffIcon,
 } from "./icons"
 import { IconName } from "../types"
 
@@ -45,10 +52,17 @@ const iconComponent = computed(() => {
         "log-out": LogOutIcon,
         "musical-note": MusicalNoteIcon,
         "music": MusicIcon,
+        "next": NextIcon,
+        "pause": PauseIcon,
         "pencil": PencilIcon,
         "play": PlayIcon,
+        "previous": PreviousIcon,
+        "repeat": RepeatIcon,
+        "repeat-one": RepeatOneIcon,
         "search": SearchIcon,
         "user": UserIcon,
+        "volume": VolumeIcon,
+        "volume-off": VolumeOffIcon,
     }[props.icon]
 })
 </script>

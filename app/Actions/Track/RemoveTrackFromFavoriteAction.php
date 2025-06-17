@@ -6,7 +6,8 @@ namespace App\Actions\Track;
 
 use App\Models\Track;
 use App\Repositories\TrackRepository;
-use App\Repositories\UserRepository;
+use App\Services\AuthService;
+use App\Services\Cache\TrackCacheService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -14,7 +15,6 @@ use Throwable;
 final readonly class RemoveTrackFromFavoriteAction
 {
     public function __construct(
-        private UserRepository  $users,
         private TrackRepository $tracks
     ) {}
 
@@ -27,8 +27,10 @@ final readonly class RemoveTrackFromFavoriteAction
             DB::beginTransaction();
 
             $this->tracks->removeFromFavorite(track: $track);
-            $this->users->decrementFavoriteTracksCount();
-
+            AuthService::decrementFavoriteTracksCount();
+            TrackCacheService::setIsFavorite(id: $track->id, value: false);
+            TrackCacheService::clearFavoriteTracks();
+            
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

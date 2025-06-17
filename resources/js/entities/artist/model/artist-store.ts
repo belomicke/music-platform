@@ -11,7 +11,7 @@ export const useArtistStore = defineStore("artists", () => {
         }
     })
 
-    const getArtistsByIds = computed(() => {
+    const getManyById = computed(() => {
         return (ids: string[]): ApiArtist[] | undefined => {
             const result: ApiArtist[] = []
 
@@ -40,7 +40,6 @@ export const useArtistStore = defineStore("artists", () => {
 
         if (artist.is_followed === false) {
             artist.is_followed = true
-            artist.followers_count++
         }
     }
 
@@ -51,13 +50,12 @@ export const useArtistStore = defineStore("artists", () => {
 
         if (artist.is_followed === true) {
             artist.is_followed = false
-            artist.followers_count--
         }
     }
 
     return {
         getById,
-        getArtistsByIds,
+        getManyById,
 
         addItem,
         addItems,

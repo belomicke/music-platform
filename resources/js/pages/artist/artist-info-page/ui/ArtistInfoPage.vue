@@ -1,18 +1,27 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useRoute } from "vue-router"
-import { ArtistReleasesCarousel } from "@/features/releases/get-artist-releases"
+import { ArtistReleasesCarousel } from "@/features/artists/get-artist-releases"
 import { useArtistById } from "@/features/artists/get-artist-by-id"
 import { ArtistPageHeader } from "@/entities/artist"
 import { useStickyHeaderTitle } from "@/shared/ui"
+import { useNavigation } from "@/shared/hooks"
 
 const route = useRoute()
+
+const { goToHomePage } = useNavigation()
 
 const id = computed(() => {
     return route.params.id as string
 })
 
-const { data: artist } = useArtistById(id)
+const { data: artist } = useArtistById(id, {
+    onError: (err) => {
+        if (err.status === 404) {
+            goToHomePage()
+        }
+    },
+})
 
 useStickyHeaderTitle(computed(() => {
     if (!artist.value) return ""

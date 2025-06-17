@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Collection;
 use App\Actions\Collection\GetFavoriteArtistsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Collection\GetMediaListRequest;
-use App\Http\Resources\Artist\CompactArtistResource;
+use App\Http\Resources\Artist\ArtistResource;
 use Illuminate\Http\JsonResponse;
 
 final class GetFavoriteArtistsController extends Controller
@@ -24,7 +24,7 @@ final class GetFavoriteArtistsController extends Controller
         );
 
         return $this->success([
-            "artists" => CompactArtistResource::collection($result->artists),
+            "artists" => ArtistResource::collection($result->artists),
             "count" => $result->count
         ]);
     }

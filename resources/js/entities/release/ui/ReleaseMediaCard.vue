@@ -2,7 +2,9 @@
 import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { useI18n } from "vue-i18n"
+import ReleasePlayButton from "./ReleasePlayButton.vue"
 import { ReleaseFollowButton } from "@/features/releases/following"
+import { SeparatedArtists } from "@/entities/artist"
 import { useReleaseStore } from "@/entities/release"
 import { useNavigation } from "@/shared/hooks"
 import { IAvatar } from "@/shared/ui"
@@ -16,7 +18,7 @@ const props = withDefaults(defineProps<{
 
 const { t } = useI18n()
 
-const { goToArtistInfoPage, goToReleaseInfoPage } = useNavigation()
+const { goToReleaseInfoPage } = useNavigation()
 
 const releaseStore = useReleaseStore()
 const { getById } = storeToRefs(releaseStore)
@@ -35,10 +37,6 @@ const type = computed(() => {
 const goToRelease = () => {
     goToReleaseInfoPage(id.value)
 }
-
-const goToArtist = (id: string) => {
-    goToArtistInfoPage(id)
-}
 </script>
 
 <template>
@@ -54,9 +52,10 @@ const goToArtist = (id: string) => {
             @click="goToRelease"
         >
             <template #overlay-bottom>
-                <div></div>
+                <release-play-button
+                    :release="release"
+                />
                 <release-follow-button
-                    class="overlay__action"
                     :id="release.id"
                     variant="primary"
                     :size="42"
@@ -64,7 +63,6 @@ const goToArtist = (id: string) => {
                 />
             </template>
         </i-avatar>
-
         <div class="info">
             <div
                 class="info__title"
@@ -72,22 +70,9 @@ const goToArtist = (id: string) => {
             >
                 {{ release.title }}
             </div>
-            <div class="info__artists">
-                <template
-                    v-for="(artist, index) in release.artists"
-                    :key="artist.id"
-                >
-                    <span
-                        class="info__artist"
-                        @click="goToArtist(artist.id)"
-                    >
-                        {{ artist.name }}
-                    </span>
-                    <template v-if="index !== release.artists.length - 1">
-                        {{ ", " }}
-                    </template>
-                </template>
-            </div>
+            <separated-artists
+                :artists="release.artists"
+            />
             <div class="info__type">
                 {{ year }} · {{ type }}
             </div>
@@ -106,6 +91,7 @@ const goToArtist = (id: string) => {
 .info {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     &__title {
         display: -webkit-box;
@@ -123,28 +109,6 @@ const goToArtist = (id: string) => {
 
         &:hover {
             text-decoration: underline;
-        }
-    }
-
-    &__artists {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        word-break: break-all;
-        -webkit-line-clamp: 1;
-        font-size: 13px;
-        font-weight: 500;
-        line-height: 18px;
-        max-height: 18px;
-        color: var(--color-text-secondary);
-    }
-
-    &__artist {
-        color: inherit;
-        cursor: pointer;
-        transition: color .15s;
-
-        &:hover {
-            color: var(--color-text-primary);
         }
     }
 

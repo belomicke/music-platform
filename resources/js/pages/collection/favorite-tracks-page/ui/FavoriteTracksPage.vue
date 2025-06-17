@@ -15,6 +15,7 @@ const ids = computed(() => tracks.value.map(track => track.id))
         <div class="favorite-tracks-page__tracks">
             <track-list
                 :ids="ids"
+                queue-id="favorite-tracks"
                 with-cover
                 with-artists
             />
@@ -23,5 +24,7 @@ const ids = computed(() => tracks.value.map(track => track.id))
 </template>
 
 <style scoped lang="scss">
-
+.favorite-tracks-page {
+    padding-bottom: 24px;
+}
 </style>

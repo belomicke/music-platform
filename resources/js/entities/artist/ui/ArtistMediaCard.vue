@@ -2,24 +2,25 @@
 import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { ArtistFollowButton } from "@/features/artists/following"
-import { useCompactArtistStore } from "@/entities/artist"
+import { useArtistStore } from "@/entities/artist"
 import { useNavigation } from "@/shared/hooks"
 import { IAvatar } from "@/shared/ui"
 
 const props = withDefaults(defineProps<{
     id: string,
     avatarSize?: string
+    maxAvatarSize?: string
 }>(), {
     avatarSize: "100%",
 })
 
 const emit = defineEmits(["click"])
 
-const compactArtistStore = useCompactArtistStore()
-const { getById: getCompactArtistById } = storeToRefs(compactArtistStore)
+const artistStore = useArtistStore()
+const { getById: getArtistById } = storeToRefs(artistStore)
 
 const id = computed(() => props.id)
-const artist = computed(() => getCompactArtistById.value(id.value))
+const artist = computed(() => getArtistById.value(id.value))
 
 const { goToArtistInfoPage } = useNavigation()
 
@@ -45,7 +46,6 @@ const goToArtistsInfoPageHandler = () => {
             <template #overlay-bottom>
                 <div></div>
                 <artist-follow-button
-                    class="overlay__action"
                     :id="artist.id"
                     variant="primary"
                     :size="42"
@@ -67,8 +67,8 @@ const goToArtistsInfoPageHandler = () => {
 .artist-media-card {
     display: flex;
     flex-direction: column;
-    gap: 8px;
     align-items: center;
+    gap: 8px;
 
     &__title {
         font-size: 13px;

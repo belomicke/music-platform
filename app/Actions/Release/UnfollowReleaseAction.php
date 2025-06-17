@@ -6,6 +6,8 @@ namespace App\Actions\Release;
 
 use App\Models\Release;
 use App\Repositories\ReleaseRepository;
+use App\Services\AuthService;
+use App\Services\Cache\ReleaseCacheService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -26,6 +28,8 @@ final readonly class UnfollowReleaseAction
 
             if ($release->is_followed()->exists()) {
                 $this->releases->unfollow(release: $release);
+                AuthService::decrementFollowedReleasesCount();
+                ReleaseCacheService::setIsFollowed(id: $release->id, value: false);
             }
 
             DB::commit();

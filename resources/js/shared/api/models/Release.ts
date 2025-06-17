@@ -1,4 +1,4 @@
-import type { ApiCompactArtist } from "./Artist"
+import { ApiArtist } from "./Artist"
 
 export interface ApiRelease {
     id: string
@@ -10,7 +10,7 @@ export interface ApiRelease {
 
     is_followed: boolean
 
-    artists: ApiCompactArtist[]
+    artists: ApiArtist[]
     tracks: string[]
 
     type: "album" | "single"

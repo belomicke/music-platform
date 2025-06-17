@@ -15,12 +15,13 @@ return new class extends Migration {
 
             $table->uuid()->unique();
             $table->string("name");
-            $table
-                ->integer("followers_count")
-                ->default(0);
 
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table
+                ->timestamp('updated_at')
+                ->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table
+                ->timestamp('created_at')
+                ->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

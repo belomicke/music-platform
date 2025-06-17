@@ -2,9 +2,10 @@
 import { computed } from "vue"
 import { useI18n } from "vue-i18n"
 import { ReleaseFollowButton } from "@/features/releases/following"
+import { useNavigation, useResponsive } from "@/shared/hooks"
 import { IAvatar, MediaPageHeader } from "@/shared/ui"
 import type { ApiRelease } from "@/shared/api"
-import { useNavigation, useResponsive } from "@/shared/hooks"
+import ReleasePlayButton from "@/entities/release/ui/ReleasePlayButton.vue"
 
 const props = defineProps<{
     release: ApiRelease
@@ -57,6 +58,10 @@ const goToArtist = (id: string) => {
         </template>
         <template #actions>
             <div class="artist-page-header-actions">
+                <release-play-button
+                    :release="release"
+                    variant="primary"
+                />
                 <release-follow-button
                     :id="release.id"
                     :size="deviceType === 'mobile' ? 64 : 40"
@@ -103,5 +108,10 @@ const goToArtist = (id: string) => {
         border-radius: 50%;
         background-color: var(--color-text-secondary);
     }
+}
+
+.artist-page-header-actions {
+    display: flex;
+    gap: 12px;
 }
 </style>

@@ -18,7 +18,10 @@ const columns = computed(() => {
 </script>
 
 <template>
-    <div class="favorite-tracks-preview">
+    <div
+        class="favorite-tracks-preview"
+        v-if="columns.length"
+    >
         <div class="favorite-tracks-preview__header">
             <i-avatar
                 icon="heart"
@@ -39,14 +42,16 @@ const columns = computed(() => {
         <div class="favorite-tracks-preview__tracks">
             <div
                 class="favorite-tracks-preview__column"
-                v-for="(column, index) in columns"
-                :key="index"
+                v-for="(column, columnIndex) in columns"
+                :key="columnIndex"
             >
                 <track-list-item
                     :id="track.id"
+                    queue-id="favorite-tracks"
+                    :index="(columnIndex + 1) * (trackIndex + 1)"
                     with-cover
                     with-artists
-                    v-for="track in column"
+                    v-for="(track, trackIndex) in column"
                     :key="track.id"
                 />
             </div>

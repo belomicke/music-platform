@@ -26,7 +26,7 @@ export const useTrackStore = defineStore("track-store", () => {
     })
 
     const addItem = (value: ApiTrack) => {
-        if (getById.value(value.id) === undefined) {
+        if (!tracks.value.find(track => track.id === value.id)) {
             tracks.value.push(value)
         }
     }

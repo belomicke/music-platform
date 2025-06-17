@@ -25,7 +25,11 @@ final class GetArtistController extends Controller
         }
 
         $artist->load(relations: [
-            "releases"
+            "releases",
+            "releases.is_followed",
+            "releases.artists",
+            "releases.artists.is_followed",
+            "releases.tracks",
         ]);
 
         return $this->success([

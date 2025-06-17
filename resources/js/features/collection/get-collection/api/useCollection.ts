@@ -1,17 +1,17 @@
-import { useCompactArtistStore } from "@/entities/artist"
+import { computed, onMounted } from "vue"
+import { storeToRefs } from "pinia"
 import { useMediaListStore } from "@/entities/media-list"
 import { useReleaseStore } from "@/entities/release"
+import { useArtistStore } from "@/entities/artist"
+import { useTrackStore } from "@/entities/track"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
-import { computed } from "vue"
-import { storeToRefs } from "pinia"
-import { useTrackStore } from "@/entities/track"
 
 export const useCollection = () => {
     const trackStore = useTrackStore()
     const releaseStore = useReleaseStore()
     const mediaListStore = useMediaListStore()
-    const compactArtistStore = useCompactArtistStore()
+    const artistStore = useArtistStore()
 
     const {
         getMediaListById,
@@ -67,7 +67,7 @@ export const useCollection = () => {
             const tracksList = data.data.data.tracks
 
             releaseStore.addItems(releasesList.items)
-            compactArtistStore.addItems(artistList.items)
+            artistStore.addItems(artistList.items)
             trackStore.addItems(tracksList.items)
 
             mediaListStore.createMediaList({
@@ -88,6 +88,12 @@ export const useCollection = () => {
                 count: tracksList.count,
             })
         },
+    })
+
+    onMounted(async () => {
+        if (data.value === undefined) {
+            await fetch()
+        }
     })
 
     return {

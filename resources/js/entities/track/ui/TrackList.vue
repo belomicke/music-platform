@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue"
 import { TrackListItem } from "./TrackListItem"
-import { useTracks } from "@/features/tracks/get-tracks"
 
-const props = withDefaults(defineProps<{
+withDefaults(defineProps<{
     ids: string[]
+    queueId: string
     withArtists?: boolean
     withCover?: boolean,
     withIndex?: boolean
@@ -13,17 +12,17 @@ const props = withDefaults(defineProps<{
     withCover: false,
     withIndex: false,
 })
-
-useTracks(computed(() => props.ids))
 </script>
 
 <template>
     <div class="track-list">
         <track-list-item
             :id="id"
+            :queue-id="queueId"
             :with-cover="withCover"
             :with-artists="withArtists"
-            :index="withIndex ? index + 1 : 0"
+            :with-index="withIndex"
+            :index="index + 1"
             v-for="(id, index) in ids"
             :key="index"
         />

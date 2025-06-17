@@ -1,10 +1,10 @@
-import { ApiCompactArtist, ApiRelease } from "@/shared/api"
+import { ApiArtist, ApiRelease } from "@/shared/api"
 
 export type SearchType = "all" | "artists"
 
 export type RecentSearchType = "artist" | "release"
 
 export interface ApiRecentSearch {
-    data: ApiRelease | ApiCompactArtist
+    data: ApiRelease | ApiArtist
     type: RecentSearchType
 }

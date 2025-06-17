@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
 import { ApiResponse } from "../global"
-import { ApiCompactArtist } from "@/shared/api"
+import { ApiArtist } from "@/shared/api"
 
 export type CompactArtistListResponseData = ApiResponse<{
-    artists: ApiCompactArtist[]
+    artists: ApiArtist[]
     count: number
 }>
 

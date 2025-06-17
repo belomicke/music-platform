@@ -17,7 +17,6 @@ use Laravel\Scout\Searchable;
  * @property int id
  * @property string uuid
  * @property string name
- * @property int followers_count
  * @property string image_url
  *
  * @property Collection<Release> releases

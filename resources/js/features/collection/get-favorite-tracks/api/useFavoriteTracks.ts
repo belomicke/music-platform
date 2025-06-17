@@ -1,14 +1,19 @@
-import { storeToRefs } from "pinia"
-import { useMediaListStore } from "@/entities/media-list"
 import { computed, onMounted } from "vue"
+import { storeToRefs } from "pinia"
+import { useCurrentUser } from "@/features/auth/current-user"
+import { useMediaListStore } from "@/entities/media-list"
+import { useArtistStore } from "@/entities/artist"
+import { useReleaseStore } from "@/entities/release"
+import { useTrackStore } from "@/entities/track"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
-import { useTrackStore } from "@/entities/track"
-import { useCurrentUser } from "@/features/auth/current-user"
 
-export const useFavoriteTracks = () => {
+export const useFavoriteTracks = (options?: { load_on_mounted?: boolean }) => {
     const trackStore = useTrackStore()
     const { getManyById: getManyTracksById } = storeToRefs(trackStore)
+
+    const artistStore = useArtistStore()
+    const releaseStore = useReleaseStore()
 
     const mediaListStore = useMediaListStore()
     const { getFavoriteTracksMediaListId, getMediaListById } = storeToRefs(mediaListStore)
@@ -29,6 +34,10 @@ export const useFavoriteTracks = () => {
         return getManyTracksById.value(data.value.items)
     })
 
+    const count = computed(() => {
+        return user.value.favorite_tracks_count
+    })
+
     const hasMore = computed((): boolean | undefined => {
         if (data.value === undefined) return undefined
 
@@ -40,18 +49,23 @@ export const useFavoriteTracks = () => {
     }, {
         onSuccess: (res) => {
             const data = res.data.data
+            const tracks = data.tracks
 
-            trackStore.addItems(data.tracks)
+            artistStore.addItems(tracks.map(track => track.artists).flat(1))
+            releaseStore.addItems(tracks.map(track => track.releases).flat(1))
+            trackStore.addItems(tracks)
 
             mediaListStore.addItemsToMediaList({
                 id: mediaListId.value,
-                items: data.tracks.map(item => item.id),
+                items: tracks.map(item => item.id),
                 count: user.value.favorite_tracks_count,
             })
         },
     })
 
     onMounted(async () => {
+        if (options && options.load_on_mounted === false) return
+
         if (data.value === undefined) {
             await fetch()
         }
@@ -67,6 +81,8 @@ export const useFavoriteTracks = () => {
     return {
         mediaListId,
         data: tracks,
+        count,
+        fetch,
         isLoading,
         hasMore,
         getMore,

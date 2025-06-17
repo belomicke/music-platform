@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios"
-import { ApiCompactArtist, ApiRelease, ApiResponse, ApiTrack } from "@/shared/api"
+import { ApiArtist, ApiRelease, ApiResponse, ApiTrack } from "@/shared/api"
 
 export type ApiSearchResponseData = ApiResponse<{
-    artists: ApiCompactArtist[]
+    artists: ApiArtist[]
     releases: ApiRelease[]
     tracks: ApiTrack[]
 }>

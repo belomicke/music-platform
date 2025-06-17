@@ -61,7 +61,7 @@ const clearRecentSearchesHandler = () => {
 
 <style scoped lang="scss">
 .recent-searches {
-    padding: 0 24px 24px;
+    padding: 0 24px;
     font-size: 16px;
     font-weight: 500;
 

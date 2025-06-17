@@ -7,6 +7,7 @@ import type { ApiTrack } from "@/shared/api"
 
 const props = withDefaults(defineProps<{
     tracks: ApiTrack[]
+    queueId: string
     title?: string
     clickableTitle?: boolean
 }>(), {
@@ -55,6 +56,8 @@ onMounted(() => {
             <div class="track-carousel__items">
                 <track-list-item
                     :id="track"
+                    :queue-id="queueId"
+                    :index="(item - 1) * 3 + chunkIndex + 1"
                     class="track-carousel__item"
                     :style="{
                         'width': `${itemWidth}px`
@@ -62,7 +65,7 @@ onMounted(() => {
                     with-artists
                     with-cover
                     @click="clickOnItemHandler(track)"
-                    v-for="track in chunks[item]"
+                    v-for="(track, chunkIndex) in chunks[item]"
                     :key="track"
                 />
             </div>

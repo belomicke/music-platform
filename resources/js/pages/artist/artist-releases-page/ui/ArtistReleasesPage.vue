@@ -3,8 +3,8 @@ import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { useRoute } from "vue-router"
 import { useI18n } from "vue-i18n"
-import { useArtistReleases } from "@/features/releases/get-artist-releases"
-import { useCompactArtistStore } from "@/entities/artist"
+import { useArtistReleases } from "@/features/artists/get-artist-releases"
+import { useArtistStore } from "@/entities/artist"
 import { ReleasesList } from "@/entities/release"
 import { MediaListPage, useStickyHeaderTitle } from "@/shared/ui"
 
@@ -17,8 +17,8 @@ const id = computed(() => {
 
 const { data: releases } = useArtistReleases(id)
 
-const compactArtistStore = useCompactArtistStore()
-const { getById } = storeToRefs(compactArtistStore)
+const artistStore = useArtistStore()
+const { getById } = storeToRefs(artistStore)
 
 const artist = computed(() => {
     return getById.value(id.value)

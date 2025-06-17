@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { ArtistMediaCard } from "@/entities/artist"
-import { ApiCompactArtist } from "@/shared/api"
+import { ApiArtist } from "@/shared/api"
 import { MediaList } from "@/shared/ui"
 
 const props = defineProps<{
-    artists: ApiCompactArtist[]
+    artists: ApiArtist[]
     hasMore: boolean
 }>()
 

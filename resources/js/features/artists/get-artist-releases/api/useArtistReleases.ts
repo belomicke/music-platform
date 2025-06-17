@@ -2,9 +2,9 @@ import { computed, ComputedRef, onMounted, watch } from "vue"
 import { storeToRefs } from "pinia"
 import { useMediaListStore } from "@/entities/media-list"
 import { useReleaseStore } from "@/entities/release"
+import { useArtistStore } from "@/entities/artist"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
-import { useCompactArtistStore } from "@/entities/artist"
 
 export const useArtistReleases = (id: ComputedRef<string>) => {
     const mediaListStore = useMediaListStore()
@@ -13,7 +13,7 @@ export const useArtistReleases = (id: ComputedRef<string>) => {
     const releaseStore = useReleaseStore()
     const { getManyById } = storeToRefs(releaseStore)
 
-    const compactArtistStore = useCompactArtistStore()
+    const artistStore = useArtistStore()
 
     const mediaListId = computed(() => {
         return `artist:${id.value}:releases`
@@ -36,13 +36,11 @@ export const useArtistReleases = (id: ComputedRef<string>) => {
             const data = res.data.data
 
             const releases = data.releases
+            const artists = releases.map(release => release.artists).flat(1)
             const count = data.count
 
+            artistStore.addItems(artists)
             releaseStore.addItems(releases)
-
-            const artists = releases.map(release => release.artists).flat(1)
-
-            compactArtistStore.addItems(artists)
 
             mediaListStore.createMediaList({
                 id: `artist:${id.value}:releases`,

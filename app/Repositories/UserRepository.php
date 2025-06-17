@@ -6,7 +6,6 @@ namespace App\Repositories;
 
 use App\DTOs\User\CreateUserDTO;
 use App\Models\User;
-use App\Services\AuthService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -29,33 +28,5 @@ final class UserRepository
         $user->save();
 
         return $user->fresh();
-    }
-
-    public function incrementFollowedArtistsCount(User $user): void
-    {
-        $user->followed_artists_count++;
-        $user->save();
-    }
-
-    public function decrementFollowedArtistsCount(User $user): void
-    {
-        $user->followed_artists_count--;
-        $user->save();
-    }
-
-    public function incrementFavoriteTracksCount(): void
-    {
-        $user = AuthService::user();
-
-        $user->favorite_tracks_count++;
-        $user->save();
-    }
-
-    public function decrementFavoriteTracksCount(): void
-    {
-        $user = AuthService::user();
-
-        $user->favorite_tracks_count--;
-        $user->save();
     }
 }

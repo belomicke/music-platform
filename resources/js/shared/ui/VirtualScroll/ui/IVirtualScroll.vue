@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, nextTick, ref } from "vue"
 import { useVirtualizer } from "@tanstack/vue-virtual"
 
 const props = withDefaults(defineProps<{
@@ -27,7 +27,7 @@ const options = computed(() => {
     return {
         count: props.count,
         getScrollElement,
-        estimateSize: () => props.estimateSize + props.gap,
+        estimateSize: () => props.estimateSize,
         overscan: 5,
     }
 })
@@ -37,6 +37,18 @@ const rowVirtualizer = useVirtualizer(options)
 const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems())
 
 const totalSize = computed(() => rowVirtualizer.value.getTotalSize())
+
+const measureElement = (el: Element) => {
+    nextTick(() => {
+        if (!el) {
+            return
+        }
+
+        rowVirtualizer.value.measureElement(el)
+
+        return undefined
+    })
+}
 </script>
 
 <template>
@@ -52,21 +64,33 @@ const totalSize = computed(() => rowVirtualizer.value.getTotalSize())
             }"
         >
             <div
-                v-for="virtualRow in virtualRows"
-                :key="virtualRow.index"
                 :style="{
                     position: 'absolute',
                     top: 0,
                     left: 0,
                     width: '100%',
-                    height: `${virtualRow.size}px`,
-                    transform: `translateY(${virtualRow.start}px)`,
+                    transform: `translateY(${
+                        virtualRows[0] ? virtualRows[0]?.start - rowVirtualizer.options.scrollMargin : 0
+                    }px)`,
                 }"
             >
-                <slot
-                    name="item"
-                    :virtual-row="virtualRow"
-                />
+                <div
+                    :data-index="virtualRow.index"
+                    :ref="measureElement"
+                    v-for="virtualRow in virtualRows"
+                    :key="virtualRow.index"
+                >
+                    <slot
+                        name="item"
+                        :virtual-row="virtualRow"
+                    />
+                    <div
+                        :style="{
+                            'height': `${gap}px`
+                        }"
+                        v-if="virtualRow.index !== count - 1"
+                    />
+                </div>
             </div>
         </div>
     </div>

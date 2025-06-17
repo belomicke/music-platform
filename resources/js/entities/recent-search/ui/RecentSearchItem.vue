@@ -3,9 +3,9 @@ import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { useI18n } from "vue-i18n"
 import type { RecentSearch } from "../model"
-import { useCompactArtistStore } from "@/entities/artist"
+import { useArtistStore } from "@/entities/artist"
 import { useReleaseStore } from "@/entities/release"
-import { ApiCompactArtist, ApiRelease } from "@/shared/api"
+import { ApiArtist, ApiRelease } from "@/shared/api"
 import { useNavigation } from "@/shared/hooks"
 import { IAvatar } from "@/shared/ui"
 
@@ -18,9 +18,9 @@ const { t } = useI18n()
 const { goToArtistInfoPage, goToReleaseInfoPage } = useNavigation()
 
 const releaseStore = useReleaseStore()
-const compactArtistStore = useCompactArtistStore()
+const artistStore = useArtistStore()
 
-const { getById: getArtistById } = storeToRefs(compactArtistStore)
+const { getById: getArtistById } = storeToRefs(artistStore)
 const { getById: getReleaseById } = storeToRefs(releaseStore)
 
 const data = computed(() => {
@@ -33,7 +33,7 @@ const data = computed(() => {
 
 const title = computed(() => {
     if (props.recentSearch.type === "artist") {
-        return (data.value as ApiCompactArtist).name
+        return (data.value as ApiArtist).name
     } else if (props.recentSearch.type === "release") {
         return (data.value as ApiRelease).title
     }

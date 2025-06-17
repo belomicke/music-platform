@@ -8,12 +8,27 @@ use App\DTOs\Artist\ArtistMediaListDTO;
 use App\Models\Artist;
 use App\Services\AuthService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 final class ArtistRepository
 {
     public function getByUUID(string $uuid): Artist|null
     {
-        return Artist::query()->where('uuid', $uuid)->first();
+        return Cache::get(
+            key: "artist:$uuid",
+            default: function () use ($uuid) {
+                $artist = Artist::query()
+                    ->where("uuid", $uuid)
+                    ->first();
+
+                Cache::set(
+                    key: "artist:$uuid",
+                    value: $artist
+                );
+
+                return $artist;
+            }
+        );
     }
 
     public function getManyByUUID(array $uuids): Collection
@@ -42,28 +57,22 @@ final class ArtistRepository
 
     public function search(string $query, int $limit = 36): Collection
     {
-        return Artist::search(query: $query)->take(limit: $limit)->get();
+        return Artist::search(query: $query)
+            ->take(limit: $limit)
+            ->get();
     }
 
     public function follow(Artist $artist): void
     {
-        AuthService::user()->followed_artists()->attach($artist);
+        AuthService::user()
+            ->followed_artists()
+            ->attach($artist);
     }
 
     public function unfollow(Artist $artist): void
     {
-        AuthService::user()->followed_artists()->detach($artist);
-    }
-
-    public function incrementFollowersCount(Artist $artist): void
-    {
-        $artist->followers_count++;
-        $artist->save();
-    }
-
-    public function decrementFollowersCount(Artist $artist): void
-    {
-        $artist->followers_count--;
-        $artist->save();
+        AuthService::user()
+            ->followed_artists()
+            ->detach($artist);
     }
 }
