@@ -156,6 +156,9 @@ export const useBackendPlayerStore = defineStore("backend-player", () => {
         const res = await playerMethods.setTrack(context_id, position)
 
         if (res.data.success) {
+            const trackStore = useTrackStore()
+            trackStore.addItem(res.data.data.track)
+
             track.value = res.data.data.track
             trackId.value = res.data.data.track.id
             length.value = res.data.data.length
