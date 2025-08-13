@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed, useSlots } from "vue"
 import { useResponsive } from "@/shared/hooks"
+import MediaPageHeaderTitle from "@/shared/ui/MediaPageHeader/ui/MediaPageHeaderTitle.vue"
+import MediaPageHeaderMeta from "@/shared/ui/MediaPageHeader/ui/MediaPageHeaderMeta.vue"
+import MediaPageHeaderControls from "@/shared/ui/MediaPageHeader/ui/MediaPageHeaderControls.vue"
 
 const props = defineProps<{
     title: string
@@ -29,29 +32,23 @@ const hasMeta = computed(() => {
         <div class="media-page-header__content">
             <div class="media-page-header__info">
                 <div
-                    class="media-page-header__type"
+                    class="media-page-header__entity-name"
                     v-if="deviceType !== 'mobile'"
                 >
                     {{ type }}
                 </div>
-                <h1
-                    class="media-page-header__title"
-                    :class="[
-                        titleLength
-                    ]"
-                >
-                    {{ title }}
-                </h1>
-                <div
-                    class="media-page-header__meta"
+                <media-page-header-title
+                    :title="title"
+                />
+                <media-page-header-meta
                     v-if="hasMeta"
                 >
-                    <slot name="meta"/>
-                </div>
+                    <slot name="meta"></slot>
+                </media-page-header-meta>
             </div>
-            <div class="media-page-header__actions">
-                <slot name="actions"/>
-            </div>
+            <media-page-header-controls>
+                <slot name="actions"></slot>
+            </media-page-header-controls>
         </div>
     </div>
 </template>
@@ -60,8 +57,10 @@ const hasMeta = computed(() => {
 .media-page-header {
     display: flex;
     align-items: center;
-    gap: 24px;
-    padding: 20px 24px;
+    gap: 1.5rem;
+    padding: 2rem;
+
+    width: 100%;
 
     container-name: media-page-header;
 
@@ -77,69 +76,34 @@ const hasMeta = computed(() => {
     &__content {
         display: flex;
         flex-direction: column;
+        flex: 1 1;
+        height: 100%;
     }
 
     &__info {
         display: flex;
         flex-direction: column;
-        margin-bottom: 32px;
+        width: 100%;
 
         @media only screen and (max-width: 768px) {
             margin-bottom: 24px;
         }
     }
 
-    &__meta {
+    &__entity-name {
+        align-items: center;
+        color: var(--ym-controls-color-primary-text-enabled);
         display: flex;
-        gap: 8px;
-        margin-top: 8px;
+        gap: var(--ym-spacer-size-xs);
 
-        @media only screen and (max-width: 768px) {
-            justify-content: center;
-            margin-top: 20px;
-        }
-    }
-
-    &__actions {
-        display: flex;
-        gap: 12px;
-
-        @media only screen and (max-width: 768px) {
-            justify-content: center;
-        }
-    }
-
-    &__type {
-        color: var(--color-text-secondary);
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 500;
-    }
-
-    &__title {
         margin: 0;
+        padding: 0;
 
-        &.short {
-            font-size: 48px;
-            line-height: 48px;
-        }
-
-        &.long {
-            font-size: 26px;
-            line-height: 28px;
-        }
-
-        &.mobile {
-            font-size: 24px;
-            line-height: 26px;
-            font-weight: 700;
-            font-style: normal;
-        }
-    }
-
-    &__subtitle {
-        font-size: 16px;
-        line-height: 2;
+        font-weight: var(--ym-font-weight-medium);
+        font-size: var(--ym-font-size-label-m);
+        font-style: normal;
+        letter-spacing: normal;
+        line-height: var(--ym-font-line-height-label-m);
     }
 }
 </style>

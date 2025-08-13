@@ -19,12 +19,17 @@ const goToArtist = (id: string) => {
             v-for="(artist, index) in artists"
             :key="artist.id"
         >
-            <span
-                class="separated-artists__artist"
-                @click="goToArtist(artist.id)"
+            <router-link
+                target="_self"
+                rel=""
+                :aria-label="`Артист ${artist.name}`"
+                :to="`/artist/${artist.id}`"
+                class="separated-artists__artist-link"
             >
-                {{ artist.name }}
-            </span>
+                <span class="separated-artists__artist-label">
+                    {{ artist.name }}
+                </span>
+            </router-link>
             <template v-if="index !== artists.length - 1">
                 {{ ", " }}
             </template>
@@ -32,18 +37,16 @@ const goToArtist = (id: string) => {
     </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .separated-artists {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    word-break: break-all;
-    -webkit-line-clamp: 1;
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 18px;
-    max-height: 18px;
-    color: var(--color-text-secondary);
     overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-word;
+
+    @media only screen and (min-width: 768px) {
+        display: contents;
+    }
 
     &__artist {
         color: inherit;
@@ -53,6 +56,27 @@ const goToArtist = (id: string) => {
         &:hover {
             color: var(--color-text-primary);
         }
+    }
+
+    &__artist-link {
+        border: none;
+        cursor: pointer;
+        outline: none;
+        overflow: hidden;
+        position: relative;
+        text-decoration: none;
+    }
+
+    &__artist-label {
+        color: var(--ym-controls-color-primary-text-enabled);
+        font-size: var(--ym-font-size-label-m);
+        letter-spacing: var(--ym-letter-spacing-m);
+        line-height: var(--ym-font-line-height-label-m);
+        font-weight: var(--ym-font-weight-medium);
+    }
+
+    &__artist-link:hover > &__artist-label {
+        color: var(--ym-controls-color-primary-text-hovered);
     }
 }
 </style>

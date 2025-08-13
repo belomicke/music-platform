@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Player;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Repositories\PlayerRepository;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class GetTrackFileController extends Controller
+final class GetTrackFileController extends Controller
 {
     public function __construct(
         private readonly PlayerRepository $player,

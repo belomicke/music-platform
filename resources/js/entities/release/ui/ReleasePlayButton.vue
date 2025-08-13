@@ -67,7 +67,7 @@ const clickHandler = async () => {
     />
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .release-play-button {
     display: flex;
     align-items: center;
@@ -75,6 +75,7 @@ const clickHandler = async () => {
     border: none;
     outline: none;
     gap: 4px;
+    height: 100%;
 
     cursor: pointer;
 

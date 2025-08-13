@@ -2,7 +2,6 @@
 import { computed } from "vue"
 import AppSidebar from "./ui/AppSidebar/AppSidebar.vue"
 import { AppPlayer } from "@/widgets/player"
-import { StickyHeaderWithNavigation } from "@/shared/ui"
 import { useResponsive } from "@/shared/hooks"
 
 const { windowSize } = useResponsive()
@@ -22,9 +21,6 @@ const width = computed(() => windowSize.value.width)
                 />
                 <div class="app-layout-content__wrapper">
                     <div class="app-layout-content">
-                        <sticky-header-with-navigation
-                            scroll-element-query-selector=".app-layout-content"
-                        />
                         <router-view></router-view>
                     </div>
                 </div>
@@ -71,8 +67,9 @@ const width = computed(() => windowSize.value.width)
         &__wrapper {
             width: 100%;
             height: 100%;
-            border-radius: 12px;
-            border: 1px solid var(--color-border);
+            flex-grow: 1;
+            border-radius: 1rem;
+            border: .0625rem solid var(--color-border);
             background-color: var(--color-background);
             overflow: hidden;
 

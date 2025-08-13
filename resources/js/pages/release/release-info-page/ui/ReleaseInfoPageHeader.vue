@@ -1,28 +1,19 @@
 <script setup lang="ts">
-import { computed } from "vue"
 import { useI18n } from "vue-i18n"
+import PageHeaderReleaseMeta from "./PageHeaderReleaseMeta.vue"
 import { ReleaseFollowButton } from "@/features/releases/following"
-import { useNavigation, useResponsive } from "@/shared/hooks"
-import { IAvatar, MediaPageHeader } from "@/shared/ui"
-import type { ApiRelease } from "@/shared/api"
 import ReleasePlayButton from "@/entities/release/ui/ReleasePlayButton.vue"
+import { IAvatar, MediaPageHeader } from "@/shared/ui"
+import { useResponsive } from "@/shared/hooks"
+import type { ApiRelease } from "@/shared/api"
 
-const props = defineProps<{
+defineProps<{
     release: ApiRelease
 }>()
 
 const { t } = useI18n()
 
 const { deviceType } = useResponsive()
-const { goToArtistInfoPage } = useNavigation()
-
-const year = computed(() => {
-    return new Date(props.release.release_date).getFullYear()
-})
-
-const goToArtist = (id: string) => {
-    goToArtistInfoPage(id)
-}
 </script>
 
 <template>
@@ -33,85 +24,30 @@ const goToArtist = (id: string) => {
         <template #avatar>
             <i-avatar
                 :url="release.image_url"
-                size="204px"
+                size="226px"
                 can-be-open-in-modal
             />
         </template>
         <template #meta>
-            <div
-                class="artist"
-                v-if="release.artists.length === 1"
-            >
-                <i-avatar
-                    :url="release.artists[0].image_url"
-                    size="20px"
-                    round
-                />
-                <div
-                    class="artist__name"
-                    @click="goToArtist(release.artists[0].id)"
-                >
-                    {{ release.artists[0].name }}
-                </div>
-            </div>
-            <div class="year">{{ year }}</div>
+            <page-header-release-meta
+                :release="release"
+            />
         </template>
         <template #actions>
-            <div class="artist-page-header-actions">
-                <release-play-button
-                    :release="release"
-                    variant="primary"
-                />
-                <release-follow-button
-                    :id="release.id"
-                    :size="deviceType === 'mobile' ? 64 : 40"
-                    :icon-size="deviceType === 'mobile' ? 32 : 20"
-                    v-if="release"
-                />
-            </div>
+            <release-play-button
+                :release="release"
+                variant="primary"
+            />
+            <release-follow-button
+                :id="release.id"
+                :size="deviceType === 'mobile' ? 64 : 44"
+                :icon-size="deviceType === 'mobile' ? 32 : 22"
+                v-if="release"
+            />
         </template>
     </media-page-header>
 </template>
 
-<style scoped lang="scss">
-.artist {
-    display: flex;
-    gap: 8px;
+<style lang="scss">
 
-    &__name {
-        cursor: pointer;
-        color: var(--color-text-secondary);
-        font-size: 14px;
-        font-weight: 500;
-        transition: color .15s;
-
-        &:hover {
-            color: var(--color-primary-hover);
-        }
-    }
-}
-
-.year {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--color-text-secondary);
-
-    font-size: 14px;
-    font-weight: 500;
-
-    &::before {
-        content: "";
-        display: block;
-        width: 3px;
-        height: 3px;
-        border-radius: 50%;
-        background-color: var(--color-text-secondary);
-    }
-}
-
-.artist-page-header-actions {
-    display: flex;
-    gap: 12px;
-}
 </style>

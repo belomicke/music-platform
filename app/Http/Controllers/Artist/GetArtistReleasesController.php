@@ -8,6 +8,7 @@ use App\Exceptions\Artist\ArtistNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Release\ReleaseResource;
 use App\Models\Artist;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 final class GetArtistReleasesController extends Controller
@@ -15,7 +16,7 @@ final class GetArtistReleasesController extends Controller
     /**
      * @throws ArtistNotFoundException
      */
-    public function __invoke(Request $request, Artist $artist)
+    public function __invoke(Request $request, Artist $artist): JsonResponse
     {
         if ($artist->exists === false) {
             throw new ArtistNotFoundException();
@@ -23,10 +24,9 @@ final class GetArtistReleasesController extends Controller
 
         $artist->load([
             "releases",
-            "releases.artists",
-            "releases.artists.is_followed"
+            "releases.artists"
         ]);
-        
+
         return $this->success([
             "releases" => ReleaseResource::collection($artist->releases),
             "count" => $artist->releases()->count(),

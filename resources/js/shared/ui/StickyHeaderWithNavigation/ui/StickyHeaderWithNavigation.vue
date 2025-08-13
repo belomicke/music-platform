@@ -5,10 +5,6 @@ import { storeToRefs } from "pinia"
 import { useStickyHeaderStore } from "../model"
 import { IIconButton } from "@/shared/ui"
 
-const props = defineProps<{
-    scrollElementQuerySelector: string
-}>()
-
 const route = useRoute()
 const router = useRouter()
 
@@ -23,7 +19,7 @@ const title = computed(() => getTitle.value)
 const scrollTop = ref<number>(0)
 
 const scrollElement = computed<HTMLDivElement>(() => {
-    return document.querySelector(props.scrollElementQuerySelector)
+    return document.querySelector(".app-layout-content")
 })
 
 watch(route, () => {
@@ -87,14 +83,14 @@ const scrollToTop = () => {
             <i-icon-button
                 icon="chevron-left"
                 variant="ghost"
-                :size="32"
+                :size="35"
                 :disabled="!canGoBack"
                 @click="goBackHandler"
             />
             <i-icon-button
                 icon="chevron-right"
                 variant="ghost"
-                :size="32"
+                :size="35"
                 :disabled="!canGoForward"
                 @click="goForwardHandler"
             />
@@ -120,10 +116,10 @@ const scrollToTop = () => {
     padding: 0 24px;
     background-color: var(--color-background-transparent-8);
     backdrop-filter: blur(12px);
-    height: 60px;
+    height: 68px;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 9999;
 
     &__navigation {
         display: flex;
@@ -131,7 +127,7 @@ const scrollToTop = () => {
     }
 
     &__title {
-        font-size: 18px;
+        font-size: 24px;
         line-height: 1;
         font-weight: 600;
         opacity: 0;

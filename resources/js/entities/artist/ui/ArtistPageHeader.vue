@@ -21,11 +21,12 @@ const { deviceType } = useResponsive()
         <template #avatar>
             <i-avatar
                 :url="artist.image_url"
-                :size="deviceType === 'mobile' ? '168px' : '204px'"
+                :size="deviceType === 'mobile' ? '168px' : '12.75rem'"
                 can-be-open-in-modal
                 round
             />
         </template>
+        <template #meta></template>
         <template #actions>
             <artist-follow-button
                 :id="artist.id"
