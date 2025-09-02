@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Middleware\CheckAccessTokenMiddleware;
+use App\Http\Middleware\ForceJsonResponseMiddleware;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -13,7 +17,19 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->statefulApi();
+
+        $middleware->api(prepend: [
+            CheckAccessTokenMiddleware::class,
+            ForceJsonResponseMiddleware::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (AuthenticationException $exception, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    "success" => false,
+                    "message" => $exception->getMessage(),
+                ], 401);
+            }
+        });
     })->create();

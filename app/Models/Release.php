@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\AuthService;
+use App\Modules\Auth\Services\AuthService;
 use App\Services\StorageService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 
@@ -31,7 +33,7 @@ use Laravel\Scout\Searchable;
  */
 class Release extends Model
 {
-    use Searchable;
+    use Searchable, HasFactory;
 
     public function toSearchableArray(): array
     {
@@ -44,18 +46,18 @@ class Release extends Model
 
     public function getImageUrlAttribute(): string
     {
-        return StorageService::getMediaAvatar(
-            uuid: $this->uuid,
-            type: "releases"
-        );
+        return StorageService::getReleaseCover(uuid: $this->uuid);
     }
 
     public function is_followed(): HasOne
     {
-        $id = AuthService::user()->id ?? 0;
+        $id = AuthService::check() ? AuthService::user()->id : null;
 
-        return $this->hasOne(UserFollowedReleasesPivot::class)
-            ->where("user_id", $id);
+        return $this->hasOne(
+            related: FollowedRelease::class
+        )
+            ->where("user_id", $id)
+            ->where("is_deleted", false);
     }
 
     public function artists(): BelongsToMany
@@ -66,11 +68,8 @@ class Release extends Model
         );
     }
 
-    public function tracks(): BelongsToMany
+    public function tracks(): HasMany
     {
-        return $this->belongsToMany(
-            related: Track::class,
-            table: "release_track"
-        );
+        return $this->hasMany(related: Track::class);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\User;
@@ -8,11 +10,18 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\ImageManager;
 
-class StorageService
+final class StorageService
 {
     public static function getMediaAvatar(string $uuid, string $type): string
     {
-        return Storage::disk("public")->url("$type/avatars/$uuid.png");
+        $folder = $type === "releases" ? "covers" : "avatars";
+
+        return Storage::disk("public")->url("$type/$folder/$uuid.png");
+    }
+
+    public static function getReleaseCover(string $uuid): string
+    {
+        return Storage::disk("public")->url("releases/covers/$uuid.png");
     }
 
     public static function saveUserAvatar(User $user, UploadedFile $file): void

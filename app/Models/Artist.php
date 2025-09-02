@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\AuthService;
+use App\Modules\Auth\Services\AuthService;
 use App\Services\StorageService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +17,7 @@ use Laravel\Scout\Searchable;
  * @property int id
  * @property string uuid
  * @property string name
+ * @property int release_count
  * @property string image_url
  *
  * @property Collection<Release> releases
@@ -59,10 +60,13 @@ class Artist extends Model
 
     public function is_followed(): HasOne
     {
-        $id = AuthService::user()->id ?? 0;
+        $id = AuthService::check() ? AuthService::user()->id : null;
 
-        return $this->hasOne(UserFollowedArtistPivot::class)
-            ->where("user_id", $id);
+        return $this->hasOne(
+            related: FollowedArtist::class
+        )
+            ->where("user_id", $id)
+            ->where("is_deleted", false);
     }
 
     public function releases(): BelongsToMany

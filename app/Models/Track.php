@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\AuthService;
+use App\Modules\Auth\Services\AuthService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
@@ -19,8 +20,8 @@ use Laravel\Scout\Searchable;
  *
  * @property HasOne is_favorite
  *
+ * @property Release release
  * @property Collection<Artist> artists
- * @property Collection<Release> releases
  */
 final class Track extends Model
 {
@@ -29,7 +30,7 @@ final class Track extends Model
     public function toSearchableArray(): array
     {
         return $this
-            ->with(["artists", "releases"])
+            ->with(["artists", "release"])
             ->where("id", $this->id)
             ->first()
             ->toArray();
@@ -37,10 +38,13 @@ final class Track extends Model
 
     public function is_favorite(): HasOne
     {
-        $id = AuthService::user()->id ?? 0;
+        $id = AuthService::check() ? AuthService::user()->id : null;
 
-        return $this->hasOne(UserFavoriteTrackPivot::class)
-            ->where("user_id", $id);
+        return $this->hasOne(
+            related: FavoriteTrack::class
+        )
+            ->where("user_id", $id)
+            ->where("is_deleted", false);
     }
 
     public function artists(): BelongsToMany
@@ -51,11 +55,11 @@ final class Track extends Model
         );
     }
 
-    public function releases(): BelongsToMany
+    public function release(): BelongsTo
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             related: Release::class,
-            table: "release_track"
+            foreignKey: "release_id"
         );
     }
 }

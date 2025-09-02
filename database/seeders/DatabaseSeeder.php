@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
-class DatabaseSeeder extends Seeder
+final class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
@@ -17,11 +17,16 @@ class DatabaseSeeder extends Seeder
         Storage::disk("public")->deleteDirectory("users");
         Storage::disk("public")->makeDirectory("users/avatars");
 
+        Storage::disk("public")->deleteDirectory("releases");
+        Storage::disk("public")->makeDirectory("releases/covers");
+
         $this->call([
             UserSeeder::class,
             ArtistSeeder::class,
             ArtistFollowingSeeder::class,
             ReleaseSeeder::class,
+            TrackSeeder::class,
+            ArtistTrackSeeder::class
         ]);
     }
 }

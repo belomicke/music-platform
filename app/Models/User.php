@@ -18,7 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
 /**
  * @property int id
  * @property string uuid
- * @property string username
+ * @property string name
  * @property string email
  * @property string password
  * @property string image_url
