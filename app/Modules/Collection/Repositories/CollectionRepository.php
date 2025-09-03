@@ -18,6 +18,7 @@ final class CollectionRepository
 
         $artists = $user
             ->followed_artists()
+            ->wherePivot("is_deleted", false)
             ->orderByPivot(
                 column: "created_at",
                 direction: "desc"
@@ -41,6 +42,7 @@ final class CollectionRepository
 
         $releases = $user
             ->followed_releases()
+            ->wherePivot("is_deleted", false)
             ->orderByPivot(
                 column: "created_at",
                 direction: "desc"
@@ -64,6 +66,7 @@ final class CollectionRepository
 
         $tracks = $user
             ->favorite_tracks()
+            ->wherePivot("is_deleted", false)
             ->orderByPivot(
                 column: "id",
                 direction: "desc"
