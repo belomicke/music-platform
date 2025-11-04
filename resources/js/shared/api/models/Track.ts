@@ -9,5 +9,5 @@ export interface ApiTrack {
     is_favorite: boolean
 
     artists: ApiArtist[]
-    releases: ApiRelease[]
+    release: ApiRelease
 }

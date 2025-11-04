@@ -1,9 +1,3 @@
-import { isUsernameValid } from "./username"
-import { isPasswordValid } from "./password"
-import { isEmailValid } from "./email"
-
-export {
-    isUsernameValid,
-    isPasswordValid,
-    isEmailValid,
-}
+export * from "./email"
+export * from "./password"
+export * from "./username"

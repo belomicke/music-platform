@@ -3,8 +3,9 @@ import { computed, ref, useTemplateRef, watch } from "vue"
 import { useI18n } from "vue-i18n"
 import { useEditAccountInfo } from "../api"
 import { useCurrentUser } from "@/features/auth/current-user"
-import { IAvatar, IButton, IIconButton, IInput, IModal, showAlert } from "@/shared/ui"
+import { IButton, IIconButton, IInput, IModal, showAlert } from "@/shared/ui"
 import { EditAccountInfoDTO } from "@/shared/api"
+import { CurrentUserAvatar } from "@/entities/auth"
 
 const { t } = useI18n()
 
@@ -114,19 +115,14 @@ const clearChanges = () => {
                         ref="avatarInputRef"
                     />
                     <div class="avatar-changer__avatar">
-                        <i-avatar
-                            :url="avatarUrl"
+                        <current-user-avatar
                             size="96px"
-                            clickable
-                            icon="user"
-                            round
                             @click="openAvatarFilePicker"
                         />
                         <i-icon-button
                             variant="primary"
                             class="avatar-changer__change-button"
                             icon="pencil"
-                            :icon-size="16"
                             @click="openAvatarFilePicker"
                         />
                     </div>

@@ -1,81 +1,63 @@
-import { useRouter } from "vue-router"
-import { ROUTE_NAMES } from "@/shared/config/router"
+import { RouteParamsRawGeneric, useRouter } from "vue-router"
+import { ROUTE_NAME } from "@/shared/config"
 
 export const useNavigation = () => {
     const router = useRouter()
 
-    const goToHomePage = () => {
-        router.push({
-            name: ROUTE_NAMES.HOME,
+    const goTo = async (name: ROUTE_NAME, params?: RouteParamsRawGeneric) => {
+        await router.push({
+            name,
+            params: params,
         })
     }
 
-    const goToSearchPage = () => {
-        router.push({
-            name: ROUTE_NAMES.SEARCH,
+    const goToHomePage = async () => {
+        await goTo("home")
+    }
+
+    const goToSearchPage = async () => {
+        await goTo("search")
+    }
+
+    const goToCollectionPage = async () => {
+        await goTo("collection")
+    }
+
+    const goToSignInPage = async () => {
+        await goTo("sign-in")
+    }
+
+    const goToSignUpPage = async () => {
+        await goTo("sign-up")
+    }
+
+    const goToFavoriteArtistsPage = async () => {
+        await goTo("favorite-artists")
+    }
+
+    const goToFavoriteReleasesPage = async () => {
+        await goTo("favorite-releases")
+    }
+
+    const goToFavoriteTracksPage = async () => {
+        await goTo("favorite-tracks")
+    }
+
+    const goToArtistInfoPage = async (id: string) => {
+        await goTo("artist-info", {
+            id,
         })
     }
 
-    const goToCollectionPage = (() => {
-        router.push({
-            name: ROUTE_NAMES.COLLECTION,
-        })
-    })
-
-    const goToSignInPage = () => {
-        router.push({
-            name: ROUTE_NAMES.SIGN_IN,
+    const goToArtistReleasesPage = async (id: string) => {
+        await goTo("artist-releases", {
+            id,
         })
     }
 
-    const goToSignUpPage = () => {
-        router.push({
-            name: ROUTE_NAMES.SIGN_UP,
-        })
-    }
-
-    const goToFavoriteArtistsPage = () => {
-        router.push({
-            name: ROUTE_NAMES.FAVORITE_ARTISTS_PAGE,
-        })
-    }
-
-    const goToFavoriteReleasesPage = () => {
-        router.push({
-            name: ROUTE_NAMES.FAVORITE_RELEASES_PAGE,
-        })
-    }
-
-    const goToFavoriteTracksPage = () => {
-        router.push({
-            name: ROUTE_NAMES.FAVORITE_TRACKS_PAGE,
-        })
-    }
-
-    const goToArtistInfoPage = (id: string) => {
-        router.push({
-            name: ROUTE_NAMES.ARTIST_INFO_PAGE,
-            params: {
-                id,
-            },
-        })
-    }
-
-    const goToArtistReleasesPage = (id: string) => {
-        router.push({
-            name: ROUTE_NAMES.ARTIST_RELEASES_PAGE,
-            params: {
-                id,
-            },
-        })
-    }
-
-    const goToReleaseInfoPage = (id: string) => {
-        router.push({
-            name: ROUTE_NAMES.RELEASE_INFO_PAGE,
-            params: {
-                id,
-            },
+    const goToReleaseInfoPage = async (id: string) => {
+        await goTo("release-info", {
+            id,
         })
     }
 

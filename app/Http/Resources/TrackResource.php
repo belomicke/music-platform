@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Resources;
+
+use App\Models\Track;
+use App\Services\AuthService;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * @mixin Track
+ */
+final class TrackResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        $isFavorite = AuthService::check() && !($this->is_favorite === null);
+
+        $artists = $this->artists;
+        $release = $this->release;
+
+        return [
+            "id" => $this->uuid,
+            "title" => $this->title,
+            "duration_ms" => $this->duration_ms,
+
+            "is_favorite" => $isFavorite,
+
+            "release" => ReleaseResource::make($release),
+            "artists" => ArtistResource::collection($artists),
+        ];
+    }
+}

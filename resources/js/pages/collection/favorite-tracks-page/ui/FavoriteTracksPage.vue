@@ -1,30 +1,23 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import FavoriteTracksPageHeader from "./FavoriteTracksPageHeader.vue"
-import { useFavoriteTracks } from "@/features/collection/get-favorite-tracks"
-import { TrackList } from "@/entities/track"
+import { useI18n } from "vue-i18n"
+import { FavoriteTracksList } from "@/widgets/track/favorite-tracks-list"
+import { AppStickyHeaderContent } from "@/widgets/app/app-sticky-header"
 
-const { data: tracks } = useFavoriteTracks()
+const { t } = useI18n()
 
-const ids = computed(() => tracks.value.map(track => track.id))
+const title = computed(() => {
+    return t("page.collection.followed-tracks.header.title")
+})
 </script>
 
 <template>
-    <div class="favorite-tracks-page">
-        <favorite-tracks-page-header/>
-        <div class="favorite-tracks-page__tracks">
-            <track-list
-                :ids="ids"
-                queue-id="favorite-tracks"
-                with-cover
-                with-artists
-            />
-        </div>
-    </div>
+    <app-sticky-header-content
+        :title="title"
+    />
+    <favorite-tracks-list/>
 </template>
 
-<style scoped lang="scss">
-.favorite-tracks-page {
-    padding-bottom: 24px;
-}
+<style lang="scss">
+
 </style>

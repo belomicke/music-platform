@@ -1,23 +1,12 @@
 import { computed, ComputedRef, onMounted, watch } from "vue"
-import { AxiosError } from "axios"
 import { storeToRefs } from "pinia"
 import { useArtistStore } from "@/entities/artist"
-import { useMediaListStore } from "@/entities/media-list"
-import { useReleaseStore } from "@/entities/release"
-import { useFetch } from "@/shared/hooks"
+import { HookOptions, useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
-interface Options {
-    onError: (err: AxiosError) => void
-}
-
-export const useArtistById = (id: ComputedRef<string>, options?: Options) => {
+export const useArtistById = (id: ComputedRef<string>, options?: HookOptions) => {
     const artistStore = useArtistStore()
-    const { getById: getArtistById } = storeToRefs(artistStore)
-
-    const releaseStore = useReleaseStore()
-
-    const mediaListStore = useMediaListStore()
+    const { getArtistById } = storeToRefs(artistStore)
 
     const artist = computed(() => {
         return getArtistById.value(id.value)
@@ -30,16 +19,6 @@ export const useArtistById = (id: ComputedRef<string>, options?: Options) => {
             const artist = res.data.data.artist
 
             artistStore.addItem(artist)
-
-            const releases = res.data.data.releases
-
-            releaseStore.addItems(releases.items)
-
-            mediaListStore.createMediaList({
-                id: `artist:${artist.id}:releases`,
-                items: releases.items.map(release => release.id),
-                count: releases.count,
-            })
         },
         onError: (err) => {
             if (options && typeof options.onError === "function") {

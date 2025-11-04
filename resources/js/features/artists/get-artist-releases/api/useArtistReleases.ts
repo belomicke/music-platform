@@ -1,32 +1,38 @@
 import { computed, ComputedRef, onMounted, watch } from "vue"
 import { storeToRefs } from "pinia"
-import { useMediaListStore } from "@/entities/media-list"
+import { useArtistReleaseListStore } from "@/entities/artist-releases"
 import { useReleaseStore } from "@/entities/release"
 import { useArtistStore } from "@/entities/artist"
-import { useFetch } from "@/shared/hooks"
+import { HookOptions, useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
-export const useArtistReleases = (id: ComputedRef<string>) => {
-    const mediaListStore = useMediaListStore()
-    const { getMediaListById } = storeToRefs(mediaListStore)
-
+export const useArtistReleases = (id: ComputedRef<string>, options?: HookOptions) => {
     const releaseStore = useReleaseStore()
-    const { getManyById } = storeToRefs(releaseStore)
+    const { getSeveralReleases } = storeToRefs(releaseStore)
 
     const artistStore = useArtistStore()
+    const artistReleasesStore = useArtistReleaseListStore()
 
-    const mediaListId = computed(() => {
-        return `artist:${id.value}:releases`
+    const artistsReleasesList = computed(() => {
+        return artistReleasesStore.getArtistReleases(id.value)
     })
 
-    const mediaList = computed(() => {
-        return getMediaListById.value(mediaListId.value)
+    const releases = computed(() => {
+        if (artistsReleasesList.value === undefined) return []
+
+        return getSeveralReleases.value(artistsReleasesList.value.releases)
     })
 
-    const data = computed(() => {
-        if (!mediaList.value) return []
+    const count = computed(() => {
+        if (artistsReleasesList.value === undefined) return 0
 
-        return getManyById.value(mediaList.value.items)
+        return artistsReleasesList.value.count
+    })
+
+    const hasMore = computed(() => {
+        if (artistsReleasesList.value === undefined) return false
+
+        return artistsReleasesList.value.releases.length < count.value
     })
 
     const { fetch, isLoading } = useFetch(async () => {
@@ -42,28 +48,43 @@ export const useArtistReleases = (id: ComputedRef<string>) => {
             artistStore.addItems(artists)
             releaseStore.addItems(releases)
 
-            mediaListStore.createMediaList({
-                id: `artist:${id.value}:releases`,
-                items: releases.map(release => release.id),
-                count,
+            artistReleasesStore.addArtistReleases({
+                id: id.value,
+                releases: releases.map(release => release.id),
+                count: count,
             })
+        },
+        onError: (error) => {
+            if (options && typeof options["onError"] === "function") {
+                options.onError(error)
+            }
         },
     })
 
     watch(id, async () => {
-        if (data.value.length === 0) {
+        if (artistsReleasesList.value === undefined) {
             await fetch()
         }
     })
 
     onMounted(async () => {
-        if (data.value.length === 0) {
+        if (artistsReleasesList.value === undefined) {
             await fetch()
         }
     })
 
+    const getMore = async () => {
+        if (isLoading.value) return
+        if (hasMore.value === false) return
+
+        await fetch()
+    }
+
     return {
-        data,
+        releases,
+        count,
+        hasMore,
         isLoading,
+        getMore,
     }
 }

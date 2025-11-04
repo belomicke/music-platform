@@ -1,73 +1,62 @@
 import { computed, onMounted } from "vue"
 import { storeToRefs } from "pinia"
 import { useCurrentUser } from "@/features/auth/current-user"
-import { useMediaListStore } from "@/entities/media-list"
+import { useCollectionStore } from "@/entities/collection"
 import { useArtistStore } from "@/entities/artist"
 import { useReleaseStore } from "@/entities/release"
 import { useTrackStore } from "@/entities/track"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
-export const useFavoriteTracks = (options?: { load_on_mounted?: boolean }) => {
+export const useFavoriteTracks = () => {
     const trackStore = useTrackStore()
-    const { getManyById: getManyTracksById } = storeToRefs(trackStore)
+    const { getSeveralTracks } = storeToRefs(trackStore)
 
     const artistStore = useArtistStore()
     const releaseStore = useReleaseStore()
 
-    const mediaListStore = useMediaListStore()
-    const { getFavoriteTracksMediaListId, getMediaListById } = storeToRefs(mediaListStore)
+    const collectionStore = useCollectionStore()
+    const { getFavoriteTracks, getTracksCount } = storeToRefs(collectionStore)
 
     const { data: user } = useCurrentUser()
 
-    const mediaListId = computed(() => {
-        return getFavoriteTracksMediaListId.value
-    })
-
-    const data = computed(() => {
-        return getMediaListById.value(mediaListId.value)
-    })
-
     const tracks = computed(() => {
-        if (data.value === undefined) return []
-
-        return getManyTracksById.value(data.value.items)
+        return getSeveralTracks.value(getFavoriteTracks.value)
     })
 
     const count = computed(() => {
         return user.value.favorite_tracks_count
     })
 
-    const hasMore = computed((): boolean | undefined => {
-        if (data.value === undefined) return undefined
-
-        return data.value.items.length < data.value.count
+    const hasMore = computed((): boolean => {
+        return tracks.value.length < count.value
     })
 
-    const { fetch, isLoading } = useFetch(async () => {
-        return await api.collection.getFavoriteTracks(tracks.value.length)
+    const after = computed(() => {
+        if (tracks.value.length === 0) return ""
+
+        return tracks.value.at(-1).id
+    })
+
+    const { fetch, isLoading } = useFetch(async (after: string) => {
+        return await api.collection.getFavoriteTracks(after)
     }, {
         onSuccess: (res) => {
             const data = res.data.data
             const tracks = data.tracks
 
             artistStore.addItems(tracks.map(track => track.artists).flat(1))
-            releaseStore.addItems(tracks.map(track => track.releases).flat(1))
+            releaseStore.addItems(tracks.map(track => track.release).flat(1))
             trackStore.addItems(tracks)
 
-            mediaListStore.addItemsToMediaList({
-                id: mediaListId.value,
-                items: tracks.map(item => item.id),
-                count: user.value.favorite_tracks_count,
-            })
+            collectionStore.addTracks(data.tracks.map(track => track.id))
+            collectionStore.setTracksCount(data.count)
         },
     })
 
     onMounted(async () => {
-        if (options && options.load_on_mounted === false) return
-
-        if (data.value === undefined) {
-            await fetch()
+        if (user.value.favorite_tracks_count !== getTracksCount.value) {
+            await fetch(after.value)
         }
     })
 
@@ -75,11 +64,10 @@ export const useFavoriteTracks = (options?: { load_on_mounted?: boolean }) => {
         if (isLoading.value) return
         if (hasMore.value === false) return
 
-        await fetch()
+        await fetch(after.value)
     }
 
     return {
-        mediaListId,
         data: tracks,
         count,
         fetch,

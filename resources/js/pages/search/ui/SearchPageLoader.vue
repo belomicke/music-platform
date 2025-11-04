@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ILoader } from "@/shared/ui"
+import { IIcon } from "@/shared/ui"
 </script>
 
 <template>
     <div class="search-page-loader">
-        <i-loader
-            :size="32"
+        <i-icon
+            class="search-page-loader__icon"
+            icon="loader"
+            size="xl"
         />
     </div>
 </template>
@@ -17,5 +19,18 @@ import { ILoader } from "@/shared/ui"
     align-items: center;
     width: 100%;
     height: 100%;
+
+    &__icon {
+        animation: rotate infinite linear 2s;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>

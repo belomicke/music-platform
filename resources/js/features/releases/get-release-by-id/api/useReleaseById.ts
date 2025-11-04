@@ -11,9 +11,9 @@ interface Options {
 }
 
 export const useReleaseById = (id: ComputedRef<string>, options?: Options) => {
-    const releaseStore = useReleaseStore()
     const artistStore = useArtistStore()
-    const { getById: getReleaseById } = storeToRefs(releaseStore)
+    const releaseStore = useReleaseStore()
+    const { getReleaseById } = storeToRefs(releaseStore)
 
     const release = computed(() => {
         return getReleaseById.value(id.value)
@@ -27,7 +27,6 @@ export const useReleaseById = (id: ComputedRef<string>, options?: Options) => {
             const artists = release.artists
 
             artistStore.addItems(artists)
-
             releaseStore.addItem(release)
         },
         onError: (err) => {

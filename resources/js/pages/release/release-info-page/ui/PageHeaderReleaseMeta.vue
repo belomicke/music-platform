@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ApiRelease } from "@/shared/api"
-import { SeparatedArtists } from "@/entities/artist"
+import { ArtistAvatar, SeparatedArtists } from "@/entities/artist"
 import { computed } from "vue"
 
 const props = defineProps<{
@@ -15,10 +15,10 @@ const year = computed(() => {
 <template>
     <div class="page-header-release-meta">
         <div class="page-header-release-meta__artist-cover">
-            <img
-                :src="release.artists[0].image_url"
-                loading="lazy"
-                alt=""
+            <artist-avatar
+                :artist="release.artists[0]"
+                icon-size="xxxs"
+                size="1.25rem"
             />
         </div>
         <separated-artists

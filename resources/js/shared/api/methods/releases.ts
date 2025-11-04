@@ -1,4 +1,4 @@
-import type { ReleaseResponse, StatusResponse, TrackListResponse } from "@/shared/api"
+import type { ReleaseResponse, TrackListResponse } from "@/shared/api"
 import { makeRequest } from "@/shared/api"
 
 export const releasesMethods = {
@@ -15,18 +15,6 @@ export const releasesMethods = {
             data: {
                 offset,
             },
-        })
-    },
-    follow: async (id: string): Promise<StatusResponse> => {
-        return makeRequest({
-            method: "PUT",
-            url: `/api/releases/${id}/follow`,
-        })
-    },
-    unfollow: async (id: string): Promise<StatusResponse> => {
-        return makeRequest({
-            method: "DELETE",
-            url: `/api/releases/${id}/unfollow`,
         })
     },
 }

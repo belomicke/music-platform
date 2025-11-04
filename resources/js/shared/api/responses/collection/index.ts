@@ -1,5 +1,1 @@
-import type { CollectionResponse } from "./CollectionResponse"
-
-export {
-    CollectionResponse,
-}
+export * from "./CollectionResponse"

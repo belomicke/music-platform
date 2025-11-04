@@ -1,12 +1,12 @@
 import { ref } from "vue"
 import { ApiErrorResponse } from "@/shared/api/responses"
 
-export type UseFetchOptions<Response, Params> = {
+export type UseFetchOptions<Response, Params = {}> = {
     onSuccess?: (res: Response, params: Params) => void
     onError?: (data: ApiErrorResponse) => void
 }
 
-export const useFetch = <Params = {}, Response = {}>(
+export const useFetch = <Response = {}, Params = {}>(
     callback: (params: Params) => Promise<Response>,
     options: UseFetchOptions<Response, Params> = {},
 ) => {

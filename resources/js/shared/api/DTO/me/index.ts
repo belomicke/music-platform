@@ -1,5 +1,1 @@
-import type { EditAccountInfoDTO } from "./EditAccountInfoDTO"
-
-export {
-    EditAccountInfoDTO,
-}
+export * from "./EditAccountInfoDTO"

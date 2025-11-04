@@ -139,7 +139,7 @@ export default {
                 "placeholder": "Трек, альбом, исполнитель",
             },
             "recent-searches": {
-                "note": "Здесь будут ваши недавние запросы",
+                "no-result": "Здесь будут ваши недавние запросы",
                 "clear": "Очистить историю",
             },
             "no-results": {
@@ -162,12 +162,17 @@ export default {
         "collection": {
             "followed-artists": {
                 "header": {
-                    "title": "Исполнители",
+                    "title": "Любимые исполнители",
                 },
             },
             "followed-releases": {
                 "header": {
-                    "title": "Релизы",
+                    "title": "Любимые релизы",
+                },
+            },
+            "followed-tracks": {
+                "header": {
+                    "title": "Любимые треки",
                 },
             },
         },

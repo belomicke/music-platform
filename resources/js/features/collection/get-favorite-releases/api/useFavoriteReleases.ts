@@ -1,56 +1,54 @@
 import { computed, onMounted } from "vue"
 import { storeToRefs } from "pinia"
-import { useMediaListStore } from "@/entities/media-list"
+import { useCurrentUser } from "@/features/auth/current-user"
+import { useCollectionStore } from "@/entities/collection"
 import { useReleaseStore } from "@/entities/release"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
 export const useFavoriteReleases = () => {
     const releaseStore = useReleaseStore()
-    const { getManyById: getManyReleasesById } = storeToRefs(releaseStore)
+    const { getSeveralReleases } = storeToRefs(releaseStore)
 
-    const mediaListStore = useMediaListStore()
-    const { getFavoriteReleasesMediaListId, getMediaListById } = storeToRefs(mediaListStore)
+    const collectionStore = useCollectionStore()
+    const { getFavoriteReleases, getReleasesCount } = storeToRefs(collectionStore)
 
-    const mediaListId = computed(() => {
-        return getFavoriteReleasesMediaListId.value
-    })
-
-    const data = computed(() => {
-        return getMediaListById.value(mediaListId.value)
-    })
+    const { data: user } = useCurrentUser()
 
     const releases = computed(() => {
-        if (data.value === undefined) return []
-
-        return getManyReleasesById.value(data.value.items)
+        return getSeveralReleases.value(getFavoriteReleases.value)
     })
 
-    const hasMore = computed((): boolean | undefined => {
-        if (data.value === undefined) return undefined
-
-        return data.value.items.length < data.value.count
+    const count = computed(() => {
+        return getReleasesCount.value
     })
 
-    const { fetch, isLoading } = useFetch(async () => {
-        return await api.collection.getFavoriteReleases(releases.value.length)
+    const hasMore = computed((): boolean => {
+        return releases.value.length < count.value
+    })
+
+    const after = computed(() => {
+        if (releases.value.length === 0) return ""
+
+        return releases.value.at(-1).id
+    })
+
+    const { fetch, isLoading } = useFetch(async (after: string) => {
+        return await api.collection.getFavoriteReleases(after)
     }, {
         onSuccess: (res) => {
             const data = res.data.data
 
             releaseStore.addItems(data.releases)
 
-            mediaListStore.addItemsToMediaList({
-                id: mediaListId.value,
-                items: data.releases.map(item => item.id),
-                count: data.count,
-            })
+            collectionStore.addReleases(data.releases.map(release => release.id))
+            collectionStore.setReleasesCount(data.count)
         },
     })
 
     onMounted(async () => {
-        if (data.value === undefined) {
-            await fetch()
+        if (user.value.favorite_releases_count !== getReleasesCount.value) {
+            await fetch(after.value)
         }
     })
 
@@ -58,11 +56,10 @@ export const useFavoriteReleases = () => {
         if (isLoading.value) return
         if (hasMore.value === false) return
 
-        await fetch()
+        await fetch(after.value)
     }
 
     return {
-        mediaListId,
         data: releases,
         isLoading,
         hasMore,

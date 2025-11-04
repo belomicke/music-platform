@@ -1,7 +1,5 @@
-import ReleaseCarousel from "./ReleaseCarousel.vue"
-import ReleasesList from "./ReleasesList.vue"
+import ReleaseCover from "./ReleaseCover.vue"
 
 export {
-    ReleaseCarousel,
-    ReleasesList,
+    ReleaseCover,
 }

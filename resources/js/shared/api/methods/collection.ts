@@ -1,7 +1,8 @@
 import type {
+    ArtistListResponse,
     CollectionResponse,
-    CompactArtistListResponse,
     ReleaseListResponse,
+    StatusResponse,
     TrackListResponse,
 } from "@/shared/api"
 import { makeRequest } from "@/shared/api"
@@ -13,30 +14,84 @@ export const collectionMethods = {
             url: `/api/collection`,
         })
     },
-    getFavoriteArtists: async (offset: number): Promise<CompactArtistListResponse> => {
+    getFavoriteArtists: async (after: string): Promise<ArtistListResponse> => {
         return makeRequest({
             method: "GET",
             url: `/api/collection/artists`,
             data: {
-                offset,
+                after: after ? after : undefined,
             },
         })
     },
-    getFavoriteReleases: async (offset: number): Promise<ReleaseListResponse> => {
+    getFavoriteReleases: async (after: string): Promise<ReleaseListResponse> => {
         return makeRequest({
             method: "GET",
             url: `/api/collection/releases`,
             data: {
-                offset,
+                after: after ? after : undefined,
             },
         })
     },
-    getFavoriteTracks: async (offset: number): Promise<TrackListResponse> => {
+    getFavoriteTracks: async (after: string): Promise<TrackListResponse> => {
         return makeRequest({
             method: "GET",
             url: `/api/collection/tracks`,
             data: {
-                offset,
+                after: after ? after : undefined,
+            },
+        })
+    },
+    addArtist: async (id: string): Promise<StatusResponse> => {
+        return makeRequest({
+            method: "PUT",
+            url: "/api/collection/artists",
+            data: {
+                id,
+            },
+        })
+    },
+    removeArtist: async (id: string): Promise<StatusResponse> => {
+        return makeRequest({
+            method: "DELETE",
+            url: "/api/collection/artists",
+            data: {
+                id,
+            },
+        })
+    },
+    addRelease: async (id: string): Promise<StatusResponse> => {
+        return makeRequest({
+            method: "PUT",
+            url: "/api/collection/releases",
+            data: {
+                id,
+            },
+        })
+    },
+    removeRelease: async (id: string): Promise<StatusResponse> => {
+        return makeRequest({
+            method: "DELETE",
+            url: "/api/collection/releases",
+            data: {
+                id,
+            },
+        })
+    },
+    addTrack: async (id: string): Promise<StatusResponse> => {
+        return makeRequest({
+            method: "PUT",
+            url: "/api/collection/tracks",
+            data: {
+                id,
+            },
+        })
+    },
+    removeTrack: async (id: string): Promise<StatusResponse> => {
+        return makeRequest({
+            method: "DELETE",
+            url: "/api/collection/tracks",
+            data: {
+                id,
             },
         })
     },

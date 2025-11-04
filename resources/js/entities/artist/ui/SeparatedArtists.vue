@@ -1,20 +1,27 @@
 <script setup lang="ts">
-import { useNavigation } from "@/shared/hooks"
-import { ApiArtist } from "@/shared/api"
 
-defineProps<{
-    artists: ApiArtist[]
-}>()
-
-const { goToArtistInfoPage } = useNavigation()
-
-const goToArtist = (id: string) => {
-    goToArtistInfoPage(id)
+interface Artist {
+    id: string
+    name: string
 }
+
+withDefaults(defineProps<{
+    artists: Artist[],
+    variant?: "primary" | "secondary"
+    size?: "m" | "s"
+}>(), {
+    size: "m",
+    variant: "primary",
+})
 </script>
 
 <template>
-    <div class="separated-artists">
+    <div
+        class="separated-artists"
+        :style="{
+            '-webkit-line-clamp': 1
+        }"
+    >
         <template
             v-for="(artist, index) in artists"
             :key="artist.id"
@@ -24,9 +31,17 @@ const goToArtist = (id: string) => {
                 rel=""
                 :aria-label="`Артист ${artist.name}`"
                 :to="`/artist/${artist.id}`"
-                class="separated-artists__artist-link"
+                class="separated-artists__link"
             >
-                <span class="separated-artists__artist-label">
+                <span
+                    class="separated-artists__label"
+                    :class="[
+                        size === 'm' && 'medium',
+                        size === 's' && 'small',
+
+                        variant
+                    ]"
+                >
                     {{ artist.name }}
                 </span>
             </router-link>
@@ -43,9 +58,14 @@ const goToArtist = (id: string) => {
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-word;
+    color: var(--ym-controls-color-primary-text-enabled);
+
+    transition: color var(--ym-duration-transition);
 
     @media only screen and (min-width: 768px) {
-        display: contents;
+        & {
+            display: contents;
+        }
     }
 
     &__artist {
@@ -58,25 +78,50 @@ const goToArtist = (id: string) => {
         }
     }
 
-    &__artist-link {
+    &__link {
+        display: inline;
         border: none;
         cursor: pointer;
         outline: none;
         overflow: hidden;
         position: relative;
+        color: var(--text-enabled-color);
         text-decoration: none;
+        transition: color var(--ym-duration-transition);
     }
 
-    &__artist-label {
-        color: var(--ym-controls-color-primary-text-enabled);
+    &__label {
+        display: inline;
         font-size: var(--ym-font-size-label-m);
+        color: var(--ym-controls-color-primary-text-enabled);
         letter-spacing: var(--ym-letter-spacing-m);
         line-height: var(--ym-font-line-height-label-m);
         font-weight: var(--ym-font-weight-medium);
-    }
+        transition: color var(--ym-duration-transition);
 
-    &__artist-link:hover > &__artist-label {
-        color: var(--ym-controls-color-primary-text-hovered);
+        &.medium {
+            font-size: var(--ym-font-size-label-m);
+        }
+
+        &.small {
+            font-size: var(--ym-font-size-label-s);
+        }
+
+        &.primary:hover {
+            color: var(--ym-controls-color-primary-text-hovered);
+        }
+
+        &.secondary {
+            --text-enabled-color: var(--ym-controls-color-primary-text-enabled);
+            --text-hovered-color: var(--ym-controls-color-primary-text-enabled_variant);
+            --text-disabled-color: var(--ym-controls-color-primary-text-disabled);
+
+            color: var(--text-enabled-color);
+
+            &:hover {
+                color: var(--text-hovered-color);
+            }
+        }
     }
 }
 </style>

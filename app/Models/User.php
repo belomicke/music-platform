@@ -8,6 +8,7 @@ use App\Services\StorageService;
 use Database\Factories\UserFactory;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -22,9 +23,13 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string email
  * @property string password
  * @property string image_url
- * @property int followed_artists_count
- * @property int followed_releases_count
  * @property int favorite_tracks_count
+ * @property int favorite_artists_count
+ * @property int favorite_releases_count
+ *
+ * @property Collection<Track> favorite_tracks
+ * @property Collection<Artist> favorite_artists
+ * @property Collection<Release> favorite_releases
  */
 final class User extends Authenticatable implements MustVerifyEmail
 {
@@ -63,7 +68,7 @@ final class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-    public function followed_artists(): BelongsToMany
+    public function favorite_artists(): BelongsToMany
     {
         return $this->belongsToMany(
             Artist::class,
@@ -71,7 +76,7 @@ final class User extends Authenticatable implements MustVerifyEmail
         )->withTimestamps();
     }
 
-    public function followed_releases(): BelongsToMany
+    public function favorite_releases(): BelongsToMany
     {
         return $this->belongsToMany(
             Release::class,

@@ -2,10 +2,10 @@
 import { computed } from "vue"
 import { useRoute } from "vue-router"
 import ReleaseInfoPageHeader from "./ReleaseInfoPageHeader.vue"
-import { ReleaseTrackList } from "@/features/releases/get-release-tracks"
+import { AppStickyHeaderContent } from "@/widgets/app/app-sticky-header"
 import { useReleaseById } from "@/features/releases/get-release-by-id"
-import { useStickyHeaderTitle } from "@/shared/ui"
 import { useNavigation } from "@/shared/hooks"
+import { ReleaseTrackList } from "@/widgets/track/release-track-list"
 
 const route = useRoute()
 
@@ -22,15 +22,13 @@ const { data: release } = useReleaseById(id, {
         }
     },
 })
-
-useStickyHeaderTitle(computed(() => {
-    if (!release.value) return ""
-
-    return release.value.title
-}))
 </script>
 
 <template>
+    <app-sticky-header-content
+        :title="release.title"
+        v-if="release"
+    />
     <div
         class="release-info-page"
         v-if="release"
@@ -46,8 +44,6 @@ useStickyHeaderTitle(computed(() => {
     </div>
 </template>
 
-<style lang="scss" scoped>
-.content {
-    padding: 0 0 24px;
-}
+<style lang="scss">
+
 </style>

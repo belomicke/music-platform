@@ -10,7 +10,7 @@ const { t } = useI18n()
         <i-icon
             class="search-page-no-results__icon"
             icon="search"
-            :size="40"
+            size="xxl"
         />
         <h3 class="search-page-no-results__title">
             {{ t("page.search.no-results.title") }}

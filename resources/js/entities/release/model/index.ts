@@ -1,5 +1,1 @@
-import { useReleaseStore } from "./release-store"
-
-export {
-    useReleaseStore,
-}
+export * from "./release-store"

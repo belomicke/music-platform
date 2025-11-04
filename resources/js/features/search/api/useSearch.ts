@@ -4,13 +4,11 @@ import { useMediaListStore } from "@/entities/media-list"
 import { useArtistStore } from "@/entities/artist"
 import { useReleaseStore } from "@/entities/release"
 import { useTrackStore } from "@/entities/track"
-import { api, ApiArtist, ApiRelease, ApiTrack, SearchType } from "@/shared/api"
+import { api, ApiArtist, ApiRelease, ApiTrack } from "@/shared/api"
 import { useFetch } from "@/shared/hooks"
 
 export const useSearch = (
     query: ComputedRef<string>,
-    type: ComputedRef<SearchType>,
-    bestResults: ComputedRef<boolean>,
 ) => {
     const mediaListStore = useMediaListStore()
     const artistStore = useArtistStore()
@@ -18,9 +16,9 @@ export const useSearch = (
     const trackStore = useTrackStore()
 
     const { getMediaListById } = storeToRefs(mediaListStore)
-    const { getManyById: getManyArtistsById } = storeToRefs(artistStore)
-    const { getManyById: getManyReleasesById } = storeToRefs(releaseStore)
-    const { getManyById: getManyTracksById } = storeToRefs(trackStore)
+    const { getSeveralArtists } = storeToRefs(artistStore)
+    const { getSeveralReleases } = storeToRefs(releaseStore)
+    const { getSeveralTracks } = storeToRefs(trackStore)
 
     const artistsMediaListId = computed(() => {
         return `search:${query.value}:artists`
@@ -33,7 +31,7 @@ export const useSearch = (
     const artists = computed(() => {
         if (!artistsMediaList.value) return undefined
 
-        return getManyArtistsById.value(artistsMediaList.value.items)
+        return getSeveralArtists.value(artistsMediaList.value.items)
     })
 
     const releasesMediaListId = computed(() => {
@@ -47,7 +45,7 @@ export const useSearch = (
     const releases = computed(() => {
         if (!releasesMediaList.value) return undefined
 
-        return getManyReleasesById.value(releasesMediaList.value.items)
+        return getSeveralReleases.value(releasesMediaList.value.items)
     })
 
     const tracksMediaListId = computed(() => {
@@ -61,7 +59,7 @@ export const useSearch = (
     const tracks = computed(() => {
         if (!tracksMediaList.value) return undefined
 
-        return getManyTracksById.value(tracksMediaList.value.items)
+        return getSeveralTracks.value(tracksMediaList.value.items)
     })
 
     const data = computed(() => {
@@ -83,7 +81,7 @@ export const useSearch = (
     })
 
     const { fetch, isLoading } = useFetch(async () => {
-        return api.search.search(query.value, type.value, bestResults.value)
+        return api.search.search(query.value)
     }, {
         onSuccess: (data) => {
             handleArtistsFromResponse(data.data.data.artists)

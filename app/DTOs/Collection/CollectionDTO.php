@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 final class CollectionDTO
 {
     public function __construct(
+        public Collection $tracks,
         public Collection $artists,
         public Collection $releases,
-        public Collection $tracks,
     ) {}
 }

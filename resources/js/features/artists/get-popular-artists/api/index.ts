@@ -1,5 +1,1 @@
-import { usePopularArtists } from "./usePopularArtists"
-
-export {
-    usePopularArtists,
-}
+export * from "./usePopularArtists"

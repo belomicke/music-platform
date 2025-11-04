@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Resources;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * @mixin User
+ */
+final class CurrentUserResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            "id" => $this->uuid,
+            "name" => $this->name,
+            "image_url" => $this->image_url,
+            "email" => $this->email,
+
+            "favorite_tracks_count" => $this->favorite_tracks_count,
+            "favorite_artists_count" => $this->favorite_artists_count,
+            "favorite_releases_count" => $this->favorite_releases_count,
+        ];
+    }
+}

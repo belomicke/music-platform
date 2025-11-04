@@ -7,7 +7,7 @@ import { api } from "@/shared/api"
 
 export const usePopularArtists = () => {
     const artistStore = useArtistStore()
-    const { getManyById: getManyArtistsById } = storeToRefs(artistStore)
+    const { getSeveralArtists } = storeToRefs(artistStore)
 
     const mediaListStore = useMediaListStore()
     const { getMediaListById, getPopularArtistsMediaListId } = storeToRefs(mediaListStore)
@@ -19,7 +19,7 @@ export const usePopularArtists = () => {
     const artists = computed(() => {
         if (mediaList.value === undefined) return []
 
-        return getManyArtistsById.value(mediaList.value.items)
+        return getSeveralArtists.value(mediaList.value.items)
     })
 
     const { fetch, isLoading } = useFetch(async () => {

@@ -5,7 +5,7 @@ export interface ApiCurrentUser {
 
     email: string
 
-    followed_artists_count: number
-    followed_users_count: number
     favorite_tracks_count: number
+    favorite_artists_count: number
+    favorite_releases_count: number
 }

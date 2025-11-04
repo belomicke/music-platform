@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import AppSidebar from "./ui/AppSidebar/AppSidebar.vue"
-import { AppPlayer } from "@/widgets/player"
+import { AppStickyHeader } from "@/widgets/app/app-sticky-header"
+import { AppSidebar } from "@/widgets/app/app-sidebar"
+import { AppPlayer } from "@/widgets/app/app-player"
 import { useResponsive } from "@/shared/hooks"
 
 const { windowSize } = useResponsive()
@@ -20,13 +21,15 @@ const width = computed(() => windowSize.value.width)
                     v-if="width.value <= 1080 && width.value >= 768"
                 />
                 <div class="app-layout-content__wrapper">
-                    <div class="app-layout-content">
-                        <router-view></router-view>
-                    </div>
+                    <main class="app-layout-content">
+                        <app-sticky-header/>
+                        <div class="app-layout-page">
+                            <router-view></router-view>
+                        </div>
+                    </main>
                 </div>
             </div>
-            <app-player
-            />
+            <app-player/>
         </div>
     </div>
 </template>
@@ -34,25 +37,22 @@ const width = computed(() => windowSize.value.width)
 <style lang="scss">
 .app-layout {
     --app-padding: 10px;
-    --sidebar-width: 320px;
-    --sidebar-width-compact: 72px;
+    --navbar-width: 270px;
+    --navbar-width-compact: 72px;
     --app-player-height: 80px;
 
     display: grid;
-    grid-template-columns: var(--sidebar-width) 1fr;
-    gap: 12px;
-    padding: var(--app-padding);
+    grid-template-columns: var(--navbar-width) 1fr;
+    column-gap: var(--ym-spacer-size-m);
+
+    padding-block-end: var(--ym-spacer-size-m);
+    padding-block-start: var(--ym-spacer-size-m);
+    padding-inline-end: var(--ym-spacer-size-m);
+    padding-inline-start: var(--ym-spacer-size-xs);
+
     height: 100vh;
-
-    @media (max-width: 1080px) {
-        display: flex;
-        border: none;
-        border-radius: 0;
-    }
-
-    @media (max-width: 767px) {
-        padding: 0;
-    }
+    width: 100%;
+    margin: 0 auto;
 
     &-body {
         display: grid;
@@ -61,27 +61,34 @@ const width = computed(() => windowSize.value.width)
     }
 
     &-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        position: relative;
+        background-color: var(--ym-background-color-primary-enabled-content);
+        border: .0625rem solid var(--ym-outline-color-primary-disabled);
+        border-radius: var(--ym-radius-size-xl);
+
         height: 100%;
         overflow-y: scroll;
 
         &__wrapper {
+            display: flex;
+
             width: 100%;
             height: 100%;
             flex-grow: 1;
-            border-radius: 1rem;
-            border: .0625rem solid var(--color-border);
-            background-color: var(--color-background);
+            position: relative;
+            border-radius: var(--ym-radius-size-xl);
             overflow: hidden;
-
-            @media (max-width: 767px) {
-                border: none;
-                border-radius: 0;
-            }
         }
+    }
 
-        @media (max-width: 767px) {
-            height: calc(100vh - 80px);
-        }
+    &-page {
+        flex-grow: 1;
+        position: relative;
+        padding-top: var(--ym-spacer-size-l);
+        padding-bottom: var(--ym-spacer-size-xxl);
     }
 }
 
@@ -91,38 +98,9 @@ const width = computed(() => windowSize.value.width)
     gap: 12px;
     width: 100%;
 
-    @media (max-width: 1080px) {
-        padding-bottom: 12px;
-    }
-
-    @media (max-width: 767px) {
-        display: grid;
-        grid-template-rows: 1fr 80px;
-        padding: 0;
-        gap: 0;
-    }
-
     &__content {
-        height: calc(100vh - var(--app-player-height) - var(--app-padding) * 2 - 12px);
-        width: calc(100vw - var(--sidebar-width) - var(--app-padding) * 2 - 12px);
-
-        @media (max-width: 1080px) {
-            display: grid;
-            grid-template-columns: var(--sidebar-width) 1fr;
-            gap: 12px;
-            width: 100%;
-        }
-
-        @media (max-width: 1024px) {
-            grid-template-columns: var(--sidebar-width-compact) 1fr;
-        }
-
-        @media (max-width: 767px) {
-            display: flex;
-            padding: 0;
-            width: 100vw;
-            height: calc(100vh - var(--app-player-height));
-        }
+        height: calc(100vh - var(--app-player-height) - var(--ym-spacer-size-m) * 2 - 12px);
+        width: auto;
     }
 }
 

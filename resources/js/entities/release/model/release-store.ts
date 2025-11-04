@@ -5,13 +5,13 @@ import { ApiRelease } from "@/shared/api"
 export const useReleaseStore = defineStore("release", () => {
     const releases = ref<ApiRelease[]>([])
 
-    const getById = computed(() => {
+    const getReleaseById = computed(() => {
         return (id: string) => {
             return releases.value.find(release => release.id === id)
         }
     })
 
-    const getManyById = computed(() => {
+    const getSeveralReleases = computed(() => {
         return (ids: string[]): ApiRelease[] | undefined => {
             const result: ApiRelease[] = []
 
@@ -39,6 +39,7 @@ export const useReleaseStore = defineStore("release", () => {
         if (!release) return
 
         release.is_followed = true
+        release.like_count += 1
     }
 
     const unfollow = (id: string) => {
@@ -47,11 +48,12 @@ export const useReleaseStore = defineStore("release", () => {
         if (!release) return
 
         release.is_followed = false
+        release.like_count -= 1
     }
 
     return {
-        getById,
-        getManyById,
+        getReleaseById,
+        getSeveralReleases,
 
         addItem,
         addItems,

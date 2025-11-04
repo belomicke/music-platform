@@ -1,6 +1,7 @@
 import { computed, onMounted } from "vue"
 import { storeToRefs } from "pinia"
-import { useMediaListStore } from "@/entities/media-list"
+import { useCurrentUser } from "@/features/auth/current-user"
+import { useCollectionStore } from "@/entities/collection"
 import { useReleaseStore } from "@/entities/release"
 import { useArtistStore } from "@/entities/artist"
 import { useTrackStore } from "@/entities/track"
@@ -9,39 +10,45 @@ import { api } from "@/shared/api"
 
 export const useCollection = () => {
     const trackStore = useTrackStore()
-    const releaseStore = useReleaseStore()
-    const mediaListStore = useMediaListStore()
     const artistStore = useArtistStore()
+    const releaseStore = useReleaseStore()
+
+    const collectionStore = useCollectionStore()
+
+    const { getSeveralTracks } = storeToRefs(trackStore)
+    const { getSeveralArtists } = storeToRefs(artistStore)
+    const { getSeveralReleases } = storeToRefs(releaseStore)
 
     const {
-        getMediaListById,
-        getFavoriteArtistsMediaListId,
-        getFavoriteReleasesMediaListId,
-        getFavoriteTracksMediaListId,
-    } = storeToRefs(mediaListStore)
+        getFavoriteTracks,
+        getTracksCount,
+        getFavoriteArtists,
+        getArtistsCount,
+        getFavoriteReleases,
+        getReleasesCount,
+    } = storeToRefs(collectionStore)
 
-    const artistsMediaListId = computed(() => {
-        return getFavoriteArtistsMediaListId.value
-    })
+    const { data: user } = useCurrentUser()
 
-    const releasesMediaListId = computed(() => {
-        return getFavoriteReleasesMediaListId.value
-    })
-
-    const tracksMediaListId = computed(() => {
-        return getFavoriteTracksMediaListId.value
+    const tracks = computed(() => {
+        return {
+            items: getSeveralTracks.value(getFavoriteTracks.value),
+            count: getTracksCount.value,
+        }
     })
 
     const artists = computed(() => {
-        return getMediaListById.value(artistsMediaListId.value)
+        return {
+            items: getSeveralArtists.value(getFavoriteArtists.value),
+            count: getArtistsCount.value,
+        }
     })
 
     const releases = computed(() => {
-        return getMediaListById.value(releasesMediaListId.value)
-    })
-
-    const tracks = computed(() => {
-        return getMediaListById.value(tracksMediaListId.value)
+        return {
+            items: getSeveralReleases.value(getFavoriteReleases.value),
+            count: getReleasesCount.value,
+        }
     })
 
     const data = computed(() => {
@@ -62,36 +69,31 @@ export const useCollection = () => {
         return api.collection.get()
     }, {
         onSuccess: (data) => {
+            const tracksList = data.data.data.tracks
             const artistList = data.data.data.artists
             const releasesList = data.data.data.releases
-            const tracksList = data.data.data.tracks
 
-            releaseStore.addItems(releasesList.items)
-            artistStore.addItems(artistList.items)
             trackStore.addItems(tracksList.items)
+            artistStore.addItems(artistList.items)
+            releaseStore.addItems(releasesList.items)
 
-            mediaListStore.createMediaList({
-                id: mediaListStore.getFavoriteArtistsMediaListId,
-                items: artistList.items.map(item => item.id),
-                count: artistList.count,
-            })
+            collectionStore.addTracks(tracksList.items.map(track => track.id))
+            collectionStore.setTracksCount(tracksList.count)
 
-            mediaListStore.createMediaList({
-                id: mediaListStore.getFavoriteReleasesMediaListId,
-                items: releasesList.items.map(item => item.id),
-                count: releasesList.count,
-            })
+            collectionStore.addArtists(artistList.items.map(artist => artist.id))
+            collectionStore.setArtistsCount(artistList.count)
 
-            mediaListStore.createMediaList({
-                id: mediaListStore.getFavoriteTracksMediaListId,
-                items: tracksList.items.map(item => item.id),
-                count: tracksList.count,
-            })
+            collectionStore.addReleases(releasesList.items.map(release => release.id))
+            collectionStore.setReleasesCount(releasesList.count)
         },
     })
 
     onMounted(async () => {
-        if (data.value === undefined) {
+        if (user.value.favorite_artists_count !== data.value.artists.count) {
+            await fetch()
+        } else if (user.value.favorite_releases_count !== data.value.releases.count) {
+            await fetch()
+        } else if (user.value.favorite_tracks_count !== data.value.tracks.count) {
             await fetch()
         }
     })

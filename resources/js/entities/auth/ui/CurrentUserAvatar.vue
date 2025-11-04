@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia"
 import { useAuthStore } from "../model"
-import { IAvatar } from "@/shared/ui"
+import { IAvatar, UiSize } from "@/shared/ui"
 
 withDefaults(defineProps<{
     size?: string
-    clickable?: boolean
-    canBeOpenInModal?: boolean
+    iconSize?: UiSize
+    withOverlay?: boolean
+    withModal?: boolean
 }>(), {
-    size: "36px",
-    clickable: false,
-    canBeOpenInModal: false,
+    size: "100%",
+    iconSize: "m",
+    withOverlay: false,
+    withModal: false,
 })
 
 const authStore = useAuthStore()
@@ -21,10 +23,12 @@ const { getCurrentUser: user } = storeToRefs(authStore)
     <i-avatar
         :url="user.image_url"
         :size="size"
-        :clickable="clickable"
-        :can-be-open-in-modal="canBeOpenInModal"
-        round
         icon="user"
+        :icon-size="iconSize"
+        round
+
+        :with-overlay="withOverlay"
+        :with-modal="withModal"
     />
 </template>
 

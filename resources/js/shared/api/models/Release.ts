@@ -7,11 +7,7 @@ export interface ApiRelease {
     track_count: number
     like_count: number
     release_date: string
-
     is_followed: boolean
-
     artists: ApiArtist[]
-    tracks: string[]
-
     type: "album" | "single"
 }

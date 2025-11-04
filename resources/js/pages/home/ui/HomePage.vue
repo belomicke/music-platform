@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { PopularArtistsCarousel } from "@/features/artists/get-popular-artists"
+import { useI18n } from "vue-i18n"
+import { PopularArtistsList } from "@/widgets/artist/popular-artists-list"
+import { MediaSection } from "@/shared/ui"
+
+const { t } = useI18n()
 </script>
 
 <template>
-    <div class="home-page">
-        <popular-artists-carousel/>
-    </div>
+    <media-section
+        :title="t('page.home.section-title.popular-artists')"
+    >
+        <popular-artists-list
+            one-row
+        />
+    </media-section>
 </template>
-
-<style lang="scss">
-.home-page {
-    padding-bottom: 24px;
-}
-</style>

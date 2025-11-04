@@ -3,11 +3,12 @@ import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { useI18n } from "vue-i18n"
 import type { RecentSearch } from "../model"
-import { useArtistStore } from "@/entities/artist"
+import RecentSearchCover from "./RecentSearchCover.vue"
 import { useReleaseStore } from "@/entities/release"
+import { useArtistStore } from "@/entities/artist"
 import { ApiArtist, ApiRelease } from "@/shared/api"
 import { useNavigation } from "@/shared/hooks"
-import { IAvatar } from "@/shared/ui"
+import { IIcon } from "@/shared/ui"
 
 const props = defineProps<{
     recentSearch: RecentSearch
@@ -17,11 +18,11 @@ const { t } = useI18n()
 
 const { goToArtistInfoPage, goToReleaseInfoPage } = useNavigation()
 
-const releaseStore = useReleaseStore()
 const artistStore = useArtistStore()
+const releaseStore = useReleaseStore()
 
-const { getById: getArtistById } = storeToRefs(artistStore)
-const { getById: getReleaseById } = storeToRefs(releaseStore)
+const { getArtistById } = storeToRefs(artistStore)
+const { getReleaseById } = storeToRefs(releaseStore)
 
 const data = computed(() => {
     if (props.recentSearch.type === "artist") {
@@ -61,9 +62,11 @@ const goToRecentSearch = () => {
         class="recent-search-item"
         @click="goToRecentSearch"
     >
-        <i-avatar
-            :url="data.image_url"
-            :round="recentSearch.type === 'artist'"
+        <recent-search-cover
+            :recent-search="recentSearch"
+            :artist="data as ApiArtist"
+            :release="data as ApiRelease"
+            v-if="data"
         />
         <div class="recent-search-item__info">
             <div
@@ -73,6 +76,12 @@ const goToRecentSearch = () => {
                 {{ title }}
             </div>
             <div class="recent-search-item__type">{{ type }}</div>
+        </div>
+        <div class="recent-search-item__controls">
+            <i-icon
+                icon="chevron-right"
+                size="xs"
+            />
         </div>
     </div>
 </template>
@@ -84,8 +93,8 @@ const goToRecentSearch = () => {
     gap: 16px;
     cursor: pointer;
     padding: 0 8px;
-    border-radius: 6px;
-    height: 56px;
+    border-radius: var(--ym-radius-size-xs);
+    height: 62px;
     transition: background-color .15s;
 
     &:hover {
@@ -98,8 +107,9 @@ const goToRecentSearch = () => {
     }
 
     &__title {
-        font-size: 14px;
-        font-weight: 500;
+        font-size: var(--ym-font-size-label-m);
+        line-height: var(--ym-font-line-height-label-m);
+        font-weight: var(--ym-font-weight-medium);
 
         &:hover {
             text-decoration: underline;
@@ -107,9 +117,20 @@ const goToRecentSearch = () => {
     }
 
     &__type {
-        font-size: 14px;
-        font-weight: 500;
-        color: var(--color-text-secondary);
+        font-size: var(--ym-font-size-label-m);
+        line-height: var(--ym-font-line-height-label-m);
+        font-weight: var(--ym-font-weight-medium);
+        color: var(--ym-controls-color-primary-text-enabled);
+    }
+
+    &__controls {
+        --text-enabled-color: var(--ym-controls-color-primary-text-enabled);
+        --text-hovered-color: var(--ym-controls-color-primary-text-enabled_variant);
+
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        color: var(--text-enabled-color);
     }
 }
 </style>

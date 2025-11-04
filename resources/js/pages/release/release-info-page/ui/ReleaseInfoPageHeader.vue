@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n"
 import PageHeaderReleaseMeta from "./PageHeaderReleaseMeta.vue"
-import { ReleaseFollowButton } from "@/features/releases/following"
-import ReleasePlayButton from "@/entities/release/ui/ReleasePlayButton.vue"
-import { IAvatar, MediaPageHeader } from "@/shared/ui"
-import { useResponsive } from "@/shared/hooks"
+import { ReleaseFollowButton } from "@/widgets/release/release-follow-button"
+import { ReleasePlayButton } from "@/widgets/release/release-play-button"
+import { ReleaseCover } from "@/entities/release"
 import type { ApiRelease } from "@/shared/api"
+import { MediaPageHeader } from "@/shared/ui"
 
 defineProps<{
     release: ApiRelease
 }>()
 
 const { t } = useI18n()
-
-const { deviceType } = useResponsive()
 </script>
 
 <template>
@@ -22,10 +20,11 @@ const { deviceType } = useResponsive()
         :title="release.title"
     >
         <template #avatar>
-            <i-avatar
+            <release-cover
                 :url="release.image_url"
                 size="226px"
-                can-be-open-in-modal
+                with-modal
+                clickable
             />
         </template>
         <template #meta>
@@ -36,18 +35,13 @@ const { deviceType } = useResponsive()
         <template #actions>
             <release-play-button
                 :release="release"
-                variant="primary"
             />
             <release-follow-button
                 :id="release.id"
-                :size="deviceType === 'mobile' ? 64 : 44"
-                :icon-size="deviceType === 'mobile' ? 32 : 22"
+                variant="secondary"
+                with-count
                 v-if="release"
             />
         </template>
     </media-page-header>
 </template>
-
-<style lang="scss">
-
-</style>

@@ -5,13 +5,13 @@ import { ApiTrack } from "@/shared/api"
 export const useTrackStore = defineStore("track-store", () => {
     const tracks = ref<ApiTrack[]>([])
 
-    const getById = computed(() => {
+    const getTrackById = computed(() => {
         return (id: string): ApiTrack | undefined => {
             return tracks.value.find(track => track.id === id)
         }
     })
 
-    const getManyById = computed(() => {
+    const getSeveralTracks = computed(() => {
         return (ids: string[]): ApiTrack[] => {
             const result: ApiTrack[] = []
 
@@ -35,30 +35,21 @@ export const useTrackStore = defineStore("track-store", () => {
         values.forEach(value => addItem(value))
     }
 
-    const addToFavorite = (id: string) => {
+    const setIsFavorite = (id: string, value: boolean) => {
         const track = tracks.value.find(track => track.id === id)
 
         if (!track) return
 
-        track.is_favorite = true
-    }
-
-    const removeFromFavorite = (id: string) => {
-        const track = tracks.value.find(track => track.id === id)
-
-        if (!track) return
-
-        track.is_favorite = false
+        track.is_favorite = value
     }
 
     return {
-        getById,
-        getManyById,
+        getTrackById,
+        getSeveralTracks,
 
         addItem,
         addItems,
 
-        addToFavorite,
-        removeFromFavorite,
+        setIsFavorite,
     }
 })

@@ -1,5 +1,1 @@
-import type { CreateUserDTO } from "./CreateUserDTO"
-
-export {
-    CreateUserDTO,
-}
+export * from "./CreateUserDTO"

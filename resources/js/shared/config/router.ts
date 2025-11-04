@@ -10,6 +10,7 @@ export type ROUTE_NAME =
 
     | "favorite-artists"
     | "favorite-releases"
+    | "favorite-tracks"
 
     | "artist-info"
     | "artist-releases"

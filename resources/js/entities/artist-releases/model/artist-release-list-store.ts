@@ -7,22 +7,12 @@ interface ArtistReleasesList {
     count: number
 }
 
-export const useArtistReleasesStore = defineStore("artist-releases", () => {
+export const useArtistReleaseListStore = defineStore("artist-releases", () => {
     const lists = ref<ArtistReleasesList[]>([])
 
     const getArtistReleases = computed(() => {
         return (id: string) => {
-            const list = lists.value.find(release => release.id === id)
-
-            if (list === undefined) {
-                return {
-                    id,
-                    releases: [],
-                    count: 0,
-                }
-            }
-
-            return list
+            return lists.value.find(release => release.id === id)
         }
     })
 

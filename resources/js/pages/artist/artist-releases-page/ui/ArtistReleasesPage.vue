@@ -3,46 +3,48 @@ import { computed } from "vue"
 import { storeToRefs } from "pinia"
 import { useRoute } from "vue-router"
 import { useI18n } from "vue-i18n"
-import { useArtistReleases } from "@/features/artists/get-artist-releases"
+import { ArtistReleasesList } from "@/widgets/release/artist-releases-list"
+import { AppStickyHeaderContent } from "@/widgets/app/app-sticky-header"
 import { useArtistStore } from "@/entities/artist"
-import { ReleasesList } from "@/entities/release"
-import { MediaListPage, useStickyHeaderTitle } from "@/shared/ui"
+import { useNavigation } from "@/shared/hooks"
 
 const { t } = useI18n()
 const route = useRoute()
+
+const { goToHomePage } = useNavigation()
 
 const id = computed(() => {
     return route.params.id as string
 })
 
-const { data: releases } = useArtistReleases(id)
-
 const artistStore = useArtistStore()
-const { getById } = storeToRefs(artistStore)
+const { getArtistById } = storeToRefs(artistStore)
 
 const artist = computed(() => {
-    return getById.value(id.value)
+    return getArtistById.value(id.value)
 })
 
 const title = computed(() => {
+    if (artist.value === undefined) return ""
+
     return t("entities.release.plural") + ` ${artist.value.name}`
 })
 
-useStickyHeaderTitle(title)
+const notFoundHandler = () => {
+    goToHomePage()
+}
 </script>
 
 <template>
-    <media-list-page
+    <app-sticky-header-content
         :title="title"
-        v-if="artist"
-    >
-        <releases-list
-            :releases="releases"
-            :has-more="false"
-        />
-    </media-list-page>
+    />
+    <artist-releases-list
+        :id="id"
+        @not-found="notFoundHandler"
+    />
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 </style>

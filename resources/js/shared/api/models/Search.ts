@@ -1,7 +1,5 @@
 import { ApiArtist, ApiRelease } from "@/shared/api"
 
-export type SearchType = "all" | "artists"
-
 export type RecentSearchType = "artist" | "release"
 
 export interface ApiRecentSearch {

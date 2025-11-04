@@ -25,17 +25,11 @@ export const useAuthStore = defineStore("auth", () => {
         isAuth.value = value
     }
 
-    const incrementFavoriteTracksCount = () => {
-        user.value.favorite_tracks_count++
-    }
-
     return {
         getCurrentUser,
         getIsAuth,
 
         setCurrentUser,
         setIsAuth,
-
-        incrementFavoriteTracksCount,
     }
 })

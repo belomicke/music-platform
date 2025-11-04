@@ -5,13 +5,13 @@ export const meMethods = {
     get: async (): Promise<CurrentUserResponse> => {
         return await makeRequest({
             method: "GET",
-            url: "/api/me",
+            url: "/api/account/me",
         })
     },
     editAccountInfo: async (data: FormData): Promise<CurrentUserResponse> => {
         return await makeRequest({
             method: "POST",
-            url: "/api/me",
+            url: "/api/account/me",
             data,
         })
     },

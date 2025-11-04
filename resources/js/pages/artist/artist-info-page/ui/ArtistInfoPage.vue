@@ -1,36 +1,40 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useRoute } from "vue-router"
-import { ArtistReleasesCarousel } from "@/features/artists/get-artist-releases"
+import { useI18n } from "vue-i18n"
+import ArtistPageHeader from "./ArtistPageHeader.vue"
+import { ArtistReleasesList } from "@/widgets/release/artist-releases-list"
+import { AppStickyHeaderContent } from "@/widgets/app/app-sticky-header"
 import { useArtistById } from "@/features/artists/get-artist-by-id"
-import { ArtistPageHeader } from "@/entities/artist"
-import { useStickyHeaderTitle } from "@/shared/ui"
 import { useNavigation } from "@/shared/hooks"
+import { MediaSection } from "@/shared/ui"
 
 const route = useRoute()
 
-const { goToHomePage } = useNavigation()
+const { t } = useI18n()
+const { goToHomePage, goToArtistReleasesPage } = useNavigation()
 
 const id = computed(() => {
     return route.params.id as string
 })
 
 const { data: artist } = useArtistById(id, {
-    onError: (err) => {
-        if (err.status === 404) {
+    onError: (error) => {
+        if (error.status === 404) {
             goToHomePage()
         }
     },
 })
 
-useStickyHeaderTitle(computed(() => {
-    if (!artist.value) return ""
-
-    return artist.value.name
-}))
+const clickOnTitleHandler = () => {
+    goToArtistReleasesPage(id.value)
+}
 </script>
 
 <template>
+    <app-sticky-header-content
+        v-if="artist"
+    />
     <div
         class="artist-info-page"
         v-if="artist"
@@ -39,15 +43,20 @@ useStickyHeaderTitle(computed(() => {
             :artist="artist"
         />
         <div class="content">
-            <artist-releases-carousel
-                :id="artist.id"
-            />
+            <media-section
+                :title="t('entities.release.plural')"
+                title-is-clickable
+                @click-on-title="clickOnTitleHandler"
+            >
+                <artist-releases-list
+                    :id="artist.id"
+                    one-row
+                />
+            </media-section>
         </div>
     </div>
 </template>
 
-<style scoped lang="scss">
-.content {
-    padding: 0 0 24px;
-}
+<style lang="scss">
+
 </style>

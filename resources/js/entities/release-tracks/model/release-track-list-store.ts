@@ -7,7 +7,7 @@ interface ReleaseTrackList {
     count: number
 }
 
-export const useReleaseTracksStore = defineStore("release-tracks", () => {
+export const useReleaseTrackListStore = defineStore("release-tracks", () => {
     const lists = ref<ReleaseTrackList[]>([])
 
     const getReleaseTracks = computed(() => {
@@ -26,7 +26,20 @@ export const useReleaseTracksStore = defineStore("release-tracks", () => {
         }
     })
 
+    const addReleaseTracks = (value: ReleaseTrackList) => {
+        const list = lists.value.find(item => item.id === value.id)
+
+        if (list === undefined) {
+            lists.value.push(value)
+            return
+        }
+
+        list.tracks.push(...value.tracks)
+        list.count = value.count
+    }
+
     return {
         getReleaseTracks,
+        addReleaseTracks,
     }
 })

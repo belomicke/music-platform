@@ -12,7 +12,7 @@ const { isLoading } = useCurrentUser()
     >
         <i-icon
             icon="app-logo"
-            :size="64"
+            size="xl"
         />
     </div>
     <slot v-else></slot>

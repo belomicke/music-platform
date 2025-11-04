@@ -5,13 +5,13 @@ import { type ApiArtist } from "@/shared/api"
 export const useArtistStore = defineStore("artists", () => {
     const artists = ref<ApiArtist[]>([])
 
-    const getById = computed(() => {
+    const getArtistById = computed(() => {
         return (id: string): ApiArtist | undefined => {
             return artists.value.find(artist => artist.id === id)
         }
     })
 
-    const getManyById = computed(() => {
+    const getSeveralArtists = computed(() => {
         return (ids: string[]): ApiArtist[] | undefined => {
             const result: ApiArtist[] = []
 
@@ -24,7 +24,7 @@ export const useArtistStore = defineStore("artists", () => {
     })
 
     const addItem = (artist: ApiArtist) => {
-        if (getById.value(artist.id) === undefined) {
+        if (getArtistById.value(artist.id) === undefined) {
             artists.value.push(artist)
         }
     }
@@ -54,8 +54,8 @@ export const useArtistStore = defineStore("artists", () => {
     }
 
     return {
-        getById,
-        getManyById,
+        getArtistById,
+        getSeveralArtists,
 
         addItem,
         addItems,

@@ -1,5 +1,1 @@
-import PopularArtistsCarousel from "./ui/PopularArtistsCarousel.vue"
-
-export {
-    PopularArtistsCarousel,
-}
+export * from "./api"

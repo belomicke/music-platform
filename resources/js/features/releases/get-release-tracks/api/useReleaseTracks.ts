@@ -1,39 +1,31 @@
 import { computed, ComputedRef, onMounted } from "vue"
 import { storeToRefs } from "pinia"
+import { useReleaseTrackListStore } from "@/entities/release-tracks"
 import { useReleaseStore } from "@/entities/release"
 import { useArtistStore } from "@/entities/artist"
 import { useTrackStore } from "@/entities/track"
 import { useFetch } from "@/shared/hooks"
 import { api } from "@/shared/api"
 
-export const useReleaseTracks = (id: ComputedRef<string>, options?: { load_on_mounted?: boolean }) => {
+export const useReleaseTracks = (id: ComputedRef<string>) => {
     const trackStore = useTrackStore()
     const artistStore = useArtistStore()
     const releaseStore = useReleaseStore()
 
-    const { getById: getReleaseById } = storeToRefs(releaseStore)
-    const { getManyById: getManyTracksById } = storeToRefs(trackStore)
+    const { getSeveralTracks } = storeToRefs(trackStore)
 
-    const release = computed(() => {
-        if (id.value === undefined) return undefined
+    const releaseTrackListStore = useReleaseTrackListStore()
 
-        return getReleaseById.value(id.value)
+    const releaseTrackList = computed(() => {
+        return releaseTrackListStore.getReleaseTracks(id.value)
     })
 
     const tracks = computed(() => {
-        if (release.value === undefined) return []
-
-        const result = getManyTracksById.value(release.value.tracks)
-
-        if (result.indexOf(undefined) !== -1) {
-            return []
-        }
-
-        return result
+        return getSeveralTracks.value(releaseTrackList.value.tracks)
     })
 
     const count = computed(() => {
-        return release.value?.track_count
+        return releaseTrackList.value.count
     })
 
     const { fetch, isLoading } = useFetch(async () => {
@@ -44,17 +36,20 @@ export const useReleaseTracks = (id: ComputedRef<string>, options?: { load_on_mo
 
             const tracks = data.tracks
             const artists = tracks.map(track => track.artists).flat(1)
-            const releases = tracks.map(track => track.releases).flat(1)
+            const releases = tracks.map(track => track.release)
 
-            trackStore.addItems(tracks)
             artistStore.addItems(artists)
             releaseStore.addItems(releases)
+            trackStore.addItems(tracks)
+            releaseTrackListStore.addReleaseTracks({
+                id: id.value,
+                tracks: tracks.map(track => track.id),
+                count: data.count,
+            })
         },
     })
 
     onMounted(async () => {
-        if (options && options.load_on_mounted === false) return
-
         if (tracks.value.length === 0) {
             await fetch()
         }

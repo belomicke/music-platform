@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useI18n } from "vue-i18n"
-import { FavoriteArtistsList } from "@/features/collection/get-favorite-artists"
-import { MediaListPage, useStickyHeaderTitle } from "@/shared/ui"
+import { FavoriteArtistsList } from "@/widgets/artist/favorite-artists-list"
+import { AppStickyHeaderContent } from "@/widgets/app/app-sticky-header"
 
 const { t } = useI18n()
 
 const title = computed(() => {
-    return t("entities.artist.plural")
+    return t("page.collection.followed-artists.header.title")
 })
-
-useStickyHeaderTitle(title)
 </script>
 
 <template>
-    <media-list-page :title="title">
-        <favorite-artists-list/>
-    </media-list-page>
+    <app-sticky-header-content
+        :title="title"
+    />
+    <favorite-artists-list/>
 </template>
